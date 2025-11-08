@@ -41,19 +41,32 @@ git checkout main
 echo -e "${YELLOW}Step 2: Pulling latest changes from origin/main...${NC}"
 git pull origin main
 
-echo -e "${YELLOW}Step 3: Merging copilot/add-copilot-instructions...${NC}"
+echo -e "${YELLOW}Step 3: Verifying target branch exists...${NC}"
+if ! git show-ref --verify --quiet refs/heads/copilot/add-copilot-instructions; then
+    echo -e "${YELLOW}Branch not found locally, fetching from origin...${NC}"
+    git fetch origin copilot/add-copilot-instructions:copilot/add-copilot-instructions
+fi
+
+echo -e "${YELLOW}Step 4: Merging copilot/add-copilot-instructions...${NC}"
 git merge copilot/add-copilot-instructions -m "Merge PR #1 — Add Copilot instructions and reproducible environment setup (v1.1.0)."
 
-echo -e "${YELLOW}Step 4: Pushing merged main branch to origin...${NC}"
+echo -e "${YELLOW}Step 5: Pushing merged main branch to origin...${NC}"
 git push origin main
 
-echo -e "${YELLOW}Step 5: Creating tag v1.1.0...${NC}"
-git tag -a v1.1.0 -m "Add Copilot instructions and reproducible environment."
+echo -e "${YELLOW}Step 6: Checking if tag v1.1.0 already exists...${NC}"
+if git tag -l | grep -q "^v1.1.0$"; then
+    echo -e "${RED}Error: Tag v1.1.0 already exists${NC}"
+    echo "To recreate the tag, first delete it with: git tag -d v1.1.0"
+    exit 1
+fi
 
-echo -e "${YELLOW}Step 6: Pushing tag v1.1.0 to origin...${NC}"
+echo -e "${YELLOW}Step 7: Creating tag v1.1.0...${NC}"
+git tag -a v1.1.0 -m "Copilot integration and environment setup finalized."
+
+echo -e "${YELLOW}Step 8: Pushing tag v1.1.0 to origin...${NC}"
 git push origin v1.1.0
 
-echo -e "${YELLOW}Step 7: Verifying tag was pushed...${NC}"
+echo -e "${YELLOW}Step 9: Verifying tag was pushed...${NC}"
 if git ls-remote --tags origin | grep -q v1.1.0; then
     echo -e "${GREEN}✓ Tag v1.1.0 successfully pushed${NC}"
 else

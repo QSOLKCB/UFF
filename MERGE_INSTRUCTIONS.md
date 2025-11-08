@@ -34,7 +34,7 @@ git push origin main
 
 ### 5. Tag the merge as v1.1.0
 ```bash
-git tag -a v1.1.0 -m "Add Copilot instructions and reproducible environment."
+git tag -a v1.1.0 -m "Copilot integration and environment setup finalized."
 ```
 
 ### 6. Push the tag to origin
@@ -86,7 +86,7 @@ git checkout main && \
 git pull origin main && \
 git merge copilot/add-copilot-instructions -m "Merge PR #1 — Add Copilot instructions and reproducible environment setup (v1.1.0)." && \
 git push origin main && \
-git tag -a v1.1.0 -m "Add Copilot instructions and reproducible environment." && \
+git tag -a v1.1.0 -m "Copilot integration and environment setup finalized." && \
 git push origin v1.1.0 && \
 git ls-remote --tags origin | grep v1.1.0
 ```
