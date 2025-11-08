@@ -34,6 +34,9 @@ QSOL_UFF/
 ├── requirements.txt          # Minimal Python dependencies
 ├── venv_setup.sh             # Auto setup script (Linux/macOS)
 ├── venv_setup.ps1            # Auto setup script (Windows)
+├── .copilot-instructions.md  # GitHub Copilot integration guide
+├── MERGE_INSTRUCTIONS.md     # Instructions for merging PR #1
+├── merge_pr1.sh              # Automated merge script for v1.1.0
 └── README.md                 # You’re reading it
 ```
 
@@ -156,6 +159,24 @@ def v_circ_uff(R_kpc, theta):
 
 Pull requests welcome via GitHub Issues or Discussions.
 Follow PEP8, document public functions, and include a 1-line test dataset for every new model variant.
+
+---
+
+## 🔀 For Repository Maintainers: Merging PR #1
+
+To merge the Copilot integration and environment setup branch (v1.1.0):
+
+### Quick Merge
+```bash
+./merge_pr1.sh
+```
+
+### Manual Merge
+See [MERGE_INSTRUCTIONS.md](MERGE_INSTRUCTIONS.md) for detailed step-by-step instructions, including:
+- Standard git merge commands
+- Tagging for Zenodo synchronization
+- Rollback procedures if needed
+- Zenodo webhook verification
 
 ---
 
