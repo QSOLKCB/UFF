@@ -127,8 +127,8 @@ Once the version appears on Zenodo:
 ### Expected DOIs
 
 - **Concept DOI** (all versions): 10.5281/zenodo.17510648
-- **v1.0.0 DOI**: 10.5281/zenodo.17510648 (or specific v1.0.0 DOI)
-- **v1.1.0 DOI**: Will be assigned automatically (format: 10.5281/zenodo.[number])
+- **v1.0.0**: Initial release used the concept DOI (no separate version-specific DOI)
+- **v1.1.0**: Will be assigned automatically by Zenodo (format: 10.5281/zenodo.[number])
 
 ## Troubleshooting
 

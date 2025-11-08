@@ -43,11 +43,15 @@ if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
 fi
 
 # Check for uncommitted changes
-if ! git diff-index --quiet HEAD -- 2>/dev/null; then
-    echo_error "You have uncommitted changes in your working directory"
-    echo_error "Please commit or stash your changes before running this script"
-    git status --short
-    exit 1
+if git rev-parse --verify HEAD >/dev/null 2>&1; then
+    if ! git diff-index --quiet HEAD -- 2>/dev/null; then
+        echo_error "You have uncommitted changes in your working directory"
+        echo_error "Please commit or stash your changes before running this script"
+        git status --short
+        exit 1
+    fi
+else
+    echo_warn "Empty repository detected (no HEAD). Skipping uncommitted changes check."
 fi
 
 # Check if on main branch

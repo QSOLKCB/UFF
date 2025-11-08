@@ -113,8 +113,8 @@ The repository is configured with a Zenodo webhook that automatically creates a 
 
 ### Expected DOI
 - **Concept DOI** (all versions): [10.5281/zenodo.17510648](https://doi.org/10.5281/zenodo.17510648)
-- **v1.1.0 DOI**: Will be generated automatically by Zenodo
-- **v1.0.0 DOI**: [10.5281/zenodo.17510648](https://doi.org/10.5281/zenodo.17510648)
+- **v1.1.0 DOI**: Will be generated automatically by Zenodo (format: 10.5281/zenodo.[number])
+- **v1.0.0 DOI**: Initial release used the concept DOI directly
 
 ### Webhook Trigger Details
 - **Event**: Tag push matching pattern `v*`
