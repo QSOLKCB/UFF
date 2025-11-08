@@ -43,8 +43,16 @@ git pull origin main
 
 echo -e "${YELLOW}Step 3: Verifying target branch exists...${NC}"
 if ! git show-ref --verify --quiet refs/heads/copilot/add-copilot-instructions; then
-    echo -e "${YELLOW}Branch not found locally, fetching from origin...${NC}"
-    git fetch origin copilot/add-copilot-instructions:copilot/add-copilot-instructions
+    echo -e "${YELLOW}Branch not found locally, checking remote...${NC}"
+    if ! git ls-remote --heads origin copilot/add-copilot-instructions | grep -q copilot/add-copilot-instructions; then
+        echo -e "${RED}Error: Branch copilot/add-copilot-instructions not found on origin${NC}"
+        exit 1
+    fi
+    echo -e "${YELLOW}Fetching branch from origin...${NC}"
+    if ! git fetch origin copilot/add-copilot-instructions:copilot/add-copilot-instructions; then
+        echo -e "${RED}Error: Failed to fetch branch from origin${NC}"
+        exit 1
+    fi
 fi
 
 echo -e "${YELLOW}Step 4: Merging copilot/add-copilot-instructions...${NC}"
@@ -54,9 +62,12 @@ echo -e "${YELLOW}Step 5: Pushing merged main branch to origin...${NC}"
 git push origin main
 
 echo -e "${YELLOW}Step 6: Checking if tag v1.1.0 already exists...${NC}"
-if git tag -l | grep -q "^v1.1.0$"; then
-    echo -e "${RED}Error: Tag v1.1.0 already exists${NC}"
-    echo "To recreate the tag, first delete it with: git tag -d v1.1.0"
+# Check both local and remote tags
+if git tag -l | grep -q "^v1.1.0$" || git ls-remote --tags origin | grep -q 'refs/tags/v1.1.0$'; then
+    echo -e "${RED}Error: Tag v1.1.0 already exists (locally or on origin)${NC}"
+    echo "To recreate the tag:"
+    echo "  1. Delete local tag: git tag -d v1.1.0"
+    echo "  2. Delete remote tag: git push origin :refs/tags/v1.1.0"
     exit 1
 fi
 
