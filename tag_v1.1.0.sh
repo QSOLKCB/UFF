@@ -13,6 +13,11 @@
 
 set -euo pipefail
 
+# Configuration
+VERSION="v1.1.0"
+TAG_MESSAGE="Copilot-integration complete; next minor release"
+TARGET_BRANCH="main"
+
 # Color output
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -37,17 +42,32 @@ if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
     exit 1
 fi
 
+# Check for uncommitted changes
+if ! git diff-index --quiet HEAD -- 2>/dev/null; then
+    echo_error "You have uncommitted changes in your working directory"
+    echo_error "Please commit or stash your changes before running this script"
+    git status --short
+    exit 1
+fi
+
 # Check if on main branch
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-if [ "$CURRENT_BRANCH" != "main" ]; then
-    echo_warn "Not on main branch (currently on: $CURRENT_BRANCH)"
-    echo_info "Checking out main..."
-    git checkout main
+if [ "$CURRENT_BRANCH" != "$TARGET_BRANCH" ]; then
+    echo_warn "Not on $TARGET_BRANCH branch (currently on: $CURRENT_BRANCH)"
+    read -p "Switch to $TARGET_BRANCH? [y/N] " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo_info "Checking out $TARGET_BRANCH..."
+        git checkout "$TARGET_BRANCH"
+    else
+        echo_error "Script requires $TARGET_BRANCH branch. Exiting."
+        exit 1
+    fi
 fi
 
 # Pull latest changes
-echo_info "Pulling latest changes from origin/main..."
-git pull origin main
+echo_info "Pulling latest changes from origin/$TARGET_BRANCH..."
+git pull origin "$TARGET_BRANCH"
 
 # Check if CHANGELOG.md exists
 if [ ! -f "CHANGELOG.md" ]; then
@@ -59,61 +79,61 @@ fi
 echo_info "CHANGELOG.md found ✓"
 
 # Check if tag already exists locally
-if git rev-parse v1.1.0 >/dev/null 2>&1; then
-    echo_warn "Tag v1.1.0 already exists locally"
+if git rev-parse "$VERSION" >/dev/null 2>&1; then
+    echo_warn "Tag $VERSION already exists locally"
     echo_info "Deleting existing local tag..."
-    git tag -d v1.1.0
+    git tag -d "$VERSION"
 fi
 
 # Check if tag exists on remote
-if git ls-remote --tags origin | grep -q "refs/tags/v1.1.0"; then
-    echo_error "Tag v1.1.0 already exists on remote"
+if git ls-remote --tags origin | grep -q "refs/tags/$VERSION"; then
+    echo_error "Tag $VERSION already exists on remote"
     echo_error "If you need to re-tag, first delete the remote tag with:"
-    echo_error "  git push origin :refs/tags/v1.1.0"
+    echo_error "  git push origin :refs/tags/$VERSION"
     exit 1
 fi
 
 # Create the tag
-echo_info "Creating tag v1.1.0..."
-git tag -a v1.1.0 -m "Copilot-integration complete; next minor release"
+echo_info "Creating tag $VERSION..."
+git tag -a "$VERSION" -m "$TAG_MESSAGE"
 
 # Show tag details
 echo_info "Tag details:"
-git show v1.1.0 --no-patch
+git show "$VERSION" --no-patch
 
 # Verify tag creation
-if git rev-parse v1.1.0 >/dev/null 2>&1; then
-    echo_info "Tag v1.1.0 created successfully ✓"
+if git rev-parse "$VERSION" >/dev/null 2>&1; then
+    echo_info "Tag $VERSION created successfully ✓"
 else
-    echo_error "Failed to create tag v1.1.0"
+    echo_error "Failed to create tag $VERSION"
     exit 1
 fi
 
 # Push main branch
-echo_info "Pushing main branch to origin..."
-if git push origin main; then
-    echo_info "Main branch pushed successfully ✓"
+echo_info "Pushing $TARGET_BRANCH branch to origin..."
+if git push origin "$TARGET_BRANCH"; then
+    echo_info "$TARGET_BRANCH branch pushed successfully ✓"
 else
-    echo_error "Failed to push main branch"
-    echo_error "You may need to manually push: git push origin main"
+    echo_error "Failed to push $TARGET_BRANCH branch"
+    echo_error "You may need to manually push: git push origin $TARGET_BRANCH"
     exit 1
 fi
 
 # Push the tag
-echo_info "Pushing tag v1.1.0 to origin..."
-if git push origin v1.1.0; then
-    echo_info "Tag v1.1.0 pushed successfully ✓"
+echo_info "Pushing tag $VERSION to origin..."
+if git push origin "$VERSION"; then
+    echo_info "Tag $VERSION pushed successfully ✓"
 else
-    echo_error "Failed to push tag v1.1.0"
-    echo_error "You may need to manually push: git push origin v1.1.0"
+    echo_error "Failed to push tag $VERSION"
+    echo_error "You may need to manually push: git push origin $VERSION"
     exit 1
 fi
 
 # Verify tag on remote
 echo_info "Verifying tag on remote..."
-if git ls-remote --tags origin | grep -q "refs/tags/v1.1.0"; then
-    echo_info "Tag v1.1.0 verified on remote ✓"
-    git ls-remote --tags origin | grep "v1.1.0"
+if git ls-remote --tags origin | grep -q "refs/tags/$VERSION"; then
+    echo_info "Tag $VERSION verified on remote ✓"
+    git ls-remote --tags origin | grep "$VERSION"
 else
     echo_warn "Could not verify tag on remote"
 fi
@@ -121,7 +141,7 @@ fi
 # Success summary
 echo ""
 echo_info "========================================="
-echo_info "  v1.1.0 Release Complete!"
+echo_info "  $VERSION Release Complete!"
 echo_info "========================================="
 echo ""
 echo_info "Next steps:"
@@ -131,7 +151,7 @@ echo "  3. New DOI will be generated automatically"
 echo "  4. Update README badges if needed"
 echo ""
 echo_info "Concept DOI (all versions): 10.5281/zenodo.17510648"
-echo_info "See RELEASE_NOTES_v1.1.0.md for detailed verification steps"
+echo_info "See RELEASE_NOTES_$VERSION.md for detailed verification steps"
 echo ""
 
 exit 0
