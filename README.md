@@ -113,10 +113,7 @@ Standard information criteria are computed from the MAP likelihood:
 The standard information criteria are:
 
 \[
-\text{AIC} = 2k - 2 \ln L_{\max}
-\]
-
-\[
+\text{AIC} = 2k - 2 \ln L_{\max}, \qquad
 \text{BIC} = k \ln n - 2 \ln L_{\max}
 \]
 
@@ -128,8 +125,7 @@ Where:
 ​
  ,BIC=klnn−2lnL 
 max
-​
- 
+​ 
 k = number of free parameters
 
 n = number of data points
