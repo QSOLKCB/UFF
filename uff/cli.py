@@ -549,7 +549,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         return int(args.handler(args))
     except (OSError, ValueError, RuntimeError) as exc:
-        parser.error(str(exc))
+        print(f"uff: error: {exc}", file=sys.stderr)
         return 2
 
 
