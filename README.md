@@ -1,278 +1,266 @@
-# 🌌 QSOL UFF — UFF v3.0.0 “Spectral Gravity Upgrade” Rotation Curve Analysis Suite
+# QSOL UFF
 
+[![CI](https://github.com/QSOLKCB/UFF/actions/workflows/ci.yml/badge.svg)](https://github.com/QSOLKCB/UFF/actions/workflows/ci.yml)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17669627.svg)](https://doi.org/10.5281/zenodo.17669627)
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Language](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://www.python.org/)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg)](https://www.python.org/)
 
-**Author:** Trent Slade (QSOL IMC)  
-**Status:** Active Research Release · v3.0.0 · November 2025
+**UFF v4.0.0 — Galaxy Dynamics and Compact-Object Research Laboratory**
 
----
+QSOL UFF is a transparent Python toolkit for fitting galaxy rotation curves,
+comparing physical and phenomenological model families, and reporting the
+scale separation between galaxy dynamics, Kerr supermassive black holes
+(SMBHs), and loop-quantum-gravity-inspired (LQG) compact-object research.
 
-## 🧠 Overview
+Version 4 replaces the old placeholder comparators with dimensionally explicit
+models, validated input handling, deterministic multi-start fitting, testable
+limiting cases, and machine-readable provenance.
 
-**QSOL UFF** is a lightweight, fully transparent **rotation-curve analysis engine** built around the **Unified Field Framework (UFF)**.
+> **Scientific boundary:** UFF is a research framework, not evidence that a
+> unified field theory, MOND, dark matter, or an LQG black-hole model is
+> correct. The repository-specific UFF curve is explicitly labelled
+> empirical. LQG is not used to explain galaxy rotation curves.
 
-Version **3.0.0 — “Spectral Gravity Upgrade”** turns the original SPARC-style fitter into a full analysis suite featuring: :contentReference[oaicite:0]{index=0}  
+## What v4 fixes
 
-- **Full-covariance adaptive MCMC** (multivariate Σ with Robbins–Monro adaptation)  
-- **NumPy-only corner plots** (no heavy plotting libs)  
-- **Posterior predictive bands** over baryonic rotation curves  
-- **Spectral sonification** — galaxies “sing” their rotation curves to WAV  
-- **E₈-projected parameter walk** for chain geometry visualization  
-- **UFF vs MOND vs NFW comparison mode** for side-by-side theory tests  
+| Area | Before v4 | v4 |
+|---|---|---|
+| SPARC baryons | Velocity scale factors were squared; signed gas was lost | Mass-to-light ratios scale `V²`; `Vgas × abs(Vgas)` is preserved |
+| NFW | Shape-only approximation using `Vmax` and `Rs` | Physical `M200`, `c200`, `r200`, and configurable `H0` |
+| MOND | Gas, disk, and bulge speeds were added before squaring | Correct baryonic acceleration with simple, standard, and RAR relations |
+| SMBH | No central compact object | Optional fixed/fitted point mass plus separate Kerr horizon/photon-orbit/ISCO report |
+| LQG | Not scoped | Area-gap scale diagnostic and opt-in bookkeeping ansatz, isolated from galaxy likelihoods |
+| Galaxy systematics | Unchecked CSV rows | Strict validation plus optional SPARC distance and inclination nuisance fits |
+| Model selection | One UFF fit with visual overlays | Same-data likelihoods, χ², RMSE, AIC/AICc/BIC, ΔBIC, and relative weights |
+| Reproducibility | Generated files and legacy scripts mixed into source | SHA-256 input receipt, deterministic seeds, JSON schema, CI, and tests |
 
-Still no black boxes: pure NumPy, explicit priors, deterministic seeds, and files you can actually read.
+## Included models
 
----
+| CLI name | Family | Free structural parameters | Status |
+|---|---|---|---|
+| `baryons` | Newtonian baseline | Stellar M/L, optional nuisance parameters | Established weak-field calculation |
+| `nfw` | ΛCDM halo baseline | `log10(M200/M☉)`, `c200` | Standard collisionless-halo profile |
+| `burkert` | Cored halo baseline | `log10(ρ0)`, core radius | Empirical dark-matter profile |
+| `mond-rar` | MOND/RAR | Optional `a0` | Empirical exponential acceleration relation |
+| `mond-simple` | MOND | Optional `a0` | Algebraic simple interpolating function |
+| `mond-standard` | MOND | Optional `a0` | Algebraic standard interpolating function |
+| `mond-efe` | MOND sensitivity test | Fixed external field and orientation | Approximate algebraic proxy, not a field-equation solver |
+| `uff-empirical` | QSOL UFF | Asymptotic speed, core radius, bounded shape term | Repository-specific research law |
 
-## 🗂️ Repository Structure
+Every galaxy model can also include a central SMBH. See
+[Model definitions](docs/MODELS.md) for equations, units, and limitations.
+Run `python -m uff models` to list the canonical CLI names.
 
-Typical layout for the `QSOLKCB/UFF` repo at tag `v3.0.0`:
+## Install
 
-```text
-QSOL_UFF/
-├── analyze_sparc.py          # Main CLI for fitting, diagnostics, & comparisons
-├── uff_model.py              # Unified Field circular-velocity law(s)
-├── e8_visualization.py       # E₈ parameter walk & chain geometry tools
-├── DEMO_GALAXY.csv           # Example SPARC-style dataset
-├── UFF_SPARC_Template.ipynb  # Notebook walkthrough (optional)
-├── requirements.txt          # Minimal Python dependencies
-├── venv_setup.sh             # Auto setup script (Linux/macOS)
-├── venv_setup.ps1            # Auto setup script (Windows)
-├── MERGE_INSTRUCTIONS.md     # Git flow & Zenodo tagging notes
-├── merge_pr1.sh              # Example scripted merge (legacy from v1.x)
-└── README.md                 # You’re reading it
-(Exact filenames may evolve; check the tagged release on GitHub for truth.)
-
-⚙️ Environment Setup
-Option A — Linux / macOS (Recommended)
-bash
-Copy code
+```bash
 git clone https://github.com/QSOLKCB/UFF.git
 cd UFF
-git checkout v3.0.0
-./venv_setup.sh
+python3 -m venv .venv
 source .venv/bin/activate
-Option B — Windows (PowerShell)
-powershell
-Copy code
-git clone https://github.com/QSOLKCB/UFF.git
-cd UFF
-git checkout v3.0.0
-.\venv_setup.ps1
-.\.venv\Scripts\Activate.ps1
-Prompt should show:
+python -m pip install -e .
+```
 
-text
-Copy code
-(.venv) UFF>
-To deactivate:
+For tests:
 
-bash
-Copy code
-deactivate
-🧩 Quick Start Example
-Fit the included demo galaxy with full diagnostics:
+```bash
+python -m pip install -e ".[dev]"
+pytest
+```
 
-bash
-Copy code
-python analyze_sparc.py \
+The compatibility script still works, but `python -m uff` or the installed
+`uff` command is preferred.
+
+## Quick start
+
+Run the default four-way comparison:
+
+```bash
+python -m uff fit \
   --csv DEMO_GALAXY.csv \
   --gal DEMO_GALAXY \
   --out outputs \
+  --sonify
+```
+
+Equivalent legacy entry point:
+
+```bash
+python analyze_sparc.py --csv DEMO_GALAXY.csv --gal DEMO_GALAXY --out outputs
+```
+
+Compare a wider candidate set and fit the MOND acceleration scale:
+
+```bash
+python -m uff fit \
+  --csv DEMO_GALAXY.csv \
+  --models baryons,nfw,burkert,mond-rar,mond-simple,mond-standard,uff-empirical \
+  --fit-a0 \
+  --restarts 24 \
+  --out outputs
+```
+
+Use the external-field sensitivity proxy only when an external field has been
+specified:
+
+```bash
+python -m uff fit \
+  --csv DEMO_GALAXY.csv \
+  --models mond-rar,mond-efe \
+  --external-field-a0 0.03 \
+  --external-field-angle-deg 60
+```
+
+Fit SPARC-style distance and inclination nuisance parameters:
+
+```bash
+python -m uff fit \
+  --csv DEMO_GALAXY.csv \
+  --models nfw,burkert,mond-rar \
+  --fit-distance \
+  --fit-inclination
+```
+
+The input needs `INC_deg` metadata, or use `--inclination-deg`. Nuisance
+parameters increase model complexity and should be given informed priors in
+publication-grade analyses; v4's bounded ranges are transparent exploratory
+defaults.
+
+## Outputs
+
+For a galaxy named `DEMO_GALAXY`, the CLI writes:
+
+| File | Purpose |
+|---|---|
+| `DEMO_GALAXY_summary.json` | Configuration, input hash, fitted values, full residual arrays, diagnostics, and warnings |
+| `DEMO_GALAXY_comparison.csv` | Flat model-ranking table |
+| `DEMO_GALAXY_models.png` | Rotation curves and standardized residuals |
+| `DEMO_GALAXY_<model>_phase_glyph.wav` | Optional deterministic stereo sonification |
+| `DEMO_GALAXY_e8_reference.png` | Optional legacy E₈ visualization, explicitly outside the fit |
+| `DEMO_GALAXY_<model>_posterior.npz` | Optional retained multi-chain posterior samples |
+| `DEMO_GALAXY_<model>_corner.png` | Optional posterior parameter plot |
+| `DEMO_GALAXY_<model>_postpred.png` | Optional 16–84% posterior curve band |
+
+Model weights are relative information-criterion weights for the models in the
+candidate set. They are not posterior probabilities that a physical theory is
+true.
+
+### Optional posterior sampling
+
+The deterministic optimizer is the default. To retain posterior draws for one
+candidate, enable the bounded full-covariance Metropolis sampler:
+
+```bash
+python -m uff fit \
+  --csv DEMO_GALAXY.csv \
+  --models nfw,burkert,mond-rar \
+  --mcmc-steps 12000 \
+  --mcmc-burn 4000 \
+  --mcmc-chains 4 \
   --corner \
-  --postpred \
-  --compare \
-  --sonify \
-  --walk-e8
-Generated Outputs (in /outputs)
-File	Description
-DEMO_GALAXY_fit.png	Observed vs model rotation curve + posterior predictive bands
-DEMO_GALAXY_corner.png	NumPy-only corner plot of posterior
-DEMO_GALAXY_compare.png	UFF vs MOND vs NFW rotation curves on same axes
-DEMO_GALAXY_e8_walk.png	E₈-projected MCMC trajectory vs root lattice slice
-DEMO_GALAXY_summary.json	MAP parameters, posterior stats, AIC/BIC, diagnostic file paths, etc.
-DEMO_GALAXY_posterior.txt	Chain statistics and text summary
-DEMO_GALAXY_sonify.wav	Spectral sonification of the MAP rotation curve
+  --postpred
+```
+
+The sampler adapts its proposal only during burn-in and freezes the transition
+kernel for retained draws. It writes a compressed NPZ, R-hat, approximate
+effective sample sizes, parameter quantiles, a corner plot, and posterior curve
+bands. Treat R-hat above 1.05 or low ESS warnings as non-convergence, not as a
+cosmetic diagnostic.
+
+## SMBH and LQG scale report
+
+Galaxy fitting uses an SMBH only as a weak-field central point mass. Strong
+field quantities belong to a separate command:
+
+```bash
+python -m uff compact-object \
+  --mass-msun 4300000 \
+  --spin 0.5 \
+  --velocity-dispersion-kms 100 \
+  --out outputs/sgr-a-scale-report.json
+```
+
+The report contains the Kerr gravitational radius, outer horizon, equatorial
+photon orbit, ISCO, sphere of influence, LQG area-gap convention, and
+`Δ/r²` scale ratio. It does not select or validate a particular effective LQG
+metric. See [Scientific status, July 2026](docs/SCIENCE_STATUS_2026.md).
+
+## Input data
+
+Canonical CSV columns are:
+
+```text
+R_kpc,V_obs_kms,e_V_kms,V_gas_kms,V_disk_kms,V_bul_kms
+```
+
+Short SPARC aliases (`Rad`, `Vobs`, `errV`, `Vgas`, `Vdisk`, `Vbul`) are also
+accepted. Full details are in [Data format](docs/DATA_FORMAT.md). The official
+[SPARC database](https://astroweb.case.edu/SPARC/) remains the authoritative
+source for the original 175-galaxy data release.
+
+## QSOL project bridges
+
+The v4 diagnostic layer makes narrow, labelled connections to three related
+QSOL repositories:
+
+- [QAI-UFT](https://github.com/QSOLKCB/QAI-UFT): π/2 phase fingerprint and phase-glyph convention.
+- [QNTOY](https://github.com/QSOLKCB/QNTOY): normalized entropy telemetry for ambiguity among model weights.
+- [TFT](https://github.com/QSOLKCB/TFT): covariance eigenspectrum and norm invariants.
+
+These transforms do not change a model prediction or likelihood. No field
+equation was copied from those projects. See
+[Related-project interoperability](docs/RELATED_PROJECTS.md).
+
+## Repository layout
+
+```text
+uff/
+  compact.py       # SMBH/Kerr and LQG scale diagnostics
+  constants.py     # explicit physical constants and units
+  data.py          # validated canonical/SPARC CSV loading
+  diagnostics.py   # plots, entropy, invariants, phase fingerprints, WAV
+  fitting.py       # deterministic bounded fitting and information criteria
+  models.py        # baryons, halos, MOND/RAR, UFF empirical law
+  sampling.py      # opt-in burn-in-adapted posterior sampler
+  cli.py           # fit, batch, and compact-object commands
+tests/             # analytic limits, synthetic recovery, and CLI tests
+docs/              # equations, data contract, science status, project bridges
+analyze_sparc.py   # compatibility launcher
+uff_model.py       # compatibility function
+```
+
+## Research status and limitations
+
+- Rotation curves alone do not settle the dark-matter-versus-modified-gravity
+  question.
+- The algebraic MOND relations are not full AQUAL/QUMOND solvers for flattened
+  disks. `mond-efe` is a sensitivity proxy with an explicit warning.
+- AIC/BIC rankings depend on data quality, priors/bounds, nuisance treatment,
+  and the candidate set.
+- A central SMBH is only constrainable if the observations resolve its sphere
+  of influence.
+- Current LQG black-hole phenomenology contains multiple effective metrics;
+  there is no accepted LQG galaxy rotation law implemented here.
+- The UFF empirical profile is falsifiable as a curve family but is not yet
+  derived from a covariant action, lensing law, or cosmological solution.
+
+The detailed evidence boundary and current literature snapshot are maintained
+in [docs/SCIENCE_STATUS_2026.md](docs/SCIENCE_STATUS_2026.md).
+
+## Citation
+
+Please cite the software record:
+
+> Slade, T. (2026). *QSOL UFF v4.0.0: Galaxy Dynamics and Compact-Object
+> Research Laboratory*. Zenodo. <https://doi.org/10.5281/zenodo.17669627>
+
+Machine-readable metadata are in [CITATION.cff](CITATION.cff). Cite the
+original scientific papers for every model used in an analysis; references are
+listed in [docs/MODELS.md](docs/MODELS.md).
+
+## License
 
-📊 Model Comparison
-UFF v3 ships with a comparison mode overlaying: 
-Zenodo
+Apache License 2.0. See [LICENSE](LICENSE).
 
-UFF (Unified Field Framework law)
-
-MOND (simple μ-interpolator)
-
-NFW halo (analytic approximation for V(r))
-
-Standard information criteria are computed from the MAP likelihood:
-
-### Information Criteria
-
-The standard information criteria are:
-
-\[
-\text{AIC} = 2k - 2 \ln L_{\max}, \qquad
-\text{BIC} = k \ln n - 2 \ln L_{\max}
-\]
-
-Where:  
-- \(k\) = number of free parameters  
-- \(n\) = number of data points  
-- \(L_{\max}\) = maximum likelihood (evaluated at the MAP estimate)
-
-​
- ,BIC=klnn−2lnL 
-max
-​ 
-k = number of free parameters
-
-n = number of data points
-
-Lower AIC/BIC → more parsimonious model for the same dataset.
-
-🧮 Method Notes
-Core philosophy: minimal dependencies, explicit assumptions, reproducible chains.
-
-Sampler: pure NumPy Metropolis–Hastings with adaptive full covariance
-
-Σ updated every N steps via damped Robbins–Monro
-
-Automatic fallback to diagonal proposals for pathological posteriors 
-Zenodo
-
-Priors: explicitly defined in analyze_sparc.py
-
-Start broad → tighten once convergence and residuals look sane
-
-Posterior predictive bands:
-
-Dense R-grid, full baryonic interpolation
-
-16–84% credible interval shaded directly on the rotation curve 
-Zenodo
-
-Deterministic seeds:
-
-Fixed RNG seeds for exact reproducibility of chains and plots
-
-NumPy-only corner plots:
-
-1D marginals on the diagonal, 2D scatter below, auto labels, no extra libs
-
-Extend uff_model.py to test:
-
-lensing-equivalent mass profiles
-
-Tully–Fisher scaling
-
-cluster-scale fits or alternative UFF parameterizations
-
-🔊 Spectral Sonification
-UFF v3 includes spectral sonification flags:
-
-Radius → time
-
-Velocity → pitch
-
-Optional normalization + fades for WAV export
-
-Result: each galaxy yields a short audio “glyph” encoding its rotation curve.
-
-Use:
-
-bash
-Copy code
-python analyze_sparc.py --csv DEMO_GALAXY.csv --gal DEMO_GALAXY --out outputs --sonify
-Check DEMO_GALAXY_sonify.wav and feed it into your DAW, sampler, or QSOL-IMC sound engine.
-
-🧊 E₈-Projected Parameter Walk
-The E₈ walk tools let you view the chain as a trajectory through a random 3-slice of the E₈ root lattice: 
-Zenodo
-
-Chain points projected into an 8D–>3D slice
-
-Overlaid on 240 E₈ roots
-
-Integer vs half-integer classes separated
-
-Deterministic projection for reproducible figures
-
-Useful for diagnosing multi-modal posteriors and correlated parameters in a way that looks like fan-art for algebraic geometers.
-
-🔍 Outputs and Diagnostics Overview
-Posterior text summary (MAP, mean, σ)
-
-AIC/BIC and log-evidence-adjacent metrics
-
-Residual plots + posterior predictive envelopes
-
-NumPy corner plots
-
-E₈ chain visualizations
-
-UFF / MOND / NFW comparison panels
-
-Optional sonification WAVs
-
-Everything is intended to be scriptable and batchable for full-SPARC sweeps.
-
-🤝 Contributing
-Pull requests welcome via GitHub issues or discussions.
-
-Guidelines:
-
-Follow PEP8
-
-Document public functions
-
-Add a tiny test dataset (or SPARC subset) for each new model variant
-
-Keep dependencies minimal; if you add a heavy one, make it optional and justified
-
-🚧 v3.x+ Roadmap
-Likely next steps:
-
-GPU / numba-assisted samplers for large SPARC batches
-
-Batch SPARC runner with per-galaxy JSON summaries and dashboard-ready outputs
-
-More sonification modes (e.g., baryons vs total curve in stereo)
-
-Optional interactive notebook gallery for teaching and demos
-
-🚪 License
-Apache License 2.0
-
-You are free to use, modify, and redistribute the code, including in commercial contexts, provided you:
-
-Preserve copyright and license notices
-
-Respect the Apache 2.0 terms for contributions and patents
-
-See LICENSE or https://www.apache.org/licenses/LICENSE-2.0 for full details. 
-Zenodo
-
-📚 Citation
-If you use UFF v3.0.0 — “Spectral Gravity Upgrade” in a publication, please cite the software record:
-
-Slade, T. (2025). QSOLKCB/UFF: UFF v3.0.0 — “Spectral Gravity Upgrade”.
-Zenodo. https://doi.org/10.5281/zenodo.17669627
-
-For the broader theoretical and sonic context, also see:
-
-Slade, T. (2024). Spectral Algebraics: Audible Geometry via E8-Inspired Signal Synthesis and 3D Visualization. Zenodo.
-(Concept DOI for earlier UFF work: 10.5281/zenodo.17510648)
-
-🔗 Related Projects
-QSOLKCB / UFF — Unified Field Framework core rotation-curve engine 
-Zenodo
-
-QSOLKCB / QEC — Quantum Error Correction Framework
-
-QSOLKCB / QAI-UFT — Unified Field Theory core modelling
-
-Spectral Algebraics (Zenodo) — E₈-inspired audio/visual geometry
-
-Truth Compiled · QSOL IMC 2025 · “Spectral Gravity Upgrade” Edition
+Maintainer: **Trent Slade / QSOL-IMC**
+GitHub: [QSOLKCB](https://github.com/QSOLKCB)

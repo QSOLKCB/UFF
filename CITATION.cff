@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use QSOL UFF, cite this software and the primary papers for every model used."
+title: "QSOL UFF v4.0.0: Galaxy Dynamics and Compact-Object Research Laboratory"
+type: software
+version: 4.0.0
+date-released: 2026-07-14
+authors:
+  - family-names: Slade
+    given-names: Trent
+    orcid: "https://orcid.org/0009-0002-4515-9237"
+repository-code: "https://github.com/QSOLKCB/UFF"
+url: "https://github.com/QSOLKCB/UFF"
+doi: "10.5281/zenodo.17669627"
+license: Apache-2.0
+keywords:
+  - galaxy rotation curves
+  - SPARC
+  - MOND
+  - radial acceleration relation
+  - NFW
+  - Burkert
+  - supermassive black holes
+  - loop quantum gravity
+abstract: >-
+  A transparent Python laboratory for validated SPARC-style galaxy data,
+  dimensionally explicit baryonic, halo, MOND/RAR, SMBH, and empirical UFF
+  rotation-curve models, deterministic model comparison, and separately scoped
+  Kerr/LQG compact-object scale diagnostics.

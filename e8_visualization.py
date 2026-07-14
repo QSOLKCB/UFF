@@ -52,8 +52,12 @@ def generate_e8_roots() -> Tuple[np.ndarray, np.ndarray]:
         if pos_count % 2 == 0:
             roots_half.append(0.5 * signs)
     roots_half_arr = np.array(roots_half)
-    assert roots_int_arr.shape[0] == 112, f"Expected 112 integer roots, got {roots_int_arr.shape[0]}"
-    assert roots_half_arr.shape[0] == 128, f"Expected 128 half roots, got {roots_half_arr.shape[0]}"
+    assert roots_int_arr.shape[0] == 112, (
+        f"Expected 112 integer roots, got {roots_int_arr.shape[0]}"
+    )
+    assert roots_half_arr.shape[0] == 128, (
+        f"Expected 128 half roots, got {roots_half_arr.shape[0]}"
+    )
     return roots_int_arr, roots_half_arr
 
 
@@ -110,12 +114,22 @@ def plot_e8_projection(save_path: str) -> None:
     fig = plt.figure(figsize=(6, 5))
     ax = fig.add_subplot(111, projection="3d")
     ax.scatter(
-        coords_int[:, 0], coords_int[:, 1], coords_int[:, 2],
-        s=8, alpha=0.6, color="C0", label="integer roots"
+        coords_int[:, 0],
+        coords_int[:, 1],
+        coords_int[:, 2],
+        s=8,
+        alpha=0.6,
+        color="C0",
+        label="integer roots",
     )
     ax.scatter(
-        coords_half[:, 0], coords_half[:, 1], coords_half[:, 2],
-        s=8, alpha=0.6, color="C1", label="half roots"
+        coords_half[:, 0],
+        coords_half[:, 1],
+        coords_half[:, 2],
+        s=8,
+        alpha=0.6,
+        color="C1",
+        label="half roots",
     )
     ax.set_title("E₈ root system — random 3D projection")
     ax.set_xlabel("x")
