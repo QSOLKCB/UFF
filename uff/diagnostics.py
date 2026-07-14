@@ -221,6 +221,12 @@ def save_rotation_sonification(
     if duration_s <= 0 or sample_rate < 8_000:
         raise ValueError("duration_s must be positive and sample_rate at least 8000")
 
+    order = np.argsort(radius)
+    radius = radius[order]
+    velocity = velocity[order]
+    if np.any(np.diff(radius) <= 0):
+        raise ValueError("radius_kpc must be strictly increasing")
+
     sample_count = int(round(duration_s * sample_rate))
     normalized_time = np.linspace(0.0, 1.0, sample_count, endpoint=False)
     radial_coordinate = (radius - radius.min()) / max(float(np.ptp(radius)), 1.0e-12)
