@@ -1,5 +1,6 @@
+# Runtime dependencies.  ``pip install -e .`` is preferred; this file remains
+# for simple notebook and venv workflows.
 numpy>=1.26
 pandas>=2.2
-matplotlib>=3.9
 scipy>=1.13
-tqdm>=4.66
+matplotlib>=3.8
