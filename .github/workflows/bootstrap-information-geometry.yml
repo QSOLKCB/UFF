@@ -1,0 +1,75 @@
+name: Bootstrap UFF Information Geometry
+
+on:
+  push:
+    branches:
+      - feat/information-geometry-nexus-v2
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bootstrap-information-geometry-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  unpack-and-commit:
+    if: ${{ github.actor != 'github-actions[bot]' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Reassemble and unpack validated payload
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import base64
+          from zipfile import ZipFile
+
+          root = Path.cwd().resolve()
+          parts = sorted((root / '.bootstrap' / 'parts').glob('part-*.b64'))
+          if len(parts) != 28:
+              raise SystemExit(f'expected 28 payload parts, found {len(parts)}')
+
+          encoded = ''.join(
+              path.read_text(encoding='ascii').strip()
+              for path in parts
+          )
+          archive = root / '.bootstrap' / 'UFF_ig_nexus_repo_payload.zip'
+          archive.write_bytes(base64.b64decode(encoded, validate=True))
+
+          with ZipFile(archive) as bundle:
+              for info in bundle.infolist():
+                  relative = Path(info.filename)
+                  if relative.is_absolute() or '..' in relative.parts:
+                      raise SystemExit(f'unsafe archive path: {info.filename}')
+                  destination = (root / relative).resolve()
+                  if root not in destination.parents and destination != root:
+                      raise SystemExit(
+                          f'archive path escapes repository: {info.filename}'
+                      )
+              bundle.extractall(root)
+          PY
+
+      - name: Integrate README launch panel
+        run: python scripts/apply_information_geometry_patch.py
+
+      - name: Remove bootstrap machinery
+        run: |
+          rm -rf .bootstrap
+          rm -f .github/workflows/bootstrap-information-geometry.yml
+
+      - name: Commit expanded laboratory
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "feat: add NEXUS-backed information geometry laboratory"
+          git push origin HEAD:feat/information-geometry-nexus-v2
