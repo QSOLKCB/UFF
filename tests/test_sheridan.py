@@ -242,3 +242,75 @@ def test_exact_source_limit_is_enforced(tmp_path):
     support = load_support(support_path, contract.survey)
     with pytest.raises(AuditError, match="exact adaptive KDE is capped"):
         fit_density(catalogue, support, contract.density)
+
+
+def test_support_kernel_mass_streams_large_support(monkeypatch):
+    import uff.sheridan_density as density_module
+
+    support = fibonacci_support(density_module.SUPPORT_BLOCK_SIZE * 2 + 17)
+    support_vectors = radec_to_unit(
+        support.ra_deg.to_numpy(), support.dec_deg.to_numpy()
+    )
+    centres = radec_to_unit(
+        np.array([10.0, 120.0, 240.0]), np.array([-20.0, 5.0, 45.0])
+    )
+    original = density_module.vmf_kernel
+    largest_evaluation_block = 0
+
+    def recording_kernel(evaluation, centre_vectors, bandwidth):
+        nonlocal largest_evaluation_block
+        largest_evaluation_block = max(largest_evaluation_block, len(evaluation))
+        return original(evaluation, centre_vectors, bandwidth)
+
+    monkeypatch.setattr(density_module, "vmf_kernel", recording_kernel)
+    mass = density_module.support_kernel_mass(
+        centres,
+        np.deg2rad(18.0),
+        support_vectors,
+        support.area_weight_sr.to_numpy(),
+        support.coverage.to_numpy(),
+    )
+    assert np.allclose(mass, 1.0, rtol=0.02, atol=0.02)
+    assert largest_evaluation_block <= density_module.SUPPORT_BLOCK_SIZE
+
+
+def test_support_kernel_mass_rejects_mismatched_support_arrays():
+    support = fibonacci_support(64)
+    vectors = radec_to_unit(support.ra_deg.to_numpy(), support.dec_deg.to_numpy())
+    centre = radec_to_unit(np.array([0.0]), np.array([0.0]))
+    with pytest.raises(AuditError, match="equal length"):
+        support_kernel_mass(
+            centre,
+            np.deg2rad(10.0),
+            vectors,
+            support.area_weight_sr.to_numpy()[:-1],
+            support.coverage.to_numpy(),
+        )
+
+
+def test_logistic_optimizer_uses_joint_value_and_gradient(monkeypatch):
+    from scipy.optimize import OptimizeResult
+    import uff.sheridan_models as model_module
+
+    calls = 0
+
+    def fake_minimize(fun, x0, *, jac, **kwargs):
+        nonlocal calls
+        assert jac is True
+        calls += 1
+        value, gradient = fun(np.asarray(x0, dtype=float))
+        assert np.isfinite(value)
+        assert gradient.shape == np.asarray(x0).shape
+        return OptimizeResult(x=np.asarray(x0, dtype=float), fun=value, success=True)
+
+    monkeypatch.setattr(model_module, "minimize", fake_minimize)
+    design = np.column_stack((np.ones(8), np.linspace(-1.0, 1.0, 8)))
+    fit = model_module._fit_logistic(
+        "joint-objective",
+        design,
+        ("intercept", "trend"),
+        np.array([0, 0, 0, 0, 1, 1, 1, 1], dtype=float),
+        np.ones(8),
+    )
+    assert calls == 1
+    assert fit.converged
