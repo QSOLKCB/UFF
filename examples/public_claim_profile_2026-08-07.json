@@ -1,0 +1,155 @@
+{
+  "schema": "uff.public-claim-profile.v1",
+  "profile_id": "logvinovich-public-claims-2026-08-07",
+  "status": "not-ready-for-confirmatory-run",
+  "subject": "Publicly stated celestial-node and catalogue-anomaly claims attributed to Dr. Logvinovich",
+  "captured_at": "2026-08-07",
+  "source_type": "public-post-and-discussion-snapshot",
+  "public_source_urls": [
+    "https://astronomy.stackexchange.com/questions/62503/real-data-vs-pipeline-failure-why-do-noirlab-gaia-dr3-and-allwise-simultaneo",
+    "https://chat.stackexchange.com/rooms/164363/discussion-on-question-by-dr-logvinovich-real-data-vs-pipeline-failure-why-do",
+    "https://zenodo.org/records/21792530",
+    "https://zenodo.org/records/21627201"
+  ],
+  "claim_versions": {
+    "ideal_oh_12": {
+      "node_count": 12,
+      "radius_deg": 5.0,
+      "nodes": [
+        {"id": "N1", "ra_deg": 0.0, "dec_deg": 45.0},
+        {"id": "N2", "ra_deg": 90.0, "dec_deg": 45.0},
+        {"id": "N3", "ra_deg": 180.0, "dec_deg": 45.0},
+        {"id": "N4", "ra_deg": 270.0, "dec_deg": 45.0},
+        {"id": "N5", "ra_deg": 0.0, "dec_deg": -45.0},
+        {"id": "N6", "ra_deg": 90.0, "dec_deg": -45.0},
+        {"id": "N7", "ra_deg": 180.0, "dec_deg": -45.0},
+        {"id": "N8", "ra_deg": 270.0, "dec_deg": -45.0},
+        {"id": "N9", "ra_deg": 45.0, "dec_deg": 0.0},
+        {"id": "N10", "ra_deg": 135.0, "dec_deg": 0.0},
+        {"id": "N11", "ra_deg": 225.0, "dec_deg": 0.0},
+        {"id": "N12", "ra_deg": 315.0, "dec_deg": 0.0}
+      ]
+    },
+    "rotated_e_nodes_partial": {
+      "declared_node_count": 12,
+      "captured_node_count": 10,
+      "missing_ids": ["E-7", "E-12"],
+      "nodes": [
+        {"id": "E-1", "ra_deg": 45.7, "dec_deg": 67.8},
+        {"id": "E-2", "ra_deg": 116.8, "dec_deg": 43.3},
+        {"id": "E-3", "ra_deg": 135.9, "dec_deg": -31.5},
+        {"id": "E-4", "ra_deg": 90.6, "dec_deg": -12.8},
+        {"id": "E-5", "ra_deg": 60.5, "dec_deg": 43.2},
+        {"id": "E-6", "ra_deg": 225.4, "dec_deg": 12.6},
+        {"id": "E-8", "ra_deg": 300.2, "dec_deg": -23.1},
+        {"id": "E-9", "ra_deg": 180.3, "dec_deg": -47.9},
+        {"id": "E-10", "ra_deg": 315.1, "dec_deg": 55.2},
+        {"id": "E-11", "ra_deg": 270.8, "dec_deg": 11.4}
+      ]
+    },
+    "query_hotspots": [
+      {"ra_deg": 270.0, "dec_deg": 45.0, "radii_deg": [1.5, 5.0]},
+      {"ra_deg": 357.135896, "dec_deg": -47.874018, "radii_deg": [3.0]}
+    ],
+    "physical_architecture": {
+      "total_nodes": 36,
+      "primary_e_nodes": 12,
+      "secondary_overtone_nodes": 24,
+      "complete_coordinate_table_available": false
+    }
+  },
+  "catalogue_predicates": {
+    "nsc_three_degree": {
+      "catalogue": "nsc_dr2.object",
+      "centre": {"ra_deg": 357.135896, "dec_deg": -47.874018},
+      "radius_deg": 3.0,
+      "predicate": "pmraerr > 90 OR pmdecerr > 90 OR pmra^2 + pmdec^2 > 2500"
+    },
+    "nsc_vector": {
+      "catalogue": "nsc_dr2.object",
+      "centre": {"ra_deg": 270.0, "dec_deg": 45.0},
+      "radius_deg": 1.5,
+      "predicate": "ndet >= 3 AND deltamjd > 365 AND pmra/pmdec non-null AND (pmraerr > 50 OR pmdecerr > 50 OR pmra^2 + pmdec^2 > 2500)",
+      "reported_rows": 42030
+    },
+    "nsc_expanded": {
+      "catalogue": "nsc_dr2.object",
+      "centre": {"ra_deg": 270.0, "dec_deg": 45.0},
+      "radius_deg": 5.0,
+      "predicate_summary": "ndet >= 3 AND deltamjd > 365",
+      "reported_rows": 373440
+    },
+    "allwise_region": {
+      "catalogue": "allwise.source",
+      "geometry": "rectangle",
+      "ra_range_deg": [267.0, 273.0],
+      "dec_range_deg": [42.0, 45.0],
+      "limit": 500000,
+      "ordering": "w3mpro - w4mpro descending",
+      "frozen_anomaly_threshold": null
+    },
+    "allwise_nsc_crossmatch": {
+      "catalogues": ["allwise.source", "nsc_dr2.object"],
+      "centre": {"ra_deg": 357.135896, "dec_deg": -47.874018},
+      "radius_deg": 3.0,
+      "match_radius_deg": 0.000833,
+      "predicate": "w4snr > 3 AND w3mpro - w4mpro > 1.5 AND nsc.deltamjd > 100"
+    },
+    "gaia_dr3": {
+      "claimed_observable": "astrometric_excess_noise",
+      "query_present_in_snapshot": false,
+      "frozen_threshold_present": false
+    }
+  },
+  "reported_assertions": {
+    "twelve_cap_sky_fraction": 0.02283,
+    "claimed_fraction_of_filtered_anomalies_inside_caps": 1.0,
+    "claimed_amplification": 43.8,
+    "claimed_p_value_early": "<1e-300",
+    "target_failure_rate": 0.515,
+    "control_failure_rate": 0.139,
+    "monte_carlo_iterations": 100000,
+    "ecliptic_bias_sigma_deg": 15.0,
+    "claimed_p_value_later": "<1e-5",
+    "claimed_radial_zero_boundary_deg": 5.0,
+    "mpcorb_objects_processed": 1553229,
+    "saturn_residual_acceleration_m_s2": 7.06e-16,
+    "cassini_comparison_threshold_m_s2": 1.0e-14,
+    "leading_non_spherical_multipole_l": 4,
+    "claimed_residual_scaling": "1/r^6"
+  },
+  "declared_discriminants": [
+    {
+      "test": "proper-motion position-angle coherence",
+      "stated_falsifying_outcome": "approximately 42000 vectors point in one coherent direction",
+      "stated_observed_outcome": "isotropic angles across 360 degrees",
+      "interpretation_boundary": "angle isotropy does not uniquely identify a topological physical cause"
+    }
+  ],
+  "blocking_ambiguities": [
+    "Which node coordinate set is the confirmatory target?",
+    "Are the empirical claim and the thirty-six-node physical architecture separate hypotheses?",
+    "Which radius is primary: 1.5, 3.0, or 5.0 degrees?",
+    "Which NSC error threshold is primary: 50 or 90?",
+    "Which temporal baseline is primary: 100 or 365 days?",
+    "Is the claim confinement of all filtered anomalies or only a density increase?",
+    "What is the complete Gaia DR3 ADQL query and anomaly threshold?",
+    "What are the exact target and control coordinates and their survey masks?",
+    "What Monte Carlo sampling measure, code, seed, and trial family produced each p-value?",
+    "What are E-7 and E-12 in the rotated coordinate list?",
+    "How does the 357.135896, -47.874018 hotspot map to the declared node table?"
+  ],
+  "required_before_confirmation": [
+    "complete frozen node table",
+    "single primary radius or multiplicity-corrected radius family",
+    "catalogue-specific anomaly predicates",
+    "node-independent full-footprint catalogue selection",
+    "survey masks and completeness support grids",
+    "exact Gaia query",
+    "frozen control fields",
+    "Monte Carlo source and deterministic seed",
+    "untouched holdout or independent catalogue",
+    "positive negative and forbidden outcomes"
+  ],
+  "scientific_boundary": "This profile records public assertions for audit design. It is not evidence that the assertions or reported numerical results are correct."
+}
