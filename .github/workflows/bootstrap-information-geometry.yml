@@ -1,0 +1,10 @@
+name: Bootstrap UFF Information Geometry
+
+on:
+  workflow_dispatch:
+
+jobs:
+  paused:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Bootstrap paused while payload corrections are staged."
