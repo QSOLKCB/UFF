@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "title": "UFF Sheridan Crucible v1.1.0: Survey-Aware Empirical Evaluation Engine",
+    "upload_type": "software",
+    "description": "An exact, preregistration-ready reference implementation for evaluating frozen celestial-node claims under explicit survey geometry, completeness, masks, edge correction, competing nuisance models, predictive checks, and synthetic catalogue-level injection calibration. The framework produces SHA-256 evidence bundles and deterministic numerical replay. It tests catalogue associations and does not identify their physical cause.",
+    "creators": [
+      {
+        "name": "Slade, Trent",
+        "orcid": "0009-0002-4515-9237"
+      }
+    ],
+    "license": "Apache-2.0",
+    "keywords": [
+      "astronomical survey selection function",
+      "von Mises-Fisher kernel density estimation",
+      "celestial lattice falsification",
+      "preregistration",
+      "synthetic injection",
+      "posterior predictive check",
+      "reproducible astronomy"
+    ],
+    "related_identifiers": [
+      {
+        "identifier": "10.3847/1538-4357/ae5bac",
+        "relation": "isDerivedFrom",
+        "scheme": "doi"
+      },
+      {
+        "identifier": "10.5281/zenodo.17669627",
+        "relation": "isNewVersionOf",
+        "scheme": "doi"
+      }
+    ]
+  }
+}

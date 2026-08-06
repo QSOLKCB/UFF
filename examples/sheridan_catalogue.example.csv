@@ -1,0 +1,4 @@
+ra_deg,dec_deg,anomaly_score,completeness,survey_id,galactic_latitude_abs_deg,magnitude
+10.0,-20.0,0.2,0.98,example,42.0,19.1
+12.0,-19.5,5.7,0.91,example,41.5,20.0
+190.0,21.0,1.1,0.86,example,38.2,18.7
