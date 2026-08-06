@@ -96,6 +96,8 @@ def holm_adjust(p_values: Iterable[float]) -> np.ndarray:
 
 
 def empirical_p(observed: float, null: np.ndarray) -> float:
+    if not math.isfinite(float(observed)):
+        raise AuditError("empirical p-value requires a finite observed statistic")
     values = np.asarray(null, dtype=float)
     if values.ndim != 1 or values.size < 1 or np.any(~np.isfinite(values)):
         raise AuditError("empirical p-value requires a finite null distribution")
@@ -104,8 +106,11 @@ def empirical_p(observed: float, null: np.ndarray) -> float:
 
 def _shuffle_labels(anomaly: np.ndarray, strata: np.ndarray, rng: np.random.Generator) -> np.ndarray:
     result = np.asarray(anomaly, dtype=bool).copy()
-    for value in pd.unique(strata):
-        indexes = np.flatnonzero(strata == value)
+    stratum_values = np.asarray(strata)
+    if pd.isna(stratum_values).any():
+        raise AuditError("stratified-label null requires non-missing stratum values")
+    for value in pd.unique(stratum_values):
+        indexes = np.flatnonzero(stratum_values == value)
         result[indexes] = rng.permutation(result[indexes])
     return result
 
@@ -149,11 +154,14 @@ def run_audit(catalogue: pd.DataFrame, contract: AuditContract) -> tuple[dict[st
         "pairwise_angle_max_abs_rad": 0.0,
     }
     if contract.null_model in {"ra-shift", "so3"}:
+        def nulls_complete() -> bool:
+            return len(global_null) == contract.permutations and all(
+                not testable[index] or len(node_null[index]) == contract.permutations
+                for index in range(len(contract.nodes))
+            )
+
         for _ in range(contract.permutations * 100):
-            if len(global_null) == contract.permutations and all(
-                not testable[i] or len(node_null[i]) == contract.permutations
-                for i in range(len(contract.nodes))
-            ):
+            if nulls_complete():
                 break
             rotation = (
                 random_so3(rng)
@@ -176,7 +184,7 @@ def run_audit(catalogue: pd.DataFrame, contract: AuditContract) -> tuple[dict[st
                 candidate = summarize_region(rotated[:, index], anomaly, weights)
                 if candidate.inside_total > 0.0 and candidate.outside_total > 0.0:
                     node_null[index].append(candidate.rate_contrast)
-        else:
+        if not nulls_complete():
             raise AuditError("unable to generate enough non-empty rotated null regions")
     else:
         strata = catalogue[contract.stratum_column].to_numpy()
