@@ -124,9 +124,9 @@ def _fit_logistic(
 
     bounds = [(-30.0, 30.0)] * x.shape[1]
     result = minimize(
-        lambda beta: objective(beta)[0],
+        objective,
         np.zeros(x.shape[1]),
-        jac=lambda beta: objective(beta)[1],
+        jac=True,
         method="L-BFGS-B",
         bounds=bounds,
         options={"maxiter": 2000, "ftol": 1.0e-12, "gtol": 1.0e-8},
