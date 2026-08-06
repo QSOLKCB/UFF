@@ -1,153 +1,136 @@
-# UFF-SLFA: Sky-Lattice Falsification Audit
+# UFF-SLFA v1.0.0: Sky-Lattice Falsification Audit
 
-**Protocol version:** 1.0.0  
-**Status:** preregistration-ready research method  
-**Scope:** empirical celestial-node claims and survey-systematics controls
+**Status:** preregistration-ready method and reference implementation  
+**Scope:** catalogue-level claims of anomalies concentrated around fixed celestial nodes
 
-## Purpose
+## Research question
 
-UFF-SLFA converts a claimed celestial lattice into a frozen, executable claim
-contract. It asks a narrow question:
+UFF-SLFA asks one deliberately narrow question:
 
-> Does a complete, independently defined catalogue exhibit a preregistered
-> excess of anomalies inside fixed spherical caps around the claimed nodes,
-> relative to a null model that preserves the relevant survey selection
-> structure?
+> Does a complete, independently selected catalogue exhibit a preregistered excess of a declared anomaly inside fixed spherical caps around frozen celestial nodes, relative to a null model that preserves the relevant survey selection structure?
 
-It does **not** decide whether space is a crystal, a quantum condensate, a
-standing wave, or any other ontology. Those are causal interpretations requiring
-additional predictions.
+The protocol does not decide whether space is a crystal, a condensate, a standing wave, or any other ontology. A statistically supported catalogue association would be a reason for further investigation, not automatic confirmation of a field theory.
 
-## Why this protocol exists
+## Non-negotiable declarations
 
-A query that first selects high-error records inside proposed node windows and
-then reports that those records occur inside the windows is circular. Likewise,
-a full-sky binomial null is invalid for a sample drawn only from targeted boxes.
-UFF-SLFA prevents these errors by requiring:
+A contract must declare that catalogue selection was independent of the proposed node masks. A node-targeted query cannot validate node clustering. Confirmatory runs must also use either:
 
-1. a complete catalogue sample independent of the node masks;
-2. a frozen node list, cap radius, anomaly rule, null model, and decision rule;
-3. a holdout set or genuinely new catalogue where feasible;
-4. rotations or label permutations that preserve declared selection effects;
-5. family-wise correction for node-by-node claims;
-6. hashes for the contract, catalogue, receipt, and output table.
+- an independent catalogue not used to discover or tune the nodes; or
+- a declared holdout split that was not inspected while fixing coordinates, thresholds, and decision rules.
 
-## Contract
+Failed nodes remain in the denominator. Null results remain in the bundle. Thresholds are frozen before the confirmatory run.
 
-The JSON contract uses schema `uff.sky-lattice-claim.v1` and freezes:
+## Frozen claim contract
 
-- ICRS node coordinates;
-- spherical-cap radius;
-- anomaly column, comparison operator, and threshold;
+The schema `uff.sky-lattice-claim.v1` records:
+
+- ICRS node coordinates and identifiers;
+- one spherical-cap radius;
+- the anomaly column, comparison operator, and threshold;
+- catalogue and discovery-catalogue SHA-256 values where applicable;
 - holdout, weight, and stratum columns;
-- null model, permutation count, and random seed;
-- global alpha, minimum effect size, and required supported-node count;
-- optionally, the expected SHA-256 of the catalogue.
+- null model, permutation count, and deterministic seed;
+- alpha, minimum rate contrast, and required supported-node count; and
+- explicit anti-circularity declarations.
 
-Once deposited or committed, changing any field produces a different canonical
-contract fingerprint.
+Canonical JSON hashing makes any later change to the contract visible.
 
 ## Test statistic
 
-For anomaly indicator \(Y_i\in\{0,1\}\), positive weight \(w_i\), and union
-node-cap membership \(M_i\), define
+For anomaly indicator `Y_i`, positive survey weight `w_i`, and union-cap membership `M_i`, define
 
 \[
-\hat p_{\mathrm{in}}=
-\frac{\sum_i w_iY_iM_i}{\sum_i w_iM_i},\qquad
-\hat p_{\mathrm{out}}=
-\frac{\sum_i w_iY_i(1-M_i)}{\sum_i w_i(1-M_i)}.
+\hat p_{in}=\frac{\sum_i w_iY_iM_i}{\sum_i w_iM_i},
+\qquad
+\hat p_{out}=\frac{\sum_i w_iY_i(1-M_i)}{\sum_i w_i(1-M_i)}.
 \]
 
 The preregistered global statistic is
 
 \[
-T=\hat p_{\mathrm{in}}-\hat p_{\mathrm{out}}.
+T=\hat p_{in}-\hat p_{out}.
 \]
 
-The same statistic is calculated separately for every node. Odds ratios are
-reported as diagnostics with the Haldane-Anscombe correction, but they are not
-used to silently replace the frozen decision statistic.
+The same contrast is calculated separately for every node. A Haldane-Anscombe corrected odds ratio is reported as a diagnostic; it does not silently replace the frozen statistic.
 
 ## Null models
 
-### RA-shift
+### RA shift
 
-A common random right-ascension shift is applied to every node. This preserves
-node declinations, mutual geometry, cap radius, and the catalogue footprint. It
-is appropriate when declination-dependent exposure is important and RA is the
-exchangeable direction.
+All nodes receive the same random rotation about the ICRS z-axis. Node declinations, cap sizes, and mutual geometry remain fixed. This is useful when declination-dependent exposure must be retained and right ascension is the exchangeable direction.
 
-### SO(3) rotation
+### Uniform SO(3) rotation
 
-A uniform random three-dimensional rotation is applied to the complete node
-configuration. This preserves all angular separations and is appropriate only
-for effectively full-sky, isotropically selected samples or when the selection
-function is explicitly represented by weights.
+The complete node configuration receives a Haar-uniform proper three-dimensional rotation. This preserves every pairwise angular separation. It is suitable for effectively full-sky samples or samples with an explicitly modelled selection function.
 
-### Stratified-label permutation
+### Stratified label permutation
 
-Anomaly labels are shuffled within preregistered strata while coordinates and
-node masks remain fixed. Strata may encode survey, depth, crowding, Galactic
-latitude band, exposure, or quality regime. This tests whether the anomaly label
-is unusually associated with the nodes after preserving those factors.
+Anomaly labels are shuffled within preregistered strata while coordinates remain fixed. Strata can encode survey, depth, crowding, Galactic latitude band, exposure, or quality regime.
 
-## Empirical p-value
+## TFT-derived invariance bridge
 
-For \(B\) null replicates \(T_b\), the one-sided empirical p-value is
+For each geometric null transform, UFF-SLFA verifies
 
 \[
-p=\frac{1+\sum_{b=1}^{B}\mathbf 1[T_b\ge T_{\mathrm{obs}}]}{B+1}.
+R^TR=I,\qquad \det R=+1,
 \]
 
-Node-wise p-values are corrected using Holm's step-down family-wise procedure.
-A node counts as supported only when its Holm-adjusted p-value is at most the
-frozen alpha and its rate contrast reaches the frozen minimum effect.
+and checks that the node Gram matrix and all pairwise angular separations remain invariant. This prevents the null generator from accidentally deforming the claimed lattice. The invariant check validates the transformation used by the audit; it does not validate the physical claim.
 
-## Decision
+## Empirical significance and multiplicity
 
-`EMPIRICAL_CRITERIA_MET` requires both:
+For `B` null replicates,
 
-1. the global test satisfies alpha and minimum effect; and
-2. at least the preregistered number of nodes survive Holm correction.
+\[
+p=\frac{1+\sum_{b=1}^{B}\mathbf{1}[T_b\ge T_{obs}]}{B+1}.
+\]
 
-Otherwise the result is `EMPIRICAL_CRITERIA_NOT_MET`.
+This finite-sample correction prevents reported permutation p-values of zero. Node-wise p-values are adjusted with Holm's step-down family-wise procedure.
 
-Neither label means that an entire metaphysical or mathematical framework is
-proved or permanently unpatchable. It means the exact empirical claim encoded
-in that exact contract did or did not pass.
+A node is supported only when:
 
-## Required anti-goalpost rules
+1. its Holm-adjusted p-value is no greater than the frozen alpha; and
+2. its rate contrast reaches the frozen minimum effect.
 
-- The discovery data cannot also serve as the confirmatory holdout.
-- Failed nodes remain in the denominator.
-- Null results and excluded rows are retained.
-- Thresholds cannot be tuned after inspecting the holdout.
-- Catalogue diagnostics are not described as physical objects without an
-  independently validated object-level model.
-- A timeout, null field, large uncertainty, or poor catalogue fit is not called a
-  "pipeline crash" unless an actual operational failure log establishes that.
-- Photometric colour differences are not re-labelled as spectral resonances
-  without a bandpass-aware spectral model.
+The global decision `EMPIRICAL_CRITERIA_MET` requires both the global criterion and the preregistered number of supported nodes. Otherwise the result is `EMPIRICAL_CRITERIA_NOT_MET`.
+
+## Artifact and replay contract
+
+Each run writes:
+
+- `recipe.json` - frozen contract, input hashes, row counts, and replay boundary;
+- `observations.json` - global result, node count result, invariant residuals, and claim boundary;
+- `nodes.csv` - all nodes, including failures, raw p-values, Holm p-values, and effects;
+- `manifest.json` - artifact byte sizes, SHA-256 hashes, runtime metadata, and result.
+
+Verification separates two questions:
+
+1. **Integrity:** do the stored files still match their manifest hashes?
+2. **Numerical replay:** does the exact frozen catalogue reproduce the recorded decision and numerical observations?
+
+A bundle can be internally consistent and still be based on a poor scientific model. Hashes and replay establish computational consistency, not truth.
+
+## Prohibited interpretations
+
+- A timeout, missing value, high uncertainty, excess-noise field, or poor fit is not a "pipeline crash" without an operational failure log.
+- A catalogue diagnostic is not a new physical object without an independently validated object-level model.
+- A broadband colour difference is not a spectral resonance without a bandpass-aware spectral model.
+- A successful association test does not prove a causal ontology.
+- A failed frozen claim does not prove that no future modified claim can be written; it falsifies the exact tested claim.
 
 ## Usage
 
 ```bash
-python sky_lattice_audit.py \
-  --catalog frozen_catalog.csv \
+python sky_lattice_audit.py run \
+  --catalogue frozen_catalogue.csv \
   --contract frozen_claim.json \
-  --out outputs/claim-id
+  --out runs/frozen-claim
+
+python sky_lattice_audit.py verify \
+  runs/frozen-claim/manifest.json \
+  --catalogue frozen_catalogue.csv
 ```
 
-The command writes:
+## Scientific posture
 
-- a JSON receipt containing hashes, configuration, global result, and boundary;
-- a CSV table containing every node, effect, raw p-value, Holm p-value, and pass;
-- a JSON artifact manifest containing output SHA-256 hashes.
-
-## Interpretation boundary
-
-UFF-SLFA is intentionally hostile to both credulity and reflexive dismissal. A
-claimed pattern that survives a fair, frozen, footprint-aware holdout deserves
-further study. A pattern that disappears under those controls must not be
-advertised as confirmed by the tested catalogue.
+The protocol is intended to be equally inconvenient for believers and skeptics. A claimed pattern that survives a frozen, footprint-aware holdout deserves attention. A pattern that disappears under those controls must not be advertised as confirmed by the tested catalogue.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compatibility launcher for the UFF sky-lattice audit."""
+"""Compatibility launcher for the UFF-SLFA command-line interface."""
 
 from uff.sky_audit import main
 

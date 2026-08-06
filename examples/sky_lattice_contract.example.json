@@ -1,6 +1,6 @@
 {
   "schema": "uff.sky-lattice-claim.v1",
-  "claim_id": "example-frozen-lattice",
+  "claim_id": "example-frozen-twelve-node-lattice",
   "title": "Example frozen twelve-node celestial lattice claim",
   "node_radius_deg": 2.0,
   "nodes": [
@@ -33,9 +33,12 @@
     "minimum_supported_nodes": 9
   },
   "data": {
-    "holdout_column": "split",
-    "holdout_value": "holdout",
-    "weight_column": "inverse_selection_probability",
-    "catalog_sha256": "REPLACE_WITH_FROZEN_CATALOG_SHA256"
+    "catalog_sha256": "REPLACE_WITH_FROZEN_CATALOGUE_SHA256",
+    "discovery_catalog_sha256": "REPLACE_IF_APPLICABLE"
+  },
+  "declarations": {
+    "selection_independent_of_nodes": true,
+    "confirmatory": true,
+    "independent_catalogue": true
   }
 }
