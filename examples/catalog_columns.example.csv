@@ -1,0 +1,4 @@
+ra_deg,dec_deg,anomaly_score,split,inverse_selection_probability,survey_id,quality_flag
+10.0,-20.0,0.2,holdout,1.0,example,0
+12.0,-19.5,5.7,holdout,1.0,example,0
+190.0,21.0,1.1,holdout,1.0,example,0
