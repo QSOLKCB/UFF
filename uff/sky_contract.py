@@ -123,7 +123,11 @@ def load_contract_payload(payload: dict[str, Any]) -> AuditContract:
             raise AuditError("node ids must be non-empty and unique")
         if not 0.0 <= ra < 360.0 or not -90.0 <= dec <= 90.0:
             raise AuditError(f"node {node_id} coordinates are outside ICRS bounds")
-        coordinate_key = (round(ra, 12), round(dec, 12))
+        # Right ascension is undefined at either celestial pole. Normalize it
+        # before duplicate detection so, for example, (0, +90) and
+        # (180, +90) cannot become duplicate statistical tests of one cap.
+        normalized_ra = 0.0 if abs(dec) == 90.0 else round(ra, 12)
+        coordinate_key = (normalized_ra, round(dec, 12))
         if coordinate_key in coordinates:
             raise AuditError("duplicate node coordinates are not allowed")
         identifiers.add(node_id)
@@ -163,6 +167,12 @@ def load_contract_payload(payload: dict[str, Any]) -> AuditContract:
     confirmatory = declarations.get("confirmatory", True) is True
     independent = declarations.get("independent_catalogue", False) is True
     holdout_column = str(data["holdout_column"]) if data.get("holdout_column") else None
+    holdout_value_present = "holdout_value" in data and data["holdout_value"] is not None
+    if holdout_column and not holdout_value_present:
+        raise AuditError("data.holdout_column requires a non-null data.holdout_value")
+    if holdout_value_present and not holdout_column:
+        raise AuditError("data.holdout_value requires data.holdout_column")
+    holdout_value = str(data["holdout_value"]) if holdout_value_present else None
     if confirmatory and not (independent or holdout_column):
         raise AuditError(
             "a confirmatory contract requires declarations.independent_catalogue=true "
@@ -195,7 +205,7 @@ def load_contract_payload(payload: dict[str, Any]) -> AuditContract:
         confirmatory=confirmatory,
         independent_catalogue=independent,
         holdout_column=holdout_column,
-        holdout_value=str(data["holdout_value"]) if data.get("holdout_value") is not None else None,
+        holdout_value=holdout_value,
         weight_column=str(data["weight_column"]) if data.get("weight_column") else None,
         stratum_column=stratum_column,
         expected_catalog_sha256=(str(data["catalog_sha256"]).lower() if data.get("catalog_sha256") else None),
@@ -249,10 +259,12 @@ def load_catalogue(path: Path, contract: AuditContract) -> tuple[pd.DataFrame, i
         raise AuditError("catalogue dec_deg must be in [-90, 90]")
     if contract.holdout_column:
         frame = frame[
-            frame[contract.holdout_column].astype(str) == str(contract.holdout_value)
+            frame[contract.holdout_column].astype(str) == contract.holdout_value
         ].copy()
         if frame.empty:
             raise AuditError("holdout filter produced an empty catalogue")
+    if contract.stratum_column and frame[contract.stratum_column].isna().any():
+        raise AuditError("stratum values must be non-missing")
     if contract.weight_column:
         frame["_weight"] = pd.to_numeric(frame[contract.weight_column], errors="raise")
         weights = frame["_weight"].to_numpy(float)
