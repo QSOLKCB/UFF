@@ -26,6 +26,7 @@ RECIPE_SCHEMA = "uff.sky-lattice-recipe.v1"
 MANIFEST_SCHEMA = "uff.sky-lattice-manifest.v1"
 SOFTWARE_VERSION = "1.0.0"
 REPLAY_TOLERANCE = 1.0e-12
+REQUIRED_ARTIFACTS = frozenset({"recipe.json", "observations.json", "nodes.csv"})
 
 
 @dataclass(frozen=True, slots=True)
@@ -73,14 +74,14 @@ def write_bundle(
     contract_path: Path,
     force: bool = False,
 ) -> Path:
-    contract, payload = load_contract(contract_path)
-    catalogue, original_rows = load_catalogue(catalogue_path, contract)
-    observations, nodes = run_audit(catalogue, contract)
     output = Path(output_dir)
     if output.exists() and not output.is_dir():
         raise AuditError(f"output path is not a directory: {output}")
     if output.exists() and any(output.iterdir()) and not force:
         raise AuditError(f"output directory is not empty: {output}")
+    contract, payload = load_contract(contract_path)
+    catalogue, original_rows = load_catalogue(catalogue_path, contract)
+    observations, nodes = run_audit(catalogue, contract)
     output.mkdir(parents=True, exist_ok=True)
     recipe = {
         "schema": RECIPE_SCHEMA,
@@ -187,6 +188,9 @@ def verify_bundle(manifest_path: Path, catalogue_path: Path | None = None) -> Ve
             errors.append("manifest artifact entry is not an object")
             continue
         relative = entry.get("path")
+        if not isinstance(relative, str):
+            errors.append("artifact path must be a non-empty POSIX relative path")
+            continue
         if relative in seen:
             errors.append(f"duplicate manifest path: {relative!r}")
             continue
@@ -204,6 +208,12 @@ def verify_bundle(manifest_path: Path, catalogue_path: Path | None = None) -> Ve
             errors.append(f"byte-size mismatch: {relative}")
         if sha256_file(path) != entry.get("sha256"):
             errors.append(f"SHA-256 mismatch: {relative}")
+    missing_artifacts = sorted(REQUIRED_ARTIFACTS - seen)
+    unexpected_artifacts = sorted(seen - REQUIRED_ARTIFACTS)
+    if missing_artifacts:
+        errors.append(f"manifest is missing required artifacts: {', '.join(missing_artifacts)}")
+    if unexpected_artifacts:
+        errors.append(f"manifest contains unexpected artifacts: {', '.join(unexpected_artifacts)}")
     integrity = not errors
     if integrity:
         checks.append("artifact byte sizes and SHA-256 hashes match the manifest")
@@ -217,13 +227,11 @@ def verify_bundle(manifest_path: Path, catalogue_path: Path | None = None) -> Ve
             errors.append(f"cannot load replay artifacts: {exc}")
             replay = False
         else:
-            if recipe.get("schema") != RECIPE_SCHEMA or recipe.get("algorithm") != ALGORITHM_ID:
-                errors.append("incompatible recipe")
-                replay = False
-            elif sha256_file(catalogue_path) != recipe.get("inputs", {}).get("catalogue_sha256"):
-                errors.append("supplied replay catalogue does not match recipe SHA-256")
-                replay = False
-            else:
+            try:
+                if recipe.get("schema") != RECIPE_SCHEMA or recipe.get("algorithm") != ALGORITHM_ID:
+                    raise AuditError("incompatible recipe")
+                if sha256_file(catalogue_path) != recipe.get("inputs", {}).get("catalogue_sha256"):
+                    raise AuditError("supplied replay catalogue does not match recipe SHA-256")
                 contract = load_contract_payload(recipe["contract"])
                 catalogue, _ = load_catalogue(catalogue_path, contract)
                 replayed, replayed_nodes = run_audit(catalogue, contract)
@@ -238,6 +246,7 @@ def verify_bundle(manifest_path: Path, catalogue_path: Path | None = None) -> Ve
                             if not np.allclose(
                                 left.to_numpy(float), right.to_numpy(float),
                                 rtol=REPLAY_TOLERANCE, atol=REPLAY_TOLERANCE,
+                                equal_nan=True,
                             ):
                                 replay_errors.append(f"nodes.csv column {column} does not replay")
                         elif left.astype(str).tolist() != right.astype(str).tolist():
@@ -248,6 +257,9 @@ def verify_bundle(manifest_path: Path, catalogue_path: Path | None = None) -> Ve
                 else:
                     replay = True
                     checks.append("numerical replay matches observations and node table")
+            except (KeyError, OSError, TypeError, ValueError, RuntimeError) as exc:
+                errors.append(f"numerical replay failed: {exc}")
+                replay = False
     return VerificationReport(
         passed=integrity and replay is not False,
         integrity_passed=integrity,
