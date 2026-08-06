@@ -153,6 +153,8 @@ def validate_lattice_invariance(
     transformed = np.asarray(transformed_nodes, dtype=float)
     if original.shape != transformed.shape or original.ndim != 2 or original.shape[1] != 3:
         raise GeometryError("original and transformed nodes must have matching shape (n, 3)")
+    if not np.all(np.isfinite(original)) or not np.all(np.isfinite(transformed)):
+        raise GeometryError("original and transformed nodes must be finite")
     orthogonality, determinant_error = validate_proper_rotation(
         rotation, tolerance=rotation_tolerance
     )
