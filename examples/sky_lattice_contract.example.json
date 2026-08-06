@@ -1,0 +1,44 @@
+{
+  "schema": "uff.sky-lattice-claim.v1",
+  "claim_id": "example-frozen-twelve-node-lattice",
+  "title": "Example frozen twelve-node celestial lattice claim",
+  "node_radius_deg": 2.0,
+  "nodes": [
+    {"id": "N01", "ra_deg": 0.0, "dec_deg": 45.0},
+    {"id": "N02", "ra_deg": 90.0, "dec_deg": 45.0},
+    {"id": "N03", "ra_deg": 180.0, "dec_deg": 45.0},
+    {"id": "N04", "ra_deg": 270.0, "dec_deg": 45.0},
+    {"id": "N05", "ra_deg": 45.0, "dec_deg": 0.0},
+    {"id": "N06", "ra_deg": 135.0, "dec_deg": 0.0},
+    {"id": "N07", "ra_deg": 225.0, "dec_deg": 0.0},
+    {"id": "N08", "ra_deg": 315.0, "dec_deg": 0.0},
+    {"id": "N09", "ra_deg": 0.0, "dec_deg": -45.0},
+    {"id": "N10", "ra_deg": 90.0, "dec_deg": -45.0},
+    {"id": "N11", "ra_deg": 180.0, "dec_deg": -45.0},
+    {"id": "N12", "ra_deg": 270.0, "dec_deg": -45.0}
+  ],
+  "anomaly_rule": {
+    "column": "anomaly_score",
+    "operator": ">=",
+    "threshold": 5.0
+  },
+  "analysis": {
+    "null_model": "ra-shift",
+    "permutations": 10000,
+    "seed": 20260807
+  },
+  "decision_rule": {
+    "alpha": 0.01,
+    "minimum_rate_contrast": 0.05,
+    "minimum_supported_nodes": 9
+  },
+  "data": {
+    "catalog_sha256": "REPLACE_WITH_FROZEN_CATALOGUE_SHA256",
+    "discovery_catalog_sha256": "REPLACE_IF_APPLICABLE"
+  },
+  "declarations": {
+    "selection_independent_of_nodes": true,
+    "confirmatory": true,
+    "independent_catalogue": true
+  }
+}

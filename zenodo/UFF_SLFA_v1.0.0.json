@@ -1,0 +1,38 @@
+{
+  "title": "UFF-SLFA v1.0.0: A Preregistered Sky-Lattice Falsification Audit",
+  "upload_type": "software",
+  "description": "A preregistration-ready, selection-aware framework for testing claims that astronomical catalogue anomalies cluster around fixed celestial nodes. UFF-SLFA freezes coordinates, anomaly definitions, holdout rules, null models, multiplicity correction, effect thresholds, and decision criteria; validates every geometric null transform with proper-rotation and lattice-invariance checks; and writes hashed artifacts that support independent numerical replay. The framework tests only the exact catalogue-level association claim and does not infer a causal ontology.",
+  "creators": [
+    {
+      "name": "Slade, Trent",
+      "affiliation": "QSOL-IMC",
+      "orcid": "0009-0002-4515-9237"
+    }
+  ],
+  "license": "Apache-2.0",
+  "keywords": [
+    "astronomical catalogues",
+    "preregistration",
+    "falsification",
+    "permutation test",
+    "survey selection function",
+    "celestial lattice",
+    "reproducible research",
+    "Holm correction",
+    "SO(3) invariance"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/QSOLKCB/UFF",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/QSOLKCB/TFT",
+      "relation": "isDerivedFrom",
+      "scheme": "url"
+    }
+  ],
+  "communities": [],
+  "notes": "Upload the compiled methods PDF alongside the tagged GitHub release archive. The software and paper share the same frozen v1.0.0 method boundary."
+}
