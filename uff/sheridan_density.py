@@ -25,6 +25,8 @@ from .sky_geometry import (
 from .sky_statistics import empirical_p, holm_adjust
 
 DENSITY_SCHEMA = "uff.sheridan-density.v1"
+SUPPORT_BLOCK_SIZE = 4096
+CENTRE_BLOCK_SIZE = 512
 
 
 def _log_sinh(value: np.ndarray) -> np.ndarray:
@@ -79,20 +81,53 @@ def support_kernel_mass(
     area_weight_sr: np.ndarray,
     coverage: np.ndarray,
 ) -> np.ndarray:
+    """Integrate each spherical kernel over the usable survey support.
+
+    Both support points and kernel centres are streamed in bounded blocks, so
+    peak memory does not scale as ``n_support * n_centres``.
+    """
     centres = np.asarray(centre_vectors, dtype=float)
+    support = np.asarray(support_vectors, dtype=float)
+    area = np.asarray(area_weight_sr, dtype=float)
+    available = np.asarray(coverage, dtype=float)
+    if centres.ndim != 2 or centres.shape[1] != 3 or len(centres) < 1:
+        raise AuditError("support-mass centres must have shape (m, 3) with m >= 1")
+    if support.ndim != 2 or support.shape[1] != 3 or len(support) < 1:
+        raise AuditError("survey support vectors must have shape (n, 3) with n >= 1")
+    if area.shape != (len(support),) or available.shape != (len(support),):
+        raise AuditError("survey support vectors, area weights, and coverage must have equal length")
+    if (
+        np.any(~np.isfinite(support))
+        or np.any(~np.isfinite(area))
+        or np.any(~np.isfinite(available))
+        or np.any(area <= 0.0)
+        or np.any((available < 0.0) | (available > 1.0))
+    ):
+        raise AuditError(
+            "survey support vectors and weights must be finite; area must be positive "
+            "and coverage must be in [0, 1]"
+        )
+
     bandwidth = np.asarray(bandwidth_rad, dtype=float)
     if bandwidth.ndim == 0:
         bandwidth = np.full(len(centres), float(bandwidth))
     if bandwidth.shape != (len(centres),):
         raise AuditError("support-mass bandwidth array must match centre count")
-    measure = np.asarray(area_weight_sr, dtype=float) * np.asarray(coverage, dtype=float)
-    mass = np.empty(len(centres), dtype=float)
-    for start in range(0, len(centres), 512):
-        stop = min(start + 512, len(centres))
-        kernel = vmf_kernel(
-            support_vectors, centres[start:stop], bandwidth[start:stop]
-        )
-        mass[start:stop] = measure @ kernel
+
+    measure = area * available
+    mass = np.zeros(len(centres), dtype=float)
+    for centre_start in range(0, len(centres), CENTRE_BLOCK_SIZE):
+        centre_stop = min(centre_start + CENTRE_BLOCK_SIZE, len(centres))
+        partial = np.zeros(centre_stop - centre_start, dtype=float)
+        for support_start in range(0, len(support), SUPPORT_BLOCK_SIZE):
+            support_stop = min(support_start + SUPPORT_BLOCK_SIZE, len(support))
+            kernel = vmf_kernel(
+                support[support_start:support_stop],
+                centres[centre_start:centre_stop],
+                bandwidth[centre_start:centre_stop],
+            )
+            partial += measure[support_start:support_stop] @ kernel
+        mass[centre_start:centre_stop] = partial
     if np.any(~np.isfinite(mass)) or np.any(mass <= 0.0):
         raise AuditError("one or more kernels have zero usable survey support")
     return mass
