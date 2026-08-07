@@ -28,9 +28,17 @@ def test_v5_release_metadata_is_consistent_and_old_doi_is_removed() -> None:
     assert re.search(r'^version = "5\.0\.0"$', pyproject, re.MULTILINE)
     assert re.search(r'^version: 5\.0\.0$', citation, re.MULTILINE)
     assert '__version__ = "5.0.0"' in package_init
+    assert re.search(
+        r'^Changelog = "https://github\.com/QSOLKCB/UFF/blob/main/CHANGELOG\.md"$',
+        pyproject,
+        re.MULTILINE,
+    )
 
     for text in (readme, pyproject, citation, changelog, release_notes):
         assert OLD_DOI not in text
 
-    assert "uff.sheridan-crucible.v2" in readme
-    assert "not implemented" in readme.lower()
+    assert re.search(
+        r"^\| `uff\.sheridan-crucible\.v2` \| [^|\n]+ \| Planned, not implemented \|$",
+        readme,
+        re.MULTILINE,
+    )
