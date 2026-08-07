@@ -1,0 +1,48 @@
+{
+  "files": [
+    {
+      "bytes": 19179,
+      "path": "papers/UFF_v5.1.0_DEFENSE_IN_DEPTH_TECHNICAL_REPORT.pdf",
+      "sha256": "70da81d11b45b5a7f85376bac147e2e1cb2ae0c5d7be198afd9c73b22f80a4b2"
+    },
+    {
+      "bytes": 16262,
+      "path": "papers/UFF_v5.1.0_DEFENSE_IN_DEPTH_TECHNICAL_REPORT.md",
+      "sha256": "9be57ef255316a429198a365f04f37f91b5684219769b408b941a9c2cf8e36fd"
+    },
+    {
+      "bytes": 6820,
+      "path": "RELEASE_NOTES_v5.1.0.md",
+      "sha256": "4dd0bcb585e6c2e1d7bc7f2e1cc76dff818308f80f4b8bdd83a3a6c03eadb795"
+    },
+    {
+      "bytes": 1895,
+      "path": "CITATION.cff",
+      "sha256": "452bee1d7f19abdcda5e63f1ba8c1991b93ab1fa5832094b8b11af239e010d36"
+    },
+    {
+      "bytes": 2735,
+      "path": ".zenodo.json",
+      "sha256": "d1b0fb112a015f1fef45206f420ca83ccc1080fcd5a48aac44aea003c911b984"
+    },
+    {
+      "bytes": 19842,
+      "path": "README.md",
+      "sha256": "9ec2cc4c384ccf1b70285755dcfe2602af5b31730064f8e401572057762ae0f9"
+    },
+    {
+      "bytes": 2006,
+      "path": "zenodo/v5.1.0/ZENODO_UPLOAD_README.md",
+      "sha256": "fd95b5b73d3eb43fe482601cd551720a8a6835b6ba8fd0d56a05bfeb183c2f7d"
+    },
+    {
+      "bytes": 2735,
+      "path": "zenodo/v5.1.0/metadata.json",
+      "sha256": "d1b0fb112a015f1fef45206f420ca83ccc1080fcd5a48aac44aea003c911b984"
+    }
+  ],
+  "note": "The GitHub v5.1.0 source archive is the canonical software payload and is intentionally not duplicated inside this supporting-document bundle.",
+  "previous_zenodo_doi": "10.5281/zenodo.21830630",
+  "release": "5.1.0",
+  "schema": "qsol-uff-zenodo-support-manifest.v1"
+}
