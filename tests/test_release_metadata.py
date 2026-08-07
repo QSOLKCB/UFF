@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from pathlib import Path
@@ -13,8 +14,15 @@ CHANGELOG = ROOT / "CHANGELOG.md"
 PACKAGE_INIT = ROOT / "uff" / "__init__.py"
 RELEASE_NOTES = ROOT / "RELEASE_NOTES_v5.1.0.md"
 ZENODO = ROOT / ".zenodo.json"
+LICENSE = ROOT / "LICENSE"
+ZENODO_MANIFEST = ROOT / "zenodo" / "v5.1.0" / "MANIFEST.json"
+ZENODO_SUMS = ROOT / "zenodo" / "v5.1.0" / "SHA256SUMS.txt"
 OBSOLETE_DOI = "10.5281/zenodo.17669627"
 PREVIOUS_VERSION_DOI = "10.5281/zenodo.21830630"
+
+
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def test_v5_1_release_metadata_is_consistent_and_pending_doi_is_not_fabricated() -> None:
@@ -25,6 +33,8 @@ def test_v5_1_release_metadata_is_consistent_and_pending_doi_is_not_fabricated()
     package_init = PACKAGE_INIT.read_text(encoding="utf-8")
     release_notes = RELEASE_NOTES.read_text(encoding="utf-8")
     zenodo = json.loads(ZENODO.read_text(encoding="utf-8"))
+    manifest = json.loads(ZENODO_MANIFEST.read_text(encoding="utf-8"))
+    sums = ZENODO_SUMS.read_text(encoding="utf-8")
 
     assert "QSOL UFF v5.1.0" in readme
     assert "# QSOL UFF v5.1.0" in release_notes
@@ -63,10 +73,12 @@ def test_v5_1_release_metadata_is_consistent_and_pending_doi_is_not_fabricated()
         re.MULTILINE,
     )
 
-    assert zenodo["title"] == (
+    canonical_title = (
         "QSOL UFF v5.1.0: Defense-in-Depth Trust, Witness, Calibration, "
         "and Telemetry for Reproducible Astrophysics"
     )
+    assert zenodo["title"] == canonical_title
+    assert f'title: "{canonical_title}"' in citation
     assert zenodo["upload_type"] == "software"
     assert zenodo["version"] == "5.1.0"
     assert zenodo["creators"] == [
@@ -85,6 +97,14 @@ def test_v5_1_release_metadata_is_consistent_and_pending_doi_is_not_fabricated()
         and item["relation"] == "isIdenticalTo"
         for item in zenodo["related_identifiers"]
     )
+
+    manifest_entries = {item["path"]: item for item in manifest["files"]}
+    for path in (CITATION, LICENSE):
+        relative = path.relative_to(ROOT).as_posix()
+        entry = manifest_entries[relative]
+        assert entry["bytes"] == path.stat().st_size
+        assert entry["sha256"] == _sha256(path)
+        assert f"{_sha256(path)}  {relative}\n" in sums
 
     assert re.search(
         r"^\| `uff\.sheridan-crucible\.v2` \| [^|\n]+ \| Planned, not implemented \|$",
