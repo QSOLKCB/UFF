@@ -3,6 +3,49 @@
 Notable changes to QSOL UFF are documented here. The project follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.0] - 2026-08-07
+
+### Added
+
+- UFF-SLFA v1.0.0 with frozen `uff.sky-lattice-claim.v1` contracts,
+  anti-circularity validation, independent-catalogue/holdout requirements,
+  RA-shift, SO(3), and stratified-label nulls, finite empirical p-values,
+  Holm correction, complete node tables, SHA-256 bundles, and numerical replay.
+- Sheridan Crucible v1.1.0 with explicit survey-support quadrature,
+  masks/completeness, spherical von Mises-Fisher weighted KDE, adaptive
+  bandwidths, edge correction, survey-matched SO(3) rotations, nuisance-model
+  comparison, predictive checks, synthetic injection calibration, and replay.
+- Content-addressed public-claim ledger and machine-readable
+  `uff.public-claim-profile.v1` provenance records.
+- Independent methodological assessment rendition, source manifest, response
+  matrix, and `uff.independent-assessment-response.v1` action ledger.
+- Formalisation roadmap for the planned breaking
+  `uff.sheridan-crucible.v2` contract family.
+- Review-driven regression coverage for geometry, artifact completeness,
+  replay failure handling, finite statistics, bounded survey quadrature,
+  optimiser evaluation, source provenance, and exact action priorities.
+- Consolidated v5 README and release notes.
+
+### Changed
+
+- Reframed the repository as a reproducible astrophysics and falsification
+  laboratory while preserving the complete v4 galaxy and compact-object core.
+- Bumped package and citation metadata to v5.0.0.
+- Separated galaxy fitting, historical claim reproduction, diagnostic tests,
+  survey-corrected enrichment, and prospective confirmation.
+- Removed the obsolete DOI from the active README, package URLs, citation
+  metadata, and release links pending creation of a new v5 archive record.
+
+### Scientific boundary
+
+- Frozen contracts, hashes and replay establish specification and
+  computational consistency; they do not prove that a sampling frame or null
+  model is scientifically adequate.
+- A supported catalogue association does not identify its physical cause.
+- `uff.sheridan-crucible.v2` is a roadmap and is not implemented in v5.0.0.
+
+Full details: [RELEASE_NOTES_v5.0.0.md](RELEASE_NOTES_v5.0.0.md).
+
 ## [4.0.0] - 2026-07-14
 
 ### Added
@@ -74,9 +117,8 @@ Notable changes to QSOL UFF are documented here. The project follows
 
 ## Release links
 
-- v4.0.0 — release tag pending review of this upgrade
+- v5.0.0 — release tag and archive DOI pending publication of this upgrade
+- v4.0.0 — historical release state retained in repository history
 - [v3.0.0](https://github.com/QSOLKCB/UFF/releases/tag/v3.0.0)
 - [v1.1.0](https://github.com/QSOLKCB/UFF/releases/tag/v1.1.0)
 - [v1.0.0](https://github.com/QSOLKCB/UFF/releases/tag/v1.0.0)
-
-Concept DOI: <https://doi.org/10.5281/zenodo.17669627>
