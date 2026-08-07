@@ -244,10 +244,16 @@ def reveal_witness(
     anchor_verified: bool | None = None
     target_profile: str | None = None
     commit_sha256: str | None = None
+    witness_contract_sha256: str | None = None
 
     try:
         witness, commit_sha256 = _verify_witness_file(Path(witness_path))
         target_profile = str(witness.get("target_profile", "")) or None
+        identity = witness.get("identity")
+        if isinstance(identity, dict):
+            value = identity.get("contract_canonical_sha256")
+            if isinstance(value, str):
+                witness_contract_sha256 = value
         checks.append("witness commitment recomputed from canonical bytes")
         contract = _load_json(Path(contract_path), require_canonical=False)
         support = Path(support_path) if support_path is not None else None
@@ -290,6 +296,16 @@ def reveal_witness(
         errors.extend(f"QEC gate: {item}" for item in qec.errors)
     if target_profile is not None and qec.profile is not None and target_profile != qec.profile:
         errors.append("witness target profile does not match the QEC bundle profile")
+
+    if witness_contract_sha256 is not None and qec.contract_canonical_sha256 is not None:
+        if witness_contract_sha256 != qec.contract_canonical_sha256:
+            errors.append(
+                "frozen witness contract does not match the contract embedded in the replayed bundle"
+            )
+        else:
+            checks.append("frozen witness contract matches the QEC-verified bundle contract")
+    elif qec.admitted:
+        errors.append("cannot bind the frozen witness contract to the replayed bundle contract")
 
     witness_verified = not errors and commit_sha256 is not None
     admitted = witness_verified and qec.admitted
