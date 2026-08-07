@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/QSOLKCB/UFF/actions/workflows/ci.yml/badge.svg)](https://github.com/QSOLKCB/UFF/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/badge/release-v5.0.0-4c1.svg)](RELEASE_NOTES_v5.0.0.md)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21830630.svg)](https://doi.org/10.5281/zenodo.21830630)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg)](https://www.python.org/)
 
@@ -177,7 +178,7 @@ It adds:
 
 - explicit survey-support quadrature with masks and fractional coverage;
 - completeness filtering and inverse-completeness weights;
-- normalized spherical von Mises–Fisher weighted KDE;
+- normalized spherical von Mises-Fisher weighted KDE;
 - leave-one-out bandwidth selection and adaptive local bandwidths;
 - mask-aware edge renormalization;
 - survey-availability-matched SO(3) rotations;
@@ -333,18 +334,16 @@ papers/                     # methods papers, assessment rendition and reference
 
 ## Citation
 
-The previous README DOI has been removed because it does not resolve to a valid
-record for the current repository state. A new archive record and DOI will be
-added after the v5.0.0 release package is deposited.
-
-Until then, cite the repository release as:
+Please cite the archived software release:
 
 > Slade, T. (2026). *QSOL UFF v5.0.0: Reproducible Astrophysics and
-> Falsification Laboratory*. QSOL-IMC. https://github.com/QSOLKCB/UFF
+> Falsification Laboratory* (Version 5.0.0) [Computer software]. Zenodo.
+> https://doi.org/10.5281/zenodo.21830630
 
-Machine-readable metadata are in [CITATION.cff](CITATION.cff). Analyses must
-also cite the primary scientific sources for every physical model, catalogue
-and statistical method used.
+Machine-readable metadata are in [CITATION.cff](CITATION.cff), and canonical
+Zenodo deposit metadata are in [.zenodo.json](.zenodo.json). Analyses must also
+cite the primary scientific sources for every physical model, catalogue and
+statistical method used.
 
 ## License
 

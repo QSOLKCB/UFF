@@ -25,6 +25,8 @@ Notable changes to QSOL UFF are documented here. The project follows
   replay failure handling, finite statistics, bounded survey quadrature,
   optimiser evaluation, source provenance, and exact action priorities.
 - Consolidated v5 README and release notes.
+- Published Zenodo software archive with version DOI
+  [`10.5281/zenodo.21830630`](https://doi.org/10.5281/zenodo.21830630).
 
 ### Changed
 
@@ -33,8 +35,9 @@ Notable changes to QSOL UFF are documented here. The project follows
 - Bumped package and citation metadata to v5.0.0.
 - Separated galaxy fitting, historical claim reproduction, diagnostic tests,
   survey-corrected enrichment, and prospective confirmation.
-- Removed the obsolete DOI from the active README, package URLs, citation
-  metadata, and release links pending creation of a new v5 archive record.
+- Replaced the obsolete archive reference with the published v5 Zenodo DOI in
+  the README, package URLs, citation metadata, release notes, and canonical
+  `.zenodo.json` deposit metadata.
 
 ### Scientific boundary
 
@@ -117,7 +120,8 @@ Full details: [RELEASE_NOTES_v5.0.0.md](RELEASE_NOTES_v5.0.0.md).
 
 ## Release links
 
-- v5.0.0 — release tag and archive DOI pending publication of this upgrade
+- [v5.0.0](https://github.com/QSOLKCB/UFF/releases/tag/v5.0.0) —
+  [Zenodo archive](https://doi.org/10.5281/zenodo.21830630)
 - v4.0.0 — historical release state retained in repository history
 - [v3.0.0](https://github.com/QSOLKCB/UFF/releases/tag/v3.0.0)
 - [v1.1.0](https://github.com/QSOLKCB/UFF/releases/tag/v1.1.0)
