@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "qsol-uff"
-version = "5.0.0"
-description = "Reproducible astrophysics, celestial-node falsification, and survey-aware audit laboratory"
+version = "5.1.0"
+description = "Reproducible astrophysics and falsification laboratory with fail-closed evidence assurance"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {file = "LICENSE"}
@@ -19,12 +19,15 @@ keywords = [
   "NFW",
   "Burkert",
   "supermassive black holes",
-  "loop quantum gravity",
   "preregistration",
   "survey systematics",
   "spherical statistics",
   "falsification",
   "reproducibility",
+  "deterministic replay",
+  "canonical JSON",
+  "defense in depth",
+  "scientific provenance",
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -59,7 +62,8 @@ Homepage = "https://github.com/QSOLKCB/UFF"
 Repository = "https://github.com/QSOLKCB/UFF"
 Documentation = "https://github.com/QSOLKCB/UFF/tree/main/docs"
 Changelog = "https://github.com/QSOLKCB/UFF/blob/main/CHANGELOG.md"
-DOI = "https://doi.org/10.5281/zenodo.21830630"
+Release = "https://github.com/QSOLKCB/UFF/releases/tag/v5.1.0"
+"Previous Zenodo Archive" = "https://doi.org/10.5281/zenodo.21830630"
 Issues = "https://github.com/QSOLKCB/UFF/issues"
 
 [tool.setuptools]
