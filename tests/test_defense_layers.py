@@ -95,6 +95,7 @@ def test_spectral_witness_is_deterministic_and_reveals_through_qec(tmp_path):
     assert report.witness_verified
     assert report.qec_admitted
     assert report.external_anchor_verified is True
+    assert any("QEC-verified bundle contract" in check for check in report.checks)
 
 
 def test_spectral_witness_detects_post_commit_input_change(tmp_path):
@@ -113,6 +114,33 @@ def test_spectral_witness_detects_post_commit_input_change(tmp_path):
     assert any("frozen witness identity" in error for error in report.errors)
 
 
+def test_spectral_witness_binds_contract_to_replayed_bundle(tmp_path):
+    contract, catalogue, witness, _manifest = _prepared(tmp_path)
+    different_contract = tmp_path / "different-contract.json"
+    payload = json.loads(contract.read_text(encoding="utf-8"))
+    payload["claim_id"] = "different-replayed-claim"
+    payload["title"] = "Different replayed contract"
+    payload["analysis"]["seed"] = 9090
+    different_contract.write_text(json.dumps(payload), encoding="utf-8")
+
+    different_bundle = tmp_path / "different-bundle"
+    different_manifest = write_bundle(
+        different_bundle,
+        catalogue_path=catalogue,
+        contract_path=different_contract,
+    )
+    report = reveal_witness(
+        witness,
+        different_manifest,
+        contract_path=contract,
+        catalogue_path=catalogue,
+    )
+    assert report.qec_admitted
+    assert not report.admitted
+    assert not report.witness_verified
+    assert any("contract embedded in the replayed bundle" in error for error in report.errors)
+
+
 def test_receiver_neutral_audit_events_are_deterministic(tmp_path):
     _contract, catalogue, _witness, manifest = _prepared(tmp_path)
     first = build_event_stream(manifest, catalogue_path=catalogue)
@@ -124,6 +152,25 @@ def test_receiver_neutral_audit_events_are_deterministic(tmp_path):
     assert first["events"][2]["code"] == "ADMISSION"
     assert first["receiver_contract"]["noncanonical"]
     assert first["event_stream_sha256"]
+
+
+def test_rejected_manifest_still_emits_boundary_telemetry(tmp_path):
+    manifest = tmp_path / "bad-bundle" / "manifest.json"
+    manifest.parent.mkdir()
+    manifest.write_bytes(b"{not valid json")
+
+    stream = build_event_stream(manifest)
+    assert stream["source"]["gate_assurance"] == "REJECTED"
+    assert [event["code"] for event in stream["events"][:3]] == [
+        "INTEGRITY",
+        "REPLAY",
+        "ADMISSION",
+    ]
+    assert [event["state"] for event in stream["events"][:3]] == [
+        "FAIL",
+        "ABSENT",
+        "REJECT",
+    ]
 
 
 def test_audit_events_cannot_be_written_into_closed_bundle(tmp_path):
