@@ -230,10 +230,16 @@ New and updated documentation includes:
 - Bumped the package version from `4.0.0` to `5.0.0`.
 - Updated the package description and research keywords.
 - Updated `CITATION.cff` for the full v5 scope.
-- Removed the obsolete DOI from the README, package URLs and citation metadata.
 - Added documentation and changelog project URLs.
+- Published the complete v5.0.0 software-and-documentation package on Zenodo.
+- Added the canonical version DOI to the README, package URLs, citation metadata,
+  changelog, and root `.zenodo.json` deposit metadata.
 
-A replacement archive DOI is intentionally not invented in this release. It will be added after the current v5.0.0 repository state is deposited as a new archival record.
+Please cite the archived software release as:
+
+> Slade, T. (2026). *QSOL UFF v5.0.0: Reproducible Astrophysics and
+> Falsification Laboratory* (Version 5.0.0) [Computer software]. Zenodo.
+> https://doi.org/10.5281/zenodo.21830630
 
 ## Compatibility
 
