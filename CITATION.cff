@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use QSOL UFF, cite this software release and the primary scientific sources for every model, catalogue, and statistical method used. The v5.1.0 Zenodo version DOI is assigned when the new version is published."
-title: "QSOL UFF v5.1.0: Defense-in-Depth Assurance for Reproducible Astrophysics and Falsification"
+title: "QSOL UFF v5.1.0: Defense-in-Depth Trust, Witness, Calibration, and Telemetry for Reproducible Astrophysics"
 type: software
 version: 5.1.0
 date-released: 2026-08-07
