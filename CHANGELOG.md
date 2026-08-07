@@ -100,17 +100,21 @@ Full details: [RELEASE_NOTES_v5.0.0.md](RELEASE_NOTES_v5.0.0.md).
 ### Added
 
 - Installable `uff` Python package and `python -m uff` CLI.
-- Validated canonical and SPARC-style CSV loader with aliases and SHA-256 input receipts.
-- Signed gas handling and dimensionally explicit baryonic scaling.
-- Physical NFW and empirical Burkert halo models.
+- Validated canonical/SPARC CSV loader with aliases and SHA-256 input receipts.
+- Physical NFW (`M200`, `c200`) and empirical Burkert halo models.
 - MOND/RAR variants and an explicitly approximate external-field sensitivity proxy.
-- The repository-specific empirical UFF rotation-curve family.
-- Optional weak-field central SMBH fitting.
-- Deterministic bounded multi-start optimisation.
-- Chi-squared, RMSE, AIC, AICc, BIC and relative model weights.
-- Optional bounded Metropolis posterior sampling, R-hat and ESS diagnostics.
-- Rotation-curve plots, residuals, deterministic sonification and SHA-256 input receipts.
-- Separate Kerr/SMBH and LQG scale reporting outside the galaxy likelihood.
+- Central SMBH terms plus separate Kerr and LQG scale-report command.
+- Optional distance and inclination nuisance parameters.
+- Deterministic multi-start optimization and normalized likelihood statistics.
+- Opt-in multi-chain full-covariance Metropolis sampling with adaptation limited
+  to burn-in, retained-draw R-hat, ESS estimates, corner plots, and curve bands.
+- AIC, AICc, BIC, ΔBIC, relative criterion weights, and residual diagnostics.
+- QAI-UFT phase fingerprints, QNTOY-style model ambiguity entropy, and
+  TFT-style covariance invariants outside the physical likelihood.
+- Automated tests, synthetic NFW recovery, CLI smoke tests, and CI across
+  Python 3.10–3.13.
+- Model equations, data contract, July 2026 science-status boundary, citation
+  metadata, contributing guide, and security policy.
 
 ### Changed
 
@@ -136,7 +140,7 @@ Full details: [RELEASE_NOTES_v5.0.0.md](RELEASE_NOTES_v5.0.0.md).
 ### Added
 
 - Full-covariance adaptive Metropolis-Hastings option.
-- Corner plots, posterior-predictive figures, sonification, E8 walk, and
+- Corner plots, posterior-predictive figures, sonification, E₈ walk, and
   preliminary UFF/MOND/NFW overlays.
 
 ### Known limitations corrected in 4.0.0
@@ -163,9 +167,9 @@ Full details: [RELEASE_NOTES_v5.0.0.md](RELEASE_NOTES_v5.0.0.md).
 ## Release links
 
 - v5.1.0 - GitHub tag and Zenodo version DOI pending publication
-- [v5.0.0](https://github.com/QSOLKCB/UFF/releases/tag/v5.0.0) -
+- [v5.0.0](https://github.com/QSOLKCB/UFF/releases/tag/v5.0.0) —
   [Zenodo archive](https://doi.org/10.5281/zenodo.21830630)
-- v4.0.0 - historical release state retained in repository history
+- v4.0.0 — historical release state retained in repository history
 - [v3.0.0](https://github.com/QSOLKCB/UFF/releases/tag/v3.0.0)
 - [v1.1.0](https://github.com/QSOLKCB/UFF/releases/tag/v1.1.0)
 - [v1.0.0](https://github.com/QSOLKCB/UFF/releases/tag/v1.0.0)
