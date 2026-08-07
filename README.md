@@ -225,7 +225,7 @@ Read the full [Sheridan Siege Engine protocol](docs/SHERIDAN_SIEGE_ENGINE.md).
 ## 4. Defense in depth
 
 Read [UFF Defense in Depth](docs/UFF_DEFENSE_IN_DEPTH.md) for the complete
-authority model and [the formal v5.1.0 technical report](papers/UFF_v5.1.0_DEFENSE_IN_DEPTH_TECHNICAL_REPORT.pdf).
+authority model and the versioned [v5.1.0 technical report source](papers/UFF_v5.1.0_DEFENSE_IN_DEPTH_TECHNICAL_REPORT.md). The rendered PDF is included in the Zenodo upload bundle.
 
 ### QEC boundary gate - computational admission
 
@@ -451,8 +451,7 @@ zenodo/                     # release-specific archival upload guidance
 ## Release notes and technical report
 
 - [QSOL UFF v5.1.0](RELEASE_NOTES_v5.1.0.md)
-- [v5.1.0 Defense-in-Depth Technical Report (PDF)](papers/UFF_v5.1.0_DEFENSE_IN_DEPTH_TECHNICAL_REPORT.pdf)
-- [v5.1.0 Technical Report source](papers/UFF_v5.1.0_DEFENSE_IN_DEPTH_TECHNICAL_REPORT.md)
+- [v5.1.0 Defense-in-Depth Technical Report source](papers/UFF_v5.1.0_DEFENSE_IN_DEPTH_TECHNICAL_REPORT.md) - the rendered PDF is included in the Zenodo bundle
 - [Zenodo v5.1.0 upload guide](zenodo/v5.1.0/ZENODO_UPLOAD_README.md)
 - [QSOL UFF v5.0.0](RELEASE_NOTES_v5.0.0.md)
 - [UFF Sheridan Crucible v1.1.0](RELEASE_NOTES_SHERIDAN_v1.1.0.md)
