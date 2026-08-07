@@ -1,0 +1,65 @@
+{
+  "title": "QSOL UFF v5.1.0: Defense-in-Depth Trust, Witness, Calibration, and Telemetry for Reproducible Astrophysics",
+  "upload_type": "software",
+  "publication_date": "2026-08-07",
+  "version": "5.1.0",
+  "description": "<p><strong>QSOL UFF v5.1.0</strong> is an additive assurance release of the reproducible astrophysics and falsification laboratory. It retains the v5.0.0 galaxy/compact-object, UFF-SLFA, Sheridan Crucible, provenance, and assessment systems while adding a deliberately small defense-in-depth layer around evidence admission and observation.</p><p>The new layer comprises a QEC-inspired fail-closed computational boundary gate, a SPECTRAL-inspired pre-observation input-identity witness, a statistical-mechanics interpretation guardrail separating deterministic replay from null-ensemble calibration, and SONIFICATION-inspired receiver-neutral forensic telemetry.</p><p><strong>Assurance boundary:</strong> <code>REPLAY_VERIFIED != ENSEMBLE_CALIBRATED != PHYSICAL_TRUTH</code>. Hashes, replay, commitments, and telemetry strengthen computational assurance; they do not establish physical ontology, historical analyst blindness, catalogue independence, null-model adequacy, or causal truth.</p><p>The release includes a formal technical report documenting the threat model, authority boundaries, regression hardening, assurance ladder, and archival requirements.</p>",
+  "creators": [
+    {
+      "name": "Slade, Trent",
+      "orcid": "0009-0002-4515-9237",
+      "affiliation": "QSOL-IMC"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "OpenAI ChatGPT",
+      "type": "Other",
+      "affiliation": "OpenAI"
+    }
+  ],
+  "license": "Apache-2.0",
+  "keywords": [
+    "reproducible astrophysics",
+    "research software",
+    "galaxy rotation curves",
+    "SPARC",
+    "MOND",
+    "dark matter",
+    "preregistration",
+    "celestial-node falsification",
+    "astronomical survey selection functions",
+    "survey systematics",
+    "spherical statistics",
+    "deterministic replay",
+    "canonical JSON",
+    "SHA-256 evidence bundles",
+    "commit reveal",
+    "defense in depth",
+    "scientific provenance",
+    "ensemble calibration",
+    "receiver-neutral telemetry"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/QSOLKCB/UFF/releases/tag/v5.1.0",
+      "relation": "isIdenticalTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/QSOLKCB/UFF",
+      "relation": "isVersionOf",
+      "scheme": "url"
+    },
+    {
+      "identifier": "10.3847/1538-4357/ae5bac",
+      "relation": "references",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.1103/PhysRevA.43.2046",
+      "relation": "references",
+      "scheme": "doi"
+    }
+  ]
+}
