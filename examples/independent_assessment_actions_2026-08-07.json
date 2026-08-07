@@ -59,7 +59,7 @@
       "priority": "P0",
       "status": "planned",
       "target": "contract-schema",
-      "summary": "Add P, T, E, M, Q and R to the next Sheridan contract schema."
+      "summary": "Add P, T, E, M, Q and R to uff.sheridan-crucible.v2."
     },
     {
       "id": "IA-P0-02",
@@ -74,6 +74,13 @@
       "status": "planned",
       "target": "data-contract",
       "summary": "Freeze release, schema version, units, query text, query hash and quality rules."
+    },
+    {
+      "id": "IA-P0-04",
+      "priority": "P0",
+      "status": "planned",
+      "target": "decision-rule",
+      "summary": "Bind delta to the declared estimand E and bind k to a globally calibrated joint decision rule."
     },
     {
       "id": "IA-P1-01",
@@ -116,6 +123,13 @@
       "status": "planned",
       "target": "custodian-execution",
       "summary": "Specify external-custodian execution with precommitted contract, environment and holdout hashes."
+    },
+    {
+      "id": "IA-P2-03",
+      "priority": "P2",
+      "status": "planned",
+      "target": "cross-catalogue-dependence",
+      "summary": "Record shared-object overlap and shared-systematic dependence before combining catalogue evidence."
     }
   ],
   "boundaries": [
