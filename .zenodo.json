@@ -1,9 +1,9 @@
 {
-  "title": "QSOL UFF v5.0.0: Reproducible Astrophysics and Falsification Laboratory",
+  "title": "QSOL UFF v5.1.0: Defense-in-Depth Trust, Witness, Calibration, and Telemetry for Reproducible Astrophysics",
   "upload_type": "software",
   "publication_date": "2026-08-07",
-  "version": "5.0.0",
-  "description": "<p><strong>QSOL UFF v5.0.0</strong> is a transparent Python research laboratory spanning validated galaxy rotation-curve and compact-object analysis, preregistered catalogue-level celestial-node falsification through UFF-SLFA, and survey-aware adversarial evaluation through the Sheridan Crucible.</p><p>The software provides frozen machine-readable contracts, deterministic null models, survey masks and completeness handling, spherical von Mises-Fisher density reconstruction, nuisance-model comparison, synthetic injection calibration, SHA-256 evidence bundles, public-claim provenance, and deterministic numerical replay.</p><p><strong>Scientific boundary:</strong> these controls establish computational consistency and calibrated catalogue-level tests. They do not establish a physical ontology or validate an extraordinary causal claim.</p>",
+  "version": "5.1.0",
+  "description": "<p><strong>QSOL UFF v5.1.0</strong> is an additive assurance release of the reproducible astrophysics and falsification laboratory. It retains the v5.0.0 galaxy/compact-object, UFF-SLFA, Sheridan Crucible, provenance, and assessment systems while adding a deliberately small defense-in-depth layer around evidence admission and observation.</p><p>The new layer comprises a QEC-inspired fail-closed computational boundary gate, a SPECTRAL-inspired pre-observation input-identity witness, a statistical-mechanics interpretation guardrail separating deterministic replay from null-ensemble calibration, and SONIFICATION-inspired receiver-neutral forensic telemetry.</p><p><strong>Assurance boundary:</strong> <code>REPLAY_VERIFIED != ENSEMBLE_CALIBRATED != PHYSICAL_TRUTH</code>. Hashes, replay, commitments, and telemetry strengthen computational assurance; they do not establish physical ontology, historical analyst blindness, catalogue independence, null-model adequacy, or causal truth.</p><p>The release includes a formal technical report documenting the threat model, authority boundaries, regression hardening, assurance ladder, and archival requirements.</p>",
   "creators": [
     {
       "name": "Slade, Trent",
@@ -26,21 +26,23 @@
     "SPARC",
     "MOND",
     "dark matter",
-    "supermassive black holes",
-    "loop quantum gravity",
     "preregistration",
     "celestial-node falsification",
     "astronomical survey selection functions",
     "survey systematics",
     "spherical statistics",
-    "von Mises-Fisher kernel density estimation",
-    "synthetic injection",
     "deterministic replay",
-    "scientific provenance"
+    "canonical JSON",
+    "SHA-256 evidence bundles",
+    "commit reveal",
+    "defense in depth",
+    "scientific provenance",
+    "ensemble calibration",
+    "receiver-neutral telemetry"
   ],
   "related_identifiers": [
     {
-      "identifier": "https://github.com/QSOLKCB/UFF/releases/tag/v5.0.0",
+      "identifier": "https://github.com/QSOLKCB/UFF/releases/tag/v5.1.0",
       "relation": "isIdenticalTo",
       "scheme": "url"
     },
@@ -51,6 +53,11 @@
     },
     {
       "identifier": "10.3847/1538-4357/ae5bac",
+      "relation": "references",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.1103/PhysRevA.43.2046",
       "relation": "references",
       "scheme": "doi"
     }
