@@ -58,7 +58,7 @@ uff = "uff.cli:main"
 Homepage = "https://github.com/QSOLKCB/UFF"
 Repository = "https://github.com/QSOLKCB/UFF"
 Documentation = "https://github.com/QSOLKCB/UFF/tree/main/docs"
-Changelog = "https://github.com/QSOLKCB/UFF/blob/main/RELEASE_NOTES_v5.0.0.md"
+Changelog = "https://github.com/QSOLKCB/UFF/blob/main/CHANGELOG.md"
 Issues = "https://github.com/QSOLKCB/UFF/issues"
 
 [tool.setuptools]
