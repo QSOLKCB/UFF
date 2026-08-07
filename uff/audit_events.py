@@ -234,8 +234,10 @@ def build_event_stream(
             authority="external-anchor",
         )
 
-    manifest = _load_json(manifest_path)
+    # Rejected manifests still produce trust-boundary telemetry. Scientific
+    # fields are loaded only after the gate has established manifest integrity.
     if gate.integrity_passed:
+        manifest = _load_json(manifest_path)
         result = str(manifest.get("result", "UNKNOWN"))
         if gate.profile == "uff-slfa-qec-gate-v1":
             _append_slfa(events, manifest_path.parent, result)
