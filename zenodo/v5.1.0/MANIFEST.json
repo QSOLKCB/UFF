@@ -16,14 +16,19 @@
       "sha256": "c9923161f8191542942fe653f0141464efb2928f1b38824e49932c73334d7640"
     },
     {
-      "bytes": 1895,
+      "bytes": 1910,
       "path": "CITATION.cff",
-      "sha256": "452bee1d7f19abdcda5e63f1ba8c1991b93ab1fa5832094b8b11af239e010d36"
+      "sha256": "5eea6d0f990a9258c5cfe297d11f96f156dbc36de5538f377258b7ee76259a0c"
     },
     {
       "bytes": 2735,
       "path": ".zenodo.json",
       "sha256": "d1b0fb112a015f1fef45206f420ca83ccc1080fcd5a48aac44aea003c911b984"
+    },
+    {
+      "bytes": 11357,
+      "path": "LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
     },
     {
       "bytes": 19870,
