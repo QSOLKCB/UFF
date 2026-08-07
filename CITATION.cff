@@ -1,37 +1,44 @@
 cff-version: 1.2.0
-message: "If you use QSOL UFF, cite this software release and the primary scientific sources for every model, catalogue, and statistical method used."
-title: "QSOL UFF v5.0.0: Reproducible Astrophysics and Falsification Laboratory"
+message: "If you use QSOL UFF, cite this software release and the primary scientific sources for every model, catalogue, and statistical method used. The v5.1.0 Zenodo version DOI is assigned when the new version is published."
+title: "QSOL UFF v5.1.0: Defense-in-Depth Trust, Witness, Calibration, and Telemetry for Reproducible Astrophysics"
 type: software
-version: 5.0.0
+version: 5.1.0
 date-released: 2026-08-07
 authors:
   - family-names: Slade
     given-names: Trent
     orcid: "https://orcid.org/0009-0002-4515-9237"
-doi: "10.5281/zenodo.21830630"
 repository-code: "https://github.com/QSOLKCB/UFF"
-url: "https://doi.org/10.5281/zenodo.21830630"
+url: "https://github.com/QSOLKCB/UFF/releases/tag/v5.1.0"
 license: Apache-2.0
 keywords:
+  - reproducible astrophysics
   - galaxy rotation curves
   - SPARC
   - MOND
   - dark matter
-  - supermassive black holes
-  - loop quantum gravity
   - preregistration
   - survey systematics
   - spherical statistics
   - falsification
-  - reproducibility
+  - deterministic replay
+  - canonical JSON
+  - SHA-256
+  - commit reveal
+  - defense in depth
+  - scientific provenance
+  - audit telemetry
 abstract: >-
-  A transparent Python research laboratory spanning validated galaxy
-  rotation-curve and compact-object analysis, preregistered catalogue-level
-  celestial-node falsification through UFF-SLFA, and survey-aware adversarial
-  evaluation through the Sheridan Crucible. The software provides frozen
-  machine-readable contracts, deterministic null models, survey masks and
-  completeness, spherical von Mises-Fisher density reconstruction,
-  nuisance-model comparison, injection calibration, SHA-256 evidence bundles,
-  public-claim provenance, and numerical replay. These controls establish
-  computational consistency and calibrated catalogue-level tests; they do not
-  establish a physical ontology or validate an extraordinary causal claim.
+  QSOL UFF v5.1.0 retains the galaxy-dynamics, compact-object, UFF-SLFA,
+  Sheridan Crucible, provenance, and independent-assessment systems from
+  v5.0.0 while adding a deliberately small defense-in-depth assurance layer.
+  A QEC-inspired fail-closed boundary gate enforces strict canonical evidence
+  bundles and requires fresh numerical replay for admission. A
+  SPECTRAL-inspired witness freezes pre-observation contract, catalogue, and
+  support-grid identities and binds them to the contract actually replayed.
+  A statistical-mechanics guardrail separates replay verification from future
+  null-ensemble calibration, and a SONIFICATION-inspired receiver-neutral event
+  stream exposes read-only forensic telemetry. These mechanisms strengthen
+  computational assurance; they do not establish physical ontology, historical
+  analyst blindness, catalogue independence, null-model adequacy, or causal
+  truth.

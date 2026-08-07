@@ -3,6 +3,52 @@
 Notable changes to QSOL UFF are documented here. The project follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.1.0] - 2026-08-07
+
+### Added
+
+- QEC-inspired `uff.qec_gate` fail-closed evidence boundary with canonical JSON,
+  exact artifact allowlists, physical bundle closure, child/hash recomputation,
+  embedded-contract validation, deterministic roots, optional external anchors,
+  and replay-required admission.
+- SPECTRAL-inspired `uff.spectral_witness` pre-observation commit/reveal workflow
+  for contract, catalogue, and Sheridan support-grid identities.
+- Statistical-mechanics interpretation guardrail separating computational replay
+  from future null-ensemble calibration.
+- SONIFICATION-inspired `uff.audit_events` receiver-neutral read-only forensic
+  telemetry outside the evidence bundle.
+- Formal v5.1.0 defense-in-depth technical report source plus rendered archival PDF.
+- Zenodo v5.1.0 upload guidance, metadata snapshot, manifest, and checksums.
+
+### Changed
+
+- Bumped package, README, citation, and Zenodo metadata to v5.1.0.
+- Expanded the assurance model to distinguish input commitment, integrity,
+  replay, future ensemble calibration, and external scientific judgement.
+- Bound SPECTRAL reveal to the canonical contract digest actually verified from
+  the replayed recipe.
+- Made integrity-only mode incapable of replay or admission even when replay
+  inputs are supplied.
+- Made `qec_gate.json` receipt verification exact by reconstructing the complete
+  deterministic receipt payload.
+- Made malformed-manifest failures observable through deterministic telemetry.
+
+### Validation
+
+- Python 3.10-3.13 CI passes for the merged defense layer.
+- Added regression coverage for contract substitution, malformed-manifest
+  telemetry, integrity-only replay suppression, and exact receipt validation.
+
+### Scientific boundary
+
+- `REPLAY_VERIFIED != ENSEMBLE_CALIBRATED != PHYSICAL_TRUTH`.
+- A local witness establishes identity, not historical chronology.
+- Telemetry is an observation aid and has no authority over evidence admission
+  or scientific verdicts.
+- `uff.sheridan-crucible.v2` and `ENSEMBLE_CALIBRATED` remain future work.
+
+Full details: [RELEASE_NOTES_v5.1.0.md](RELEASE_NOTES_v5.1.0.md).
+
 ## [5.0.0] - 2026-08-07
 
 ### Added
@@ -55,8 +101,8 @@ Full details: [RELEASE_NOTES_v5.0.0.md](RELEASE_NOTES_v5.0.0.md).
 
 - Installable `uff` Python package and `python -m uff` CLI.
 - Validated canonical/SPARC CSV loader with aliases and SHA-256 input receipts.
-- Physical NFW (`M200`, `c200`) and Burkert halo models.
-- MOND simple, standard, empirical RAR, and labelled EFE sensitivity models.
+- Physical NFW (`M200`, `c200`) and empirical Burkert halo models.
+- MOND/RAR variants and an explicitly approximate external-field sensitivity proxy.
 - Central SMBH terms plus separate Kerr and LQG scale-report command.
 - Optional distance and inclination nuisance parameters.
 - Deterministic multi-start optimization and normalized likelihood statistics.
@@ -120,6 +166,7 @@ Full details: [RELEASE_NOTES_v5.0.0.md](RELEASE_NOTES_v5.0.0.md).
 
 ## Release links
 
+- v5.1.0 - GitHub tag and Zenodo version DOI pending publication
 - [v5.0.0](https://github.com/QSOLKCB/UFF/releases/tag/v5.0.0) —
   [Zenodo archive](https://doi.org/10.5281/zenodo.21830630)
 - v4.0.0 — historical release state retained in repository history
