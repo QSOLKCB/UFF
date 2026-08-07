@@ -1,57 +1,69 @@
 # QSOL UFF
 
 [![CI](https://github.com/QSOLKCB/UFF/actions/workflows/ci.yml/badge.svg)](https://github.com/QSOLKCB/UFF/actions/workflows/ci.yml)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17669627.svg)](https://doi.org/10.5281/zenodo.17669627)
+[![Release](https://img.shields.io/badge/release-v5.0.0-4c1.svg)](RELEASE_NOTES_v5.0.0.md)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg)](https://www.python.org/)
 
-**UFF v4.0.0 — Galaxy Dynamics and Compact-Object Research Laboratory**
+**QSOL UFF v5.0.0 — Reproducible Astrophysics and Falsification Laboratory**
 
-QSOL UFF is a transparent Python toolkit for fitting galaxy rotation curves,
-comparing physical and phenomenological model families, and reporting the
-scale separation between galaxy dynamics, Kerr supermassive black holes
-(SMBHs), and loop-quantum-gravity-inspired (LQG) compact-object research.
+QSOL UFF is a transparent Python research laboratory for two kinds of work that
+should never be confused:
 
-Version 4 replaces the old placeholder comparators with dimensionally explicit
-models, validated input handling, deterministic multi-start fitting, testable
-limiting cases, and machine-readable provenance.
+1. fitting and comparing explicit astrophysical models; and
+2. testing extraordinary catalogue-level spatial claims under frozen,
+   replayable and survey-aware rules.
 
-> **Scientific boundary:** UFF is a research framework, not evidence that a
-> unified field theory, MOND, dark matter, or an LQG black-hole model is
-> correct. The repository-specific UFF curve is explicitly labelled
-> empirical. LQG is not used to explain galaxy rotation curves.
+The repository retains the validated galaxy-dynamics and compact-object tools
+from v4, then adds the UFF Sky-Lattice Falsification Audit (SLFA), the Sheridan
+Crucible survey engine, content-addressed public-claim provenance, and an
+independent methodological assessment programme.
 
-## What v4 fixes
+> **Scientific boundary:** UFF can formalise a claim, expose circular selection,
+> model survey geometry, calibrate a detection procedure and replay an exact
+> decision. It cannot turn catalogue diagnostics into physical objects, prove a
+> vacuum ontology, make an inspected dataset blind again, or guarantee that a
+> chosen null model represents nature.
 
-| Area | Before v4 | v4 |
-|---|---|---|
-| SPARC baryons | Velocity scale factors were squared; signed gas was lost | Mass-to-light ratios scale `V²`; `Vgas × abs(Vgas)` is preserved |
-| NFW | Shape-only approximation using `Vmax` and `Rs` | Physical `M200`, `c200`, `r200`, and configurable `H0` |
-| MOND | Gas, disk, and bulge speeds were added before squaring | Correct baryonic acceleration with simple, standard, and RAR relations |
-| SMBH | No central compact object | Optional fixed/fitted point mass plus separate Kerr horizon/photon-orbit/ISCO report |
-| LQG | Not scoped | Area-gap scale diagnostic and opt-in bookkeeping ansatz, isolated from galaxy likelihoods |
-| Galaxy systematics | Unchecked CSV rows | Strict validation plus optional SPARC distance and inclination nuisance fits |
-| Model selection | One UFF fit with visual overlays | Same-data likelihoods, χ², RMSE, AIC/AICc/BIC, ΔBIC, and relative weights |
-| Reproducibility | Generated files and legacy scripts mixed into source | SHA-256 input receipt, deterministic seeds, JSON schema, CI, and tests |
+## What UFF contains
 
-## Included models
-
-| CLI name | Family | Free structural parameters | Status |
+| Layer | Purpose | Primary interface | Status |
 |---|---|---|---|
-| `baryons` | Newtonian baseline | Stellar M/L, optional nuisance parameters | Established weak-field calculation |
-| `nfw` | ΛCDM halo baseline | `log10(M200/M☉)`, `c200` | Standard collisionless-halo profile |
-| `burkert` | Cored halo baseline | `log10(ρ0)`, core radius | Empirical dark-matter profile |
-| `mond-rar` | MOND/RAR | Optional `a0` | Empirical exponential acceleration relation |
-| `mond-simple` | MOND | Optional `a0` | Algebraic simple interpolating function |
-| `mond-standard` | MOND | Optional `a0` | Algebraic standard interpolating function |
-| `mond-efe` | MOND sensitivity test | Fixed external field and orientation | Approximate algebraic proxy, not a field-equation solver |
-| `uff-empirical` | QSOL UFF | Asymptotic speed, core radius, bounded shape term | Repository-specific research law |
+| Galaxy and compact-object laboratory | Fit rotation curves, compare baryonic/halo/MOND/UFF model families, and report separate Kerr/LQG scales | `python -m uff` | Stable v4 core retained in v5 |
+| UFF-SLFA | Test a frozen anomaly-rate claim inside fixed celestial node caps | `python sky_lattice_audit.py` | Preregistration-ready reference implementation |
+| Sheridan Crucible | Add masks, completeness, spherical density reconstruction, nuisance models, survey-matched rotations and injection calibration | `python -m uff.sheridan` | Exact survey-aware reference implementation |
+| Provenance and assessment layer | Preserve incompatible public claim versions, source hashes, blockers and external methodological review | JSON ledgers and Markdown records | Audit governance; deliberately non-executable where fields remain unresolved |
 
-Every galaxy model can also include a central SMBH. See
-[Model definitions](docs/MODELS.md) for equations, units, and limitations.
-Run `python -m uff models` to list the canonical CLI names.
+The default `uff` CLI remains focused on galaxy and compact-object analysis.
+The sky-audit interfaces are separate so their contracts, evidence bundles and
+scientific verdicts cannot be accidentally mixed with model-fitting outputs.
 
-## Install
+## Why v5 exists
+
+UFF began as a galaxy rotation-curve and compact-object laboratory. During v5,
+the project gained a second, rigorously bounded role: converting disputed
+celestial-node claims into tests that cannot silently change coordinates,
+radii, anomaly definitions, null models or success criteria after results are
+seen.
+
+The resulting stack is:
+
+```text
+public claim record
+        ↓
+frozen UFF-SLFA contract
+        ↓
+survey-aware Sheridan contract
+        ↓
+integrity + numerical replay bundle
+        ↓
+separate empirical, diagnostic and scientific interpretation boundaries
+```
+
+A claim that is incomplete remains `CONTRACT_NOT_EXECUTABLE`. Failure to specify
+an experiment is not treated as empirical falsification.
+
+## Installation
 
 ```bash
 git clone https://github.com/QSOLKCB/UFF.git
@@ -61,116 +73,50 @@ source .venv/bin/activate
 python -m pip install -e .
 ```
 
-For tests:
+For development and tests:
 
 ```bash
 python -m pip install -e ".[dev]"
 pytest
 ```
 
-The compatibility script still works, but `python -m uff` or the installed
-`uff` command is preferred.
+## 1. Galaxy dynamics and compact objects
 
-## Quick start
-
-Run the default four-way comparison:
+### Fit and compare rotation-curve models
 
 ```bash
 python -m uff fit \
   --csv DEMO_GALAXY.csv \
   --gal DEMO_GALAXY \
+  --models baryons,nfw,burkert,mond-rar,uff-empirical \
+  --restarts 24 \
   --out outputs \
   --sonify
 ```
 
-Equivalent legacy entry point:
+Canonical CSV columns are:
 
-```bash
-python analyze_sparc.py --csv DEMO_GALAXY.csv --gal DEMO_GALAXY --out outputs
+```text
+R_kpc,V_obs_kms,e_V_kms,V_gas_kms,V_disk_kms,V_bul_kms
 ```
 
-Compare a wider candidate set and fit the MOND acceleration scale:
+Short SPARC aliases are also accepted. See
+[Data format](docs/DATA_FORMAT.md) and [Model definitions](docs/MODELS.md).
 
-```bash
-python -m uff fit \
-  --csv DEMO_GALAXY.csv \
-  --models baryons,nfw,burkert,mond-rar,mond-simple,mond-standard,uff-empirical \
-  --fit-a0 \
-  --restarts 24 \
-  --out outputs
-```
+Included model families are:
 
-Use the external-field sensitivity proxy only when an external field has been
-specified:
+- Newtonian baryons;
+- NFW and Burkert dark-matter baselines;
+- MOND/RAR variants, including an explicitly approximate EFE sensitivity proxy;
+- a repository-specific empirical UFF curve family; and
+- an optional weak-field central SMBH term.
 
-```bash
-python -m uff fit \
-  --csv DEMO_GALAXY.csv \
-  --models mond-rar,mond-efe \
-  --external-field-a0 0.03 \
-  --external-field-angle-deg 60
-```
+The fit pipeline reports likelihood diagnostics, chi-squared, RMSE, AIC/AICc,
+BIC, relative information-criterion weights, bound hits, full residual arrays
+and SHA-256 input receipts. Optional posterior sampling, plots and deterministic
+sonification remain available.
 
-Fit SPARC-style distance and inclination nuisance parameters:
-
-```bash
-python -m uff fit \
-  --csv DEMO_GALAXY.csv \
-  --models nfw,burkert,mond-rar \
-  --fit-distance \
-  --fit-inclination
-```
-
-The input needs `INC_deg` metadata, or use `--inclination-deg`. Nuisance
-parameters increase model complexity and should be given informed priors in
-publication-grade analyses; v4's bounded ranges are transparent exploratory
-defaults.
-
-## Outputs
-
-For a galaxy named `DEMO_GALAXY`, the CLI writes:
-
-| File | Purpose |
-|---|---|
-| `DEMO_GALAXY_summary.json` | Configuration, input hash, fitted values, full residual arrays, diagnostics, and warnings |
-| `DEMO_GALAXY_comparison.csv` | Flat model-ranking table |
-| `DEMO_GALAXY_models.png` | Rotation curves and standardized residuals |
-| `DEMO_GALAXY_<model>_phase_glyph.wav` | Optional deterministic stereo sonification |
-| `DEMO_GALAXY_e8_reference.png` | Optional legacy E₈ visualization, explicitly outside the fit |
-| `DEMO_GALAXY_<model>_posterior.npz` | Optional retained multi-chain posterior samples |
-| `DEMO_GALAXY_<model>_corner.png` | Optional posterior parameter plot |
-| `DEMO_GALAXY_<model>_postpred.png` | Optional 16–84% posterior curve band |
-
-Model weights are relative information-criterion weights for the models in the
-candidate set. They are not posterior probabilities that a physical theory is
-true.
-
-### Optional posterior sampling
-
-The deterministic optimizer is the default. To retain posterior draws for one
-candidate, enable the bounded full-covariance Metropolis sampler:
-
-```bash
-python -m uff fit \
-  --csv DEMO_GALAXY.csv \
-  --models nfw,burkert,mond-rar \
-  --mcmc-steps 12000 \
-  --mcmc-burn 4000 \
-  --mcmc-chains 4 \
-  --corner \
-  --postpred
-```
-
-The sampler adapts its proposal only during burn-in and freezes the transition
-kernel for retained draws. It writes a compressed NPZ, R-hat, approximate
-effective sample sizes, parameter quantiles, a corner plot, and posterior curve
-bands. Treat R-hat above 1.05 or low ESS warnings as non-convergence, not as a
-cosmetic diagnostic.
-
-## SMBH and LQG scale report
-
-Galaxy fitting uses an SMBH only as a weak-field central point mass. Strong
-field quantities belong to a separate command:
+### Compact-object scale report
 
 ```bash
 python -m uff compact-object \
@@ -180,87 +126,229 @@ python -m uff compact-object \
   --out outputs/sgr-a-scale-report.json
 ```
 
-The report contains the Kerr gravitational radius, outer horizon, equatorial
-photon orbit, ISCO, sphere of influence, LQG area-gap convention, and
-`Δ/r²` scale ratio. It does not select or validate a particular effective LQG
-metric. See [Scientific status, July 2026](docs/SCIENCE_STATUS_2026.md).
+This command reports Kerr characteristic radii, the sphere of influence, the
+selected LQG area-gap convention and scale ratios. LQG is not used in the galaxy
+likelihood. See [Scientific status](docs/SCIENCE_STATUS_2026.md).
 
-## Input data
+## 2. UFF-SLFA: frozen sky-lattice claims
 
-Canonical CSV columns are:
+UFF-SLFA asks a narrow question:
 
-```text
-R_kpc,V_obs_kms,e_V_kms,V_gas_kms,V_disk_kms,V_bul_kms
+> Does an independently selected catalogue show a preregistered excess of a
+> declared anomaly inside spherical caps around frozen celestial nodes, under a
+> null model that preserves the relevant selection structure?
+
+A `uff.sky-lattice-claim.v1` contract freezes:
+
+- node IDs and ICRS coordinates;
+- one cap radius;
+- the anomaly predicate;
+- catalogue, holdout, weight and stratum declarations;
+- the null model, permutation count and deterministic seed;
+- alpha, minimum effect and required supported-node count; and
+- explicit anti-circularity statements.
+
+Run and verify an audit:
+
+```bash
+python sky_lattice_audit.py run \
+  --catalogue frozen_catalogue.csv \
+  --contract examples/sky_lattice_contract.example.json \
+  --out runs/frozen-claim
+
+python sky_lattice_audit.py verify \
+  runs/frozen-claim/manifest.json \
+  --catalogue frozen_catalogue.csv
 ```
 
-Short SPARC aliases (`Rad`, `Vobs`, `errV`, `Vgas`, `Vdisk`, `Vbul`) are also
-accepted. Full details are in [Data format](docs/DATA_FORMAT.md). The official
-[SPARC database](https://astroweb.case.edu/SPARC/) remains the authoritative
-source for the original 175-galaxy data release.
+SLFA supports shared RA shifts, Haar-uniform proper SO(3) rotations and
+stratified label permutations. It uses finite plus-one empirical p-values,
+Holm family-wise correction and TFT-derived invariance checks for every
+geometric null transform.
 
-## QSOL project bridges
+Read the full [Sky-Lattice Falsification Protocol](docs/SKY_LATTICE_FALSIFICATION_PROTOCOL.md).
 
-The v4 diagnostic layer makes narrow, labelled connections to three related
-QSOL repositories:
+## 3. Sheridan Crucible: the survey-aware layer
 
-- [QAI-UFT](https://github.com/QSOLKCB/QAI-UFT): π/2 phase fingerprint and phase-glyph convention.
-- [QNTOY](https://github.com/QSOLKCB/QNTOY): normalized entropy telemetry for ambiguity among model weights.
-- [TFT](https://github.com/QSOLKCB/TFT): covariance eigenspectrum and norm invariants.
+Sheridan wraps an ordinary SLFA claim in `uff.sheridan-crucible.v1` and makes
+the telescope and catalogue geometry part of the frozen experiment.
 
-These transforms do not change a model prediction or likelihood. No field
-equation was copied from those projects. See
-[Related-project interoperability](docs/RELATED_PROJECTS.md).
+It adds:
+
+- explicit survey-support quadrature with masks and fractional coverage;
+- completeness filtering and inverse-completeness weights;
+- normalized spherical von Mises–Fisher weighted KDE;
+- leave-one-out bandwidth selection and adaptive local bandwidths;
+- mask-aware edge renormalization;
+- survey-availability-matched SO(3) rotations;
+- nuisance-only versus nuisance-plus-node logistic comparison;
+- predictive checks and synthetic anomaly-label injection;
+- bounded exact-source execution; and
+- SHA-256 evidence bundles with complete numerical replay.
+
+Generate a deterministic full-sky support grid:
+
+```bash
+python -m uff.sheridan support-grid \
+  --points 4096 \
+  --out full_sky_support.csv
+```
+
+Run a frozen Sheridan contract:
+
+```bash
+python -m uff.sheridan run \
+  --catalogue frozen_catalogue.csv \
+  --support frozen_support.csv \
+  --contract examples/sheridan_contract.example.json \
+  --out runs/sheridan-example
+```
+
+Verify integrity and optionally replay the calculation:
+
+```bash
+python -m uff.sheridan verify \
+  runs/sheridan-example/manifest.json \
+  --catalogue frozen_catalogue.csv \
+  --support frozen_support.csv
+```
+
+Read the full [Sheridan Siege Engine protocol](docs/SHERIDAN_SIEGE_ENGINE.md).
+
+## Evidence bundles and verdict boundaries
+
+SLFA and Sheridan separate four questions that are often blurred together:
+
+1. **Was the claim fully specified?**
+2. **Are the artifacts intact?**
+3. **Does numerical replay reproduce the stored result?**
+4. **Is the scientific model and sampling design defensible?**
+
+A bundle may be computationally perfect and scientifically biased. Hashes prove
+byte identity; deterministic replay proves computational consistency; neither
+proves that the sampling frame, anomaly predicate or null distribution is
+appropriate.
+
+Sheridan bundles contain:
+
+```text
+recipe.json
+ density.json
+ nodes.csv
+ models.json
+ injection.json
+ decision.json
+ manifest.json
+```
+
+Failed and untestable nodes remain visible. Null outcomes are not deleted. A
+positive association remains an association, not automatic evidence for its
+proposed cause.
+
+## Claim provenance and independent assessment
+
+The current repository includes a content-addressed public-claim ledger for the
+Logvinovich celestial-node claims. It preserves incompatible coordinate sets,
+radii, query predicates, reported counts and unresolved fields without choosing
+a preferred version on the claimant's behalf.
+
+Key records include:
+
+- [Public Claim Ledger](docs/PUBLIC_CLAIM_LEDGER_2026-08-07.md)
+- [Public Claim Source Manifest](docs/PUBLIC_CLAIM_SOURCE_MANIFEST_2026-08-07.md)
+- [Machine-readable public claim profile](examples/public_claim_profile_2026-08-07.json)
+- [Independent assessment response](docs/INDEPENDENT_ASSESSMENT_RESPONSE_2026-08-07.md)
+- [Independent assessment source manifest](docs/INDEPENDENT_ASSESSMENT_SOURCE_MANIFEST_2026-08-07.md)
+- [Machine-readable assessment action ledger](examples/independent_assessment_actions_2026-08-07.json)
+
+The governing assessment is intentionally uncomfortable:
+
+> The crucible's syntax is largely formalised. Its statistical calibration
+> still needs validation, and the claimant has not supplied one stationary
+> claim to place inside it.
+
+The assessment proposes a future breaking contract family,
+`uff.sheridan-crucible.v2`, with explicit provenance, statistic, estimand,
+multiplicity, quality and reproducible-environment fields. **That v2 schema is a
+roadmap, not an implemented contract in this release.**
+
+## Machine-readable schemas
+
+| Schema | Role | Executable? |
+|---|---|---:|
+| `uff.rotation-curve-summary.v4` | Galaxy fit and comparison result | Output schema |
+| `uff.sky-lattice-claim.v1` | Frozen catalogue-level celestial-node claim | Yes, when complete |
+| `uff.sheridan-crucible.v1` | Survey-aware wrapper around a frozen SLFA claim | Yes, when complete |
+| `uff.public-claim-profile.v1` | Provenance record containing unresolved public claim versions | No by design |
+| `uff.independent-assessment-response.v1` | Machine-readable implementation roadmap | No; governance record |
+| `uff.sheridan-crucible.v2` | Proposed publication-grade contract expansion | Planned, not implemented |
 
 ## Repository layout
 
 ```text
 uff/
-  compact.py       # SMBH/Kerr and LQG scale diagnostics
-  constants.py     # explicit physical constants and units
-  data.py          # validated canonical/SPARC CSV loading
-  diagnostics.py   # plots, entropy, invariants, phase fingerprints, WAV
-  fitting.py       # deterministic bounded fitting and information criteria
-  models.py        # baryons, halos, MOND/RAR, UFF empirical law
-  sampling.py      # opt-in burn-in-adapted posterior sampler
-  cli.py           # fit, batch, and compact-object commands
-tests/             # analytic limits, synthetic recovery, and CLI tests
-docs/              # equations, data contract, science status, project bridges
-analyze_sparc.py   # compatibility launcher
-uff_model.py       # compatibility function
+  cli.py                    # galaxy and compact-object CLI
+  models.py                 # baryons, halos, MOND/RAR and UFF empirical law
+  fitting.py                # deterministic model fitting and comparison
+  sampling.py               # optional posterior sampler
+  compact.py                # Kerr/SMBH and LQG scale diagnostics
+  sky_contract.py           # SLFA contract validation
+  sky_geometry.py           # spherical geometry and SO(3) invariants
+  sky_statistics.py         # audit statistics and null models
+  sky_artifacts.py          # SLFA bundles, integrity and replay
+  sky_audit.py              # SLFA public API and CLI
+  sheridan_contract.py      # survey-aware contract validation
+  sheridan_density.py       # vMF KDE, masks and edge correction
+  sheridan_models.py        # nuisance comparison and injection recovery
+  sheridan_artifacts.py     # Sheridan bundles and replay
+  sheridan.py               # Sheridan public API and CLI
+examples/                   # frozen example contracts and governance ledgers
+tests/                      # model, geometry, replay and provenance regressions
+docs/                       # protocols, scientific boundaries and manifests
+papers/                     # methods papers, assessment rendition and references
 ```
 
 ## Research status and limitations
 
-- Rotation curves alone do not settle the dark-matter-versus-modified-gravity
-  question.
-- The algebraic MOND relations are not full AQUAL/QUMOND solvers for flattened
-  disks. `mond-efe` is a sensitivity proxy with an explicit warning.
-- AIC/BIC rankings depend on data quality, priors/bounds, nuisance treatment,
-  and the candidate set.
-- A central SMBH is only constrainable if the observations resolve its sphere
-  of influence.
-- Current LQG black-hole phenomenology contains multiple effective metrics;
-  there is no accepted LQG galaxy rotation law implemented here.
-- The UFF empirical profile is falsifiable as a curve family but is not yet
-  derived from a covariant action, lensing law, or cosmological solution.
+- Rotation curves alone do not settle dark matter versus modified gravity.
+- Algebraic MOND relations are not full AQUAL/QUMOND solvers for flattened disks.
+- Information-criterion rankings depend on the candidate set and data contract.
+- The UFF empirical profile is not derived from a covariant field theory.
+- Catalogue diagnostics such as excess noise, uncertainty or missing values are
+  not physical objects without an independently validated object-level model.
+- Broadband colour differences are not spectral resonances without a
+  bandpass-aware spectral model.
+- Cross-catalogue agreement is not automatic statistical independence when the
+  catalogues share objects, source-density structure or systematics.
+- Preregistration prevents later rule changes; it does not repair a biased
+  sampling frame or make previously inspected data blind.
+- The current exact Sheridan KDE is intentionally bounded by a frozen source
+  limit rather than silently changing algorithm or exhausting memory.
 
-The detailed evidence boundary and current literature snapshot are maintained
-in [docs/SCIENCE_STATUS_2026.md](docs/SCIENCE_STATUS_2026.md).
+## Release notes
+
+- [QSOL UFF v5.0.0](RELEASE_NOTES_v5.0.0.md)
+- [UFF Sheridan Crucible v1.1.0](RELEASE_NOTES_SHERIDAN_v1.1.0.md)
+- [UFF-SLFA v1.0.0](RELEASE_NOTES_SLFA_v1.0.0.md)
 
 ## Citation
 
-Please cite the software record:
+The previous README DOI has been removed because it does not resolve to a valid
+record for the current repository state. A new archive record and DOI will be
+added after the v5.0.0 release package is deposited.
 
-> Slade, T. (2026). *QSOL UFF v4.0.0: Galaxy Dynamics and Compact-Object
-> Research Laboratory*. Zenodo. <https://doi.org/10.5281/zenodo.17669627>
+Until then, cite the repository release as:
 
-Machine-readable metadata are in [CITATION.cff](CITATION.cff). Cite the
-original scientific papers for every model used in an analysis; references are
-listed in [docs/MODELS.md](docs/MODELS.md).
+> Slade, T. (2026). *QSOL UFF v5.0.0: Reproducible Astrophysics and
+> Falsification Laboratory*. QSOL-IMC. https://github.com/QSOLKCB/UFF
+
+Machine-readable metadata are in [CITATION.cff](CITATION.cff). Analyses must
+also cite the primary scientific sources for every physical model, catalogue
+and statistical method used.
 
 ## License
 
 Apache License 2.0. See [LICENSE](LICENSE).
 
-Maintainer: **Trent Slade / QSOL-IMC**
+Maintainer: **Trent Slade / QSOL-IMC**  
 GitHub: [QSOLKCB](https://github.com/QSOLKCB)

@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "qsol-uff"
-version = "4.0.0"
-description = "Transparent galaxy rotation-curve and compact-object model laboratory"
+version = "5.0.0"
+description = "Reproducible astrophysics, celestial-node falsification, and survey-aware audit laboratory"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {file = "LICENSE"}
@@ -20,6 +20,11 @@ keywords = [
   "Burkert",
   "supermassive black holes",
   "loop quantum gravity",
+  "preregistration",
+  "survey systematics",
+  "spherical statistics",
+  "falsification",
+  "reproducibility",
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -52,8 +57,9 @@ uff = "uff.cli:main"
 [project.urls]
 Homepage = "https://github.com/QSOLKCB/UFF"
 Repository = "https://github.com/QSOLKCB/UFF"
+Documentation = "https://github.com/QSOLKCB/UFF/tree/main/docs"
+Changelog = "https://github.com/QSOLKCB/UFF/blob/main/CHANGELOG.md"
 Issues = "https://github.com/QSOLKCB/UFF/issues"
-DOI = "https://doi.org/10.5281/zenodo.17669627"
 
 [tool.setuptools]
 packages = ["uff"]
