@@ -110,7 +110,7 @@ With 100,000 ordinary null draws and zero exceedances, the finest directly resol
 
 ### P0 — contract hardening
 
-1. Introduce `uff.sheridan-contract.v1.2` with `P`, `T`, `E`, `M`, `Q` and `R`.
+1. Introduce `uff.sheridan-crucible.v2` with `P`, `T`, `E`, `M`, `Q` and `R`.
 2. Add terminal validation with an explicit `unresolved_primary_fields` list.
 3. Bind `delta` to the scale of `E` and bind `k` to a globally calibrated decision rule.
 4. Freeze catalogue release, table/schema version, units, query text and query hash.
