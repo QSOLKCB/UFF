@@ -24,14 +24,48 @@ def test_independent_assessment_manifest_and_action_priorities() -> None:
     assert RENDITION.is_file()
     assert MANIFEST.is_file()
 
-    current = set(payload["contract_delta"]["current"])
-    proposed = set(payload["contract_delta"]["proposed"])
-    assert proposed - current == {"P", "T", "E", "M", "Q", "R"}
+    expected_current = {
+        "N",
+        "r",
+        "A",
+        "D",
+        "S",
+        "H",
+        "N_null",
+        "alpha",
+        "delta",
+        "k",
+    }
+    expected_added = {"P", "T", "E", "M", "Q", "R"}
+
+    contract_delta = payload["contract_delta"]
+    current = set(contract_delta["current"])
+    proposed = set(contract_delta["proposed"])
+    added_fields = set(contract_delta["added_fields"])
+
+    assert current == expected_current
+    assert added_fields == expected_added
+    assert proposed == current | added_fields
 
     actions = payload["actions"]
     ids = [action["id"] for action in actions]
     assert len(ids) == len(set(ids))
-    assert {action["priority"] for action in actions} == {"P0", "P1", "P2"}
+
+    expected_priorities = {
+        "IA-P0-01": "P0",
+        "IA-P0-02": "P0",
+        "IA-P0-03": "P0",
+        "IA-P0-04": "P0",
+        "IA-P1-01": "P1",
+        "IA-P1-02": "P1",
+        "IA-P1-03": "P1",
+        "IA-P1-04": "P1",
+        "IA-P2-01": "P2",
+        "IA-P2-02": "P2",
+        "IA-P2-03": "P2",
+    }
+    actual_priorities = {action["id"]: action["priority"] for action in actions}
+    assert actual_priorities == expected_priorities
     assert all(action["status"] == "planned" for action in actions)
 
     boundaries = payload["boundaries"]
