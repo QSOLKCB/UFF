@@ -23,6 +23,11 @@ GATE_SCHEMA = "uff.qec-boundary-gate.v1"
 ROOT_SCHEMA = "uff.qec-bundle-root.v1"
 GATE_FILENAME = "qec_gate.json"
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+_RECEIPT_BOUNDARY = (
+    "This receipt establishes strict bundle integrity and successful deterministic replay. "
+    "It does not establish source-data correctness, statistical adequacy, causal explanation, "
+    "or physical ontology."
+)
 
 
 class GateError(RuntimeError):
@@ -90,6 +95,7 @@ class GateReport:
     integrity_passed: bool
     replay_passed: bool | None
     root_sha256: str | None
+    contract_canonical_sha256: str | None
     checks: tuple[str, ...]
     errors: tuple[str, ...]
 
@@ -102,6 +108,7 @@ class GateReport:
             "integrity_passed": self.integrity_passed,
             "replay_passed": self.replay_passed,
             "root_sha256": self.root_sha256,
+            "contract_canonical_sha256": self.contract_canonical_sha256,
             "checks": list(self.checks),
             "errors": list(self.errors),
         }
@@ -146,7 +153,12 @@ def _reject_constant(token: str) -> None:
     raise GateError(f"non-finite JSON constant is forbidden: {token}")
 
 
-def _strict_json_bytes(data: bytes, *, label: str, require_canonical: bool = True) -> dict[str, Any]:
+def _strict_json_bytes(
+    data: bytes,
+    *,
+    label: str,
+    require_canonical: bool = True,
+) -> dict[str, Any]:
     if data.startswith(b"\xef\xbb\xbf"):
         raise GateError(f"{label} must not contain a UTF-8 BOM")
     try:
@@ -207,7 +219,11 @@ def _physical_files(base: Path) -> set[str]:
     return files
 
 
-def _root_payload(profile: _Profile, manifest_bytes: bytes, entries: list[dict[str, Any]]) -> dict[str, Any]:
+def _root_payload(
+    profile: _Profile,
+    manifest_bytes: bytes,
+    entries: list[dict[str, Any]],
+) -> dict[str, Any]:
     children = [
         {
             "path": entry["path"],
@@ -225,38 +241,65 @@ def _root_payload(profile: _Profile, manifest_bytes: bytes, entries: list[dict[s
     }
 
 
+def _receipt_payload(
+    *,
+    profile: str,
+    root_sha256: str,
+    manifest_sha256: str,
+) -> dict[str, Any]:
+    """Construct the one exact receipt shape accepted by the gate."""
+
+    return {
+        "schema": GATE_SCHEMA,
+        "profile": profile,
+        "assurance": "REPLAY_VERIFIED",
+        "root_sha256": root_sha256,
+        "manifest_sha256": manifest_sha256,
+        "self_hash_exclusion": GATE_FILENAME,
+        "recompute_not_trust": True,
+        "external_anchor_required_for_authenticity": True,
+        "boundary": _RECEIPT_BOUNDARY,
+    }
+
+
 def _inspect_bundle(manifest_path: Path, expected_root: str | None) -> tuple[
     _Profile | None,
     dict[str, Any] | None,
+    str | None,
     str | None,
     list[str],
     list[str],
 ]:
     checks: list[str] = []
     errors: list[str] = []
+    contract_sha256: str | None = None
     manifest_path = Path(manifest_path)
     base = manifest_path.parent
     if manifest_path.name != "manifest.json":
         errors.append("gate entry point must be a file named manifest.json")
-        return None, None, None, checks, errors
+        return None, None, None, None, checks, errors
     try:
         manifest_bytes = manifest_path.read_bytes()
-        manifest = _strict_json_bytes(manifest_bytes, label="manifest.json", require_canonical=True)
+        manifest = _strict_json_bytes(
+            manifest_bytes,
+            label="manifest.json",
+            require_canonical=True,
+        )
     except (OSError, GateError) as exc:
         errors.append(str(exc))
-        return None, None, None, checks, errors
+        return None, None, None, None, checks, errors
 
     profile = _PROFILES.get(manifest.get("schema"))
     if profile is None:
         errors.append(f"unsupported UFF manifest schema: {manifest.get('schema')!r}")
-        return None, manifest, None, checks, errors
+        return None, manifest, None, None, checks, errors
     if manifest.get("algorithm") != profile.algorithm:
         errors.append("manifest algorithm does not match the selected gate profile")
 
     raw_entries = manifest.get("artifacts")
     if not isinstance(raw_entries, list):
         errors.append("manifest artifacts must be a list")
-        return profile, manifest, None, checks, errors
+        return profile, manifest, None, None, checks, errors
 
     expected_paths = set(profile.artifacts)
     seen: set[str] = set()
@@ -268,7 +311,10 @@ def _inspect_bundle(manifest_path: Path, expected_root: str | None) -> tuple[
             errors.append("manifest artifact entry is not an object")
             continue
         if set(raw) != {"path", "media_type", "bytes", "sha256"}:
-            errors.append("manifest artifact entries must contain exactly path, media_type, bytes and sha256")
+            errors.append(
+                "manifest artifact entries must contain exactly "
+                "path, media_type, bytes and sha256"
+            )
             continue
         relative = raw.get("path")
         if not isinstance(relative, str):
@@ -349,9 +395,11 @@ def _inspect_bundle(manifest_path: Path, expected_root: str | None) -> tuple[
             errors.append("recipe must contain object-valued contract and inputs")
         else:
             claimed_contract_hash = inputs.get("contract_canonical_sha256")
-            actual_contract_hash = _sha256_bytes(canonical_json_bytes(contract))
-            if claimed_contract_hash != actual_contract_hash:
-                errors.append("recipe contract_canonical_sha256 does not match the embedded contract")
+            contract_sha256 = _sha256_bytes(canonical_json_bytes(contract))
+            if claimed_contract_hash != contract_sha256:
+                errors.append(
+                    "recipe contract_canonical_sha256 does not match the embedded contract"
+                )
             if not _valid_sha256(inputs.get("catalogue_sha256")):
                 errors.append("recipe catalogue_sha256 is missing or malformed")
             if profile.manifest_schema == "uff.sheridan-manifest.v1" and not _valid_sha256(
@@ -373,36 +421,43 @@ def _inspect_bundle(manifest_path: Path, expected_root: str | None) -> tuple[
 
     root_sha256: str | None = None
     if not errors:
-        root_sha256 = _sha256_bytes(canonical_json_bytes(_root_payload(profile, manifest_bytes, normalized_entries)))
+        root_sha256 = _sha256_bytes(
+            canonical_json_bytes(_root_payload(profile, manifest_bytes, normalized_entries))
+        )
         checks.append("strict canonical JSON, closed artifact set and child hashes verified")
         checks.append("recipe and decision cross-links recomputed instead of trusted")
         if expected_root is not None:
             if not _valid_sha256(expected_root):
-                errors.append("expected_root must be a lowercase 64-character SHA-256 digest")
+                errors.append(
+                    "expected_root must be a lowercase 64-character SHA-256 digest"
+                )
             elif root_sha256 != expected_root:
-                errors.append("bundle root does not match the externally supplied trust anchor")
+                errors.append(
+                    "bundle root does not match the externally supplied trust anchor"
+                )
             else:
                 checks.append("bundle root matches the external trust anchor")
 
     receipt_path = base / GATE_FILENAME
-    if receipt_path.exists() and not errors:
+    if receipt_path.exists() and not errors and root_sha256 is not None:
         try:
             receipt = _strict_json_file(receipt_path, require_canonical=True)
         except GateError as exc:
             errors.append(str(exc))
         else:
-            if receipt.get("schema") != GATE_SCHEMA:
-                errors.append("qec_gate.json has an incompatible schema")
-            if receipt.get("profile") != profile.name:
-                errors.append("qec_gate.json profile does not match the bundle")
-            if receipt.get("root_sha256") != root_sha256:
-                errors.append("qec_gate.json root does not match the recomputed bundle root")
-            if receipt.get("assurance") != "REPLAY_VERIFIED":
-                errors.append("qec_gate.json does not carry REPLAY_VERIFIED assurance")
-            if not errors:
-                checks.append("sealed gate receipt matches the recomputed bundle root")
+            expected_receipt = _receipt_payload(
+                profile=profile.name,
+                root_sha256=root_sha256,
+                manifest_sha256=_sha256_bytes(manifest_bytes),
+            )
+            if receipt != expected_receipt:
+                errors.append(
+                    "qec_gate.json does not exactly match the deterministic sealed receipt"
+                )
+            else:
+                checks.append("sealed gate receipt exactly matches the recomputed receipt")
 
-    return profile, manifest, root_sha256, checks, errors
+    return profile, manifest, root_sha256, contract_sha256, checks, errors
 
 
 def verify_boundary(
@@ -420,18 +475,24 @@ def verify_boundary(
     recompute the numerical result from the frozen source inputs.
     """
 
-    profile, _manifest, root, checks, errors = _inspect_bundle(Path(manifest_path), expected_root)
+    profile, _manifest, root, contract_sha256, checks, errors = _inspect_bundle(
+        Path(manifest_path),
+        expected_root,
+    )
     structural_integrity = profile is not None and not errors
     replay: bool | None = None
 
-    if structural_integrity and profile is not None:
+    # Integrity-only is a hard mode boundary. Extra replay inputs are ignored so
+    # diagnostics can never accidentally upgrade themselves to REPLAY_VERIFIED.
+    if structural_integrity and profile is not None and require_replay:
         if profile.manifest_schema == "uff.sky-lattice-manifest.v1":
             if support_path is not None:
                 errors.append("SLFA replay does not accept a support grid")
                 replay = False
             elif catalogue_path is None:
-                if require_replay:
-                    errors.append("SLFA gate admission requires the frozen catalogue for numerical replay")
+                errors.append(
+                    "SLFA gate admission requires the frozen catalogue for numerical replay"
+                )
             else:
                 from .sky_artifacts import verify_bundle
 
@@ -440,13 +501,16 @@ def verify_boundary(
                     errors.extend(f"SLFA verifier: {item}" for item in domain.errors)
                 replay = domain.replay_passed is True
                 if replay:
-                    checks.append("SLFA numerical replay independently reproduced the stored result")
+                    checks.append(
+                        "SLFA numerical replay independently reproduced the stored result"
+                    )
                 else:
                     errors.extend(f"SLFA replay: {item}" for item in domain.errors)
         elif profile.manifest_schema == "uff.sheridan-manifest.v1":
             if catalogue_path is None or support_path is None:
-                if require_replay:
-                    errors.append("Sheridan gate admission requires both frozen catalogue and support grid")
+                errors.append(
+                    "Sheridan gate admission requires both frozen catalogue and support grid"
+                )
             else:
                 from .sheridan_artifacts import verify_sheridan_bundle
 
@@ -459,7 +523,9 @@ def verify_boundary(
                     errors.extend(f"Sheridan verifier: {item}" for item in domain.errors)
                 replay = domain.replay_passed is True
                 if replay:
-                    checks.append("Sheridan numerical replay independently reproduced the stored result")
+                    checks.append(
+                        "Sheridan numerical replay independently reproduced the stored result"
+                    )
                 else:
                     errors.extend(f"Sheridan replay: {item}" for item in domain.errors)
 
@@ -482,6 +548,7 @@ def verify_boundary(
         integrity_passed=integrity,
         replay_passed=replay,
         root_sha256=root,
+        contract_canonical_sha256=contract_sha256,
         checks=tuple(checks),
         errors=tuple(errors),
     )
@@ -512,21 +579,11 @@ def seal_boundary(
         detail = "; ".join(report.errors) or "bundle was not admitted"
         raise GateError(f"refusing to seal bundle: {detail}")
     manifest_path = Path(manifest_path)
-    receipt = {
-        "schema": GATE_SCHEMA,
-        "profile": report.profile,
-        "assurance": "REPLAY_VERIFIED",
-        "root_sha256": report.root_sha256,
-        "manifest_sha256": _sha256_file(manifest_path),
-        "self_hash_exclusion": GATE_FILENAME,
-        "recompute_not_trust": True,
-        "external_anchor_required_for_authenticity": True,
-        "boundary": (
-            "This receipt establishes strict bundle integrity and successful deterministic replay. "
-            "It does not establish source-data correctness, statistical adequacy, causal explanation, "
-            "or physical ontology."
-        ),
-    }
+    receipt = _receipt_payload(
+        profile=report.profile,
+        root_sha256=report.root_sha256,
+        manifest_sha256=_sha256_file(manifest_path),
+    )
     output = manifest_path.parent / GATE_FILENAME
     output.write_bytes(canonical_json_bytes(receipt))
     return output
@@ -540,7 +597,10 @@ def _main_parser() -> argparse.ArgumentParser:
     parser.add_argument("manifest", type=Path, help="Path to a UFF manifest.json")
     parser.add_argument("--catalogue", type=Path, help="Frozen catalogue used for replay")
     parser.add_argument("--support", type=Path, help="Frozen Sheridan support grid")
-    parser.add_argument("--expected-root", help="Externally anchored lowercase SHA-256 bundle root")
+    parser.add_argument(
+        "--expected-root",
+        help="Externally anchored lowercase SHA-256 bundle root",
+    )
     parser.add_argument(
         "--integrity-only",
         action="store_true",
