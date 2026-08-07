@@ -8,8 +8,9 @@ authors:
   - family-names: Slade
     given-names: Trent
     orcid: "https://orcid.org/0009-0002-4515-9237"
+doi: "10.5281/zenodo.21830630"
 repository-code: "https://github.com/QSOLKCB/UFF"
-url: "https://github.com/QSOLKCB/UFF"
+url: "https://doi.org/10.5281/zenodo.21830630"
 license: Apache-2.0
 keywords:
   - galaxy rotation curves
