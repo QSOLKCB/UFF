@@ -1,0 +1,73 @@
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+
+ROOT = Path(__file__).parents[1]
+ACTIONS = ROOT / "examples" / "independent_assessment_actions_2026-08-07.json"
+RENDITION = ROOT / "papers" / "Independent_Research_Assessment_Logvinovich_Claim_and_Sheridan_Audit.md"
+MANIFEST = ROOT / "docs" / "INDEPENDENT_ASSESSMENT_SOURCE_MANIFEST_2026-08-07.md"
+
+
+def test_independent_assessment_manifest_and_action_priorities() -> None:
+    payload = json.loads(ACTIONS.read_text(encoding="utf-8"))
+
+    assert payload["schema"] == "uff.independent-assessment-response.v1"
+    assert payload["status"] == "accepted-with-implementation-follow-up"
+
+    source = payload["source"]
+    assert source["sha256"] == "4af1ba265770b88b41d70d08b93eb73c2b1ff3992b0b041431deea40f1a4ea07"
+    assert source["byte_count"] == 135639
+    assert source["pages"] == 11
+    assert source["repository_rendition"] == str(RENDITION.relative_to(ROOT))
+    assert RENDITION.is_file()
+    assert MANIFEST.is_file()
+
+    expected_current = {
+        "N",
+        "r",
+        "A",
+        "D",
+        "S",
+        "H",
+        "N_null",
+        "alpha",
+        "delta",
+        "k",
+    }
+    expected_added = {"P", "T", "E", "M", "Q", "R"}
+
+    contract_delta = payload["contract_delta"]
+    current = set(contract_delta["current"])
+    proposed = set(contract_delta["proposed"])
+    added_fields = set(contract_delta["added_fields"])
+
+    assert current == expected_current
+    assert added_fields == expected_added
+    assert proposed == current | added_fields
+
+    actions = payload["actions"]
+    ids = [action["id"] for action in actions]
+    assert len(ids) == len(set(ids))
+
+    expected_priorities = {
+        "IA-P0-01": "P0",
+        "IA-P0-02": "P0",
+        "IA-P0-03": "P0",
+        "IA-P0-04": "P0",
+        "IA-P1-01": "P1",
+        "IA-P1-02": "P1",
+        "IA-P1-03": "P1",
+        "IA-P1-04": "P1",
+        "IA-P2-01": "P2",
+        "IA-P2-02": "P2",
+        "IA-P2-03": "P2",
+    }
+    actual_priorities = {action["id"]: action["priority"] for action in actions}
+    assert actual_priorities == expected_priorities
+    assert all(action["status"] == "planned" for action in actions)
+
+    boundaries = payload["boundaries"]
+    assert any("does not validate the Logvinovich claim" in item for item in boundaries)
+    assert any("not an independent execution of UFF" in item for item in boundaries)

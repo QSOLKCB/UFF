@@ -1,0 +1,141 @@
+{
+  "schema": "uff.independent-assessment-response.v1",
+  "assessment_id": "independent-assessment-logvinovich-sheridan-2026-08-07",
+  "status": "accepted-with-implementation-follow-up",
+  "source": {
+    "path": null,
+    "sha256": "4af1ba265770b88b41d70d08b93eb73c2b1ff3992b0b041431deea40f1a4ea07",
+    "byte_count": 135639,
+    "pages": 11,
+    "acquired_at": "2026-08-07T09:25:13+09:30",
+    "original_filename": "Independent Research Assessment of the Logvinovich Claim and Sheridan Audit.pdf",
+    "repository_rendition": "papers/Independent_Research_Assessment_Logvinovich_Claim_and_Sheridan_Audit.md",
+    "embedding_status": "authoritative PDF checksum recorded; repository-native Markdown rendition included"
+  },
+  "governing_statement": "The crucible syntax is largely formalised; statistical calibration and a stationary claimant specification are not yet complete.",
+  "contract_delta": {
+    "current": [
+      "N",
+      "r",
+      "A",
+      "D",
+      "S",
+      "H",
+      "N_null",
+      "alpha",
+      "delta",
+      "k"
+    ],
+    "proposed": [
+      "P",
+      "N",
+      "r",
+      "A",
+      "D",
+      "S",
+      "H",
+      "T",
+      "E",
+      "M",
+      "N_null",
+      "alpha",
+      "delta",
+      "k",
+      "Q",
+      "R"
+    ],
+    "added_fields": {
+      "P": "provenance and historical claim version",
+      "T": "exact statistic and node aggregation",
+      "E": "estimand",
+      "M": "multiplicity family and correction",
+      "Q": "quality, deduplication, cross-match and missing-data rules",
+      "R": "execution environment and RNG specification"
+    }
+  },
+  "actions": [
+    {
+      "id": "IA-P0-01",
+      "priority": "P0",
+      "status": "planned",
+      "target": "contract-schema",
+      "summary": "Add P, T, E, M, Q and R to uff.sheridan-crucible.v2."
+    },
+    {
+      "id": "IA-P0-02",
+      "priority": "P0",
+      "status": "planned",
+      "target": "validation",
+      "summary": "Return CONTRACT_NOT_EXECUTABLE with unresolved primary fields instead of a scientific failure verdict."
+    },
+    {
+      "id": "IA-P0-03",
+      "priority": "P0",
+      "status": "planned",
+      "target": "data-contract",
+      "summary": "Freeze release, schema version, units, query text, query hash and quality rules."
+    },
+    {
+      "id": "IA-P0-04",
+      "priority": "P0",
+      "status": "planned",
+      "target": "decision-rule",
+      "summary": "Bind delta to the declared estimand E and bind k to a globally calibrated joint decision rule."
+    },
+    {
+      "id": "IA-P1-01",
+      "priority": "P1",
+      "status": "planned",
+      "target": "calibration",
+      "summary": "Measure type-I error under synthetic anisotropic skies, irregular masks and catalogue-specific failures."
+    },
+    {
+      "id": "IA-P1-02",
+      "priority": "P1",
+      "status": "planned",
+      "target": "multiplicity",
+      "summary": "Calibrate the complete radius, endpoint, node-set and predicate family with a max-statistic or declared correction."
+    },
+    {
+      "id": "IA-P1-03",
+      "priority": "P1",
+      "status": "planned",
+      "target": "verdicts",
+      "summary": "Separate historical reproduction and diagnostic verdicts from prospective crucible verdicts."
+    },
+    {
+      "id": "IA-P1-04",
+      "priority": "P1",
+      "status": "planned",
+      "target": "controls",
+      "summary": "Add frozen negative-control geometries, predicates and matched fields."
+    },
+    {
+      "id": "IA-P2-01",
+      "priority": "P2",
+      "status": "planned",
+      "target": "holdout",
+      "summary": "Define protected-holdout manifests covering both data independence and analyst blindness."
+    },
+    {
+      "id": "IA-P2-02",
+      "priority": "P2",
+      "status": "planned",
+      "target": "custodian-execution",
+      "summary": "Specify external-custodian execution with precommitted contract, environment and holdout hashes."
+    },
+    {
+      "id": "IA-P2-03",
+      "priority": "P2",
+      "status": "planned",
+      "target": "cross-catalogue-dependence",
+      "summary": "Record shared-object overlap and shared-systematic dependence before combining catalogue evidence."
+    }
+  ],
+  "boundaries": [
+    "The assessment is not an independent execution of UFF.",
+    "The assessment does not validate the Logvinovich claim.",
+    "A reproducible analysis can still reproduce a biased sampling design or inappropriate null model.",
+    "Claimant clarification cannot replace independent data, calibrated nulls or a protected holdout."
+  ]
+}
