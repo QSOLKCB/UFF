@@ -198,7 +198,13 @@ def build_event_stream(
         polarity=1 if gate.integrity_passed else -1,
         authority="qec-boundary",
     )
-    replay_state = "PASS" if gate.replay_passed is True else "FAIL" if gate.replay_passed is False else "ABSENT"
+    replay_state = (
+        "PASS"
+        if gate.replay_passed is True
+        else "FAIL"
+        if gate.replay_passed is False
+        else "ABSENT"
+    )
     _event(
         events,
         channel="trust-boundary",
@@ -216,7 +222,9 @@ def build_event_stream(
         authority="qec-boundary",
     )
     if expected_root is not None:
-        anchor_ok = gate.root_sha256 == expected_root and not any("trust anchor" in item for item in gate.errors)
+        anchor_ok = gate.root_sha256 == expected_root and not any(
+            "trust anchor" in item for item in gate.errors
+        )
         _event(
             events,
             channel="trust-anchor",
@@ -290,7 +298,9 @@ def write_event_stream(
     expected_root: str | None = None,
 ) -> Path:
     output_path = Path(output_path)
-    if output_path.resolve().parent == Path(manifest_path).resolve().parent:
+    bundle_dir = Path(manifest_path).resolve().parent
+    resolved_output = output_path.resolve()
+    if resolved_output.is_relative_to(bundle_dir):
         raise TelemetryError("audit telemetry must be written outside the closed evidence bundle")
     document = build_event_stream(
         manifest_path,
