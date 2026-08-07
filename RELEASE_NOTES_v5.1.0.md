@@ -98,10 +98,7 @@ Regression coverage includes:
 
 ## Documentation and archival package
 
-Added a formal technical report:
-
-- `papers/UFF_v5.1.0_DEFENSE_IN_DEPTH_TECHNICAL_REPORT.pdf`
-- `papers/UFF_v5.1.0_DEFENSE_IN_DEPTH_TECHNICAL_REPORT.md`
+Added a versioned formal technical-report source at `papers/UFF_v5.1.0_DEFENSE_IN_DEPTH_TECHNICAL_REPORT.md`. A rendered archival PDF, `UFF_v5.1.0_DEFENSE_IN_DEPTH_TECHNICAL_REPORT.pdf`, is included in the Zenodo upload bundle.
 
 The report documents the threat model, architecture, authority matrix, assurance ladder, review-driven hardening, preservation requirements, and scientific limitations of the defense layer.
 
