@@ -79,6 +79,27 @@ def test_integrity_alone_never_admits_bundle(tmp_path):
     assert not report.admitted
 
 
+def test_integrity_only_ignores_supplied_replay_inputs(tmp_path):
+    manifest, catalogue = _bundle(tmp_path)
+    frame = pd.read_csv(catalogue)
+    frame.loc[0, "score"] = 1 - int(frame.loc[0, "score"])
+    frame.to_csv(catalogue, index=False)
+
+    report = verify_boundary(
+        manifest,
+        catalogue_path=catalogue,
+        require_replay=False,
+    )
+    assert report.integrity_passed
+    assert report.replay_passed is None
+    assert report.assurance == "INTEGRITY_ONLY"
+    assert not report.admitted
+
+    replayed = verify_boundary(manifest, catalogue_path=catalogue)
+    assert not replayed.admitted
+    assert replayed.replay_passed is False
+
+
 def test_gate_requires_replay_for_admission(tmp_path):
     manifest, catalogue = _bundle(tmp_path)
     missing = verify_boundary(manifest)
@@ -93,6 +114,7 @@ def test_gate_requires_replay_for_admission(tmp_path):
     assert replayed.assurance == "REPLAY_VERIFIED"
     assert replayed.admitted
     assert replayed.root_sha256 is not None
+    assert replayed.contract_canonical_sha256 is not None
 
 
 def test_gate_rejects_noncanonical_child_even_if_manifest_hash_is_rewritten(tmp_path):
@@ -149,3 +171,16 @@ def test_seal_is_recomputed_and_can_be_externally_anchored(tmp_path):
     assert not wrong.admitted
     assert not wrong.integrity_passed
     assert any("externally supplied trust anchor" in error for error in wrong.errors)
+
+
+def test_sealed_receipt_requires_exact_deterministic_payload(tmp_path):
+    manifest, catalogue = _bundle(tmp_path)
+    receipt_path = seal_boundary(manifest, catalogue_path=catalogue)
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    receipt["uncommitted_note"] = "must not be accepted"
+    receipt_path.write_bytes(canonical_json_bytes(receipt))
+
+    report = verify_boundary(manifest, catalogue_path=catalogue)
+    assert not report.admitted
+    assert not report.integrity_passed
+    assert any("exactly match the deterministic sealed receipt" in error for error in report.errors)
