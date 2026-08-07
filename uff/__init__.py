@@ -11,7 +11,7 @@ from .fitting import FitResult, fit_model, fit_models
 from .models import ModelOptions, available_models, build_model
 from .sampling import PosteriorResult, sample_posterior
 
-__version__ = "5.0.0"
+__version__ = "5.1.0"
 
 __all__ = [
     "FitResult",
