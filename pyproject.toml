@@ -59,6 +59,7 @@ Homepage = "https://github.com/QSOLKCB/UFF"
 Repository = "https://github.com/QSOLKCB/UFF"
 Documentation = "https://github.com/QSOLKCB/UFF/tree/main/docs"
 Changelog = "https://github.com/QSOLKCB/UFF/blob/main/CHANGELOG.md"
+DOI = "https://doi.org/10.5281/zenodo.21830630"
 Issues = "https://github.com/QSOLKCB/UFF/issues"
 
 [tool.setuptools]
