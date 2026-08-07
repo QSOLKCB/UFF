@@ -1,8 +1,9 @@
 # UFF Defense in Depth
 
-UFF uses three small, independent ideas from QSOLKCB/QEC, QSOLKCB/SPECTRAL,
-and QSOLKCB/SONIFICATION. None of the parent architectures is transplanted.
-Each borrowed mechanism has one job and one authority boundary.
+UFF uses three small, independent software ideas from QSOLKCB/QEC,
+QSOLKCB/SPECTRAL, and QSOLKCB/SONIFICATION, plus a statistical-mechanics
+interpretation guardrail. None of the parent architectures is transplanted.
+Each mechanism has one job and one authority boundary.
 
 ```text
              BEFORE OBSERVATION
@@ -20,6 +21,10 @@ Each borrowed mechanism has one job and one authority boundary.
        cross-links + numerical replay
                      │
               ADMIT / REJECT
+                     │
+                     ▼
+       statistical-mechanics guardrail
+       replay ≠ ensemble calibration
                      │
                      ▼
        SONIFICATION-inspired telemetry
@@ -103,7 +108,35 @@ gate independently returns `REPLAY_VERIFIED`.
 A local commitment alone does **not** prove chronology or analyst blindness.
 It only proves identity. The historical claim comes from the independent anchor.
 
-## 3. SONIFICATION: the diagnostic receiver bus
+## 3. Statistical mechanics: the ensemble guardrail
+
+Document: `docs/STATISTICAL_MECHANICS_GUARDRAIL.md`
+
+Quantum statistical mechanics contributes a methodological separation, not a
+new UFF physical model. The useful lesson is that exact microscopic dynamics
+does not automatically establish the validity of a chosen macroscopic
+statistical ensemble.
+
+UFF adopts the corresponding rule:
+
+```text
+REPLAY_VERIFIED != ENSEMBLE_CALIBRATED
+ENSEMBLE_CALIBRATED != PHYSICAL_TRUTH
+```
+
+The guardrail therefore prevents deterministic replay, hashes, or a successful
+pre-observation reveal from being promoted into a claim that the null ensemble
+is scientifically adequate.
+
+A future `ENSEMBLE_CALIBRATED` assurance state must be earned separately through
+prespecified type-I-error, power, negative-control, mask/systematic, convergence,
+seed-block and multiplicity calibration. It is not implemented by the current
+v5 contract family.
+
+No Hilbert-space, Hamiltonian, density-matrix, microcanonical, canonical, or ETH
+model is imported into UFF catalogue analysis by this guardrail.
+
+## 4. SONIFICATION: the diagnostic receiver bus
 
 Module: `uff.audit_events`
 
@@ -148,19 +181,22 @@ observation tool cannot accidentally become part of the evidence identity.
 | UFF scientific engine | Produces the recorded result | Yes, by executing the frozen method | No |
 | QEC boundary gate | **Yes** | No | No |
 | SPECTRAL witness | **Yes, when reveal identity fails** | No | No |
+| Statistical-mechanics guardrail | No; constrains interpretation | No | No |
 | SONIFICATION telemetry | **No** | **No** | No |
 
 ## Gaps these layers close
 
-Together the three small additions close several practical gaps without
-rebuilding UFF around another architecture:
+Together the small additions close several practical gaps without rebuilding
+UFF around another architecture:
 
 - integrity-only success cannot masquerade as replay verification;
 - permissive JSON and hidden bundle payloads fail closed;
 - manifest, decision and embedded-contract identities are cross-checked;
 - a bundle can be tied to an independent external root;
 - frozen pre-observation inputs can be committed before result inspection;
-- post-commit input substitution is detectable; and
+- post-commit input substitution is detectable;
+- deterministic replay cannot silently masquerade as null-ensemble validation;
+- a future ensemble-calibration assurance level now has an explicit boundary;
 - trust-boundary failures and scientific diagnostics can be exported as a
   deterministic receiver-neutral event stream for human inspection.
 
@@ -183,4 +219,4 @@ protected holdouts, provenance, external review and scientific argument.
 
 The design principle is therefore simple:
 
-> **QEC guards the door. SPECTRAL proves what was handed to the door. SONIFICATION tells the operator what the door is doing. None of them gets to impersonate nature.**
+> **QEC guards the door. SPECTRAL proves what was handed to the door. Statistical mechanics stops us mistaking one perfectly replayed run for a validated ensemble. SONIFICATION tells the operator what the door is doing. None of them gets to impersonate nature.**
