@@ -3,6 +3,60 @@
 Notable changes to QSOL UFF are documented here. The project follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.2.0] - 2026-08-12
+
+### Added
+
+- Lean 4 formal assurance library under `formal/lean/`, pinned to an exact
+  toolchain and focused on software/epistemic invariants rather than physical
+  truth claims.
+- Machine-checked assurance separation showing that replay verification does not
+  itself satisfy ensemble calibration and ensemble calibration does not itself
+  satisfy scientific defensibility.
+- Formal identity models for frozen recipes, claim boundaries, and runtime
+  replay contracts.
+- Formal fail-closed transaction model in which cancellation produces no
+  archival bundle and cannot be exported.
+- Formal one-way observation model in which sonification preserves the numerical
+  result and telemetry has zero evidence-admission authority.
+- Typed manifest-core/envelope construction that makes no-self-hash sequencing
+  explicit in the formal interface.
+- Explicit machine-visible nonclaims for SHA-256 collision resistance, catalogue
+  correctness, null-model adequacy, and physical truth.
+- Exact theorem declaration manifest, `#print axioms` audit surface, proof-hole
+  rejection, and project-defined axiom/constant rejection.
+- Dedicated `UFF Lean 4 formal verification` GitHub Actions workflow.
+- Runtime-correspondence and NEXUS v1.0.0 architectural-lineage documentation.
+- Zenodo v5.2.0 metadata and exact-commit publication checklist.
+
+### Changed
+
+- Bumped package, citation, release, and Zenodo metadata to v5.2.0.
+- Preserved the v5.1.0 scientific schemas and runtime behavior while adding an
+  independent formal specification layer.
+- Made the distinction between formal proof scope and empirical scientific
+  validation part of the release contract.
+
+### Validation
+
+- Lean CI pins the exact Lean release artifact and verifies the v5.1.0 base
+  ancestry before building the formal library.
+- Formal CI rejects `sorry`, `admit`, and project-defined `axiom`/`constant`
+  declarations, requires exact theorem-manifest synchronization, and audits
+  advertised theorem dependencies.
+- Existing Python 3.10-3.13 CI remains authoritative for runtime regressions.
+
+### Scientific boundary
+
+- `REPLAY_VERIFIED != ENSEMBLE_CALIBRATED != PHYSICAL_TRUTH` remains governing.
+- Lean proves selected properties of the formal specification only.
+- The formal layer does not prove source-catalogue correctness, null-model
+  adequacy, SHA-256 security, causal interpretation, or physical ontology.
+- `uff.sheridan-crucible.v2` and runtime `ENSEMBLE_CALIBRATED` remain future
+  work.
+
+Full details: [RELEASE_NOTES_v5.2.0.md](RELEASE_NOTES_v5.2.0.md).
+
 ## [5.1.0] - 2026-08-07
 
 ### Added
@@ -166,7 +220,8 @@ Full details: [RELEASE_NOTES_v5.0.0.md](RELEASE_NOTES_v5.0.0.md).
 
 ## Release links
 
-- v5.1.0 - GitHub tag and Zenodo version DOI pending publication
+- v5.2.0 - release candidate; GitHub tag and Zenodo version DOI pending publication
+- [v5.1.0](https://github.com/QSOLKCB/UFF/releases/tag/v5.1.0) - Zenodo version DOI pending metadata patch
 - [v5.0.0](https://github.com/QSOLKCB/UFF/releases/tag/v5.0.0) —
   [Zenodo archive](https://doi.org/10.5281/zenodo.21830630)
 - v4.0.0 — historical release state retained in repository history
