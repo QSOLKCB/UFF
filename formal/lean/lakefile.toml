@@ -1,0 +1,6 @@
+name = "uff_formal"
+version = "5.2.0"
+defaultTargets = ["UFF"]
+
+[[lean_lib]]
+name = "UFF"

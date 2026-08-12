@@ -1,44 +1,36 @@
 cff-version: 1.2.0
-message: "If you use QSOL UFF, cite this software release and the primary scientific sources for every model, catalogue, and statistical method used. The v5.1.0 Zenodo version DOI is assigned when the new version is published."
-title: "QSOL UFF v5.1.0: Defense-in-Depth Trust, Witness, Calibration, and Telemetry for Reproducible Astrophysics"
+message: "If you use QSOL UFF, cite this software release and the primary scientific sources for every model, catalogue, and statistical method used. The v5.2.0 Zenodo version DOI is assigned when the new version is published."
+title: "QSOL UFF v5.2.0: Machine-Checked Assurance and Formal Claim Boundaries for Reproducible Astrophysics"
 type: software
-version: 5.1.0
-date-released: 2026-08-07
+version: 5.2.0
+date-released: 2026-08-12
 authors:
   - family-names: Slade
     given-names: Trent
     orcid: "https://orcid.org/0009-0002-4515-9237"
 repository-code: "https://github.com/QSOLKCB/UFF"
-url: "https://github.com/QSOLKCB/UFF/releases/tag/v5.1.0"
+url: "https://github.com/QSOLKCB/UFF/releases/tag/v5.2.0"
 license: Apache-2.0
 keywords:
   - reproducible astrophysics
   - galaxy rotation curves
-  - SPARC
-  - MOND
-  - dark matter
   - preregistration
   - survey systematics
-  - spherical statistics
   - falsification
   - deterministic replay
-  - canonical JSON
-  - SHA-256
-  - commit reveal
   - defense in depth
   - scientific provenance
-  - audit telemetry
+  - formal verification
+  - Lean 4
+  - theorem proving
+  - machine-checked assurance
 abstract: >-
-  QSOL UFF v5.1.0 retains the galaxy-dynamics, compact-object, UFF-SLFA,
-  Sheridan Crucible, provenance, and independent-assessment systems from
-  v5.0.0 while adding a deliberately small defense-in-depth assurance layer.
-  A QEC-inspired fail-closed boundary gate enforces strict canonical evidence
-  bundles and requires fresh numerical replay for admission. A
-  SPECTRAL-inspired witness freezes pre-observation contract, catalogue, and
-  support-grid identities and binds them to the contract actually replayed.
-  A statistical-mechanics guardrail separates replay verification from future
-  null-ensemble calibration, and a SONIFICATION-inspired receiver-neutral event
-  stream exposes read-only forensic telemetry. These mechanisms strengthen
-  computational assurance; they do not establish physical ontology, historical
-  analyst blindness, catalogue independence, null-model adequacy, or causal
-  truth.
+  QSOL UFF v5.2.0 retains the v5.1.0 reproducible astrophysics, falsification,
+  provenance, witness, replay-gate, ensemble-boundary, and telemetry systems
+  while adding a Lean 4 specification of selected software and epistemic
+  invariants. The formal layer machine-checks assurance ordering, replay
+  separation, identity-bearing claim boundaries, cancellation closure,
+  one-way sonification, zero-authority telemetry, no-self-hash manifest
+  construction, and deterministic replay identity. It explicitly does not
+  prove SHA-256 security, catalogue correctness, null-model adequacy,
+  statistical independence, causality, or physical truth.

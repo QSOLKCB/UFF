@@ -1,0 +1,20 @@
+import UFF.Main
+
+#print axioms UFFFormal.no_hash_collision_resistance_claim
+#print axioms UFFFormal.no_catalogue_correctness_claim
+#print axioms UFFFormal.no_null_model_adequacy_claim
+#print axioms UFFFormal.no_physical_truth_claim
+#print axioms UFFFormal.replay_preserves_external_scientific_judgement
+#print axioms UFFFormal.replay_verified_is_not_ensemble_calibrated
+#print axioms UFFFormal.ensemble_calibrated_is_not_scientifically_defensible
+#print axioms UFFFormal.ensemble_calibrated_includes_replay
+#print axioms UFFFormal.changed_claim_boundary_changes_identity
+#print axioms UFFFormal.changed_frozen_recipe_changes_identity
+#print axioms UFFFormal.cancellation_produces_no_bundle
+#print axioms UFFFormal.cancelled_transaction_not_exportable
+#print axioms UFFFormal.sonification_preserves_numerical_result
+#print axioms UFFFormal.telemetry_has_zero_admission_authority
+#print axioms UFFFormal.sealing_does_not_modify_manifest_core
+#print axioms UFFFormal.manifest_digest_is_computed_from_core_only
+#print axioms UFFFormal.deterministic_replay_same_inputs
+#print axioms UFFFormal.changed_runtime_contract_changes_replay_identity
