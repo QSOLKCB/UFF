@@ -15,14 +15,14 @@ theorem replay_preserves_external_scientific_judgement (state : EvidenceState) :
 
 theorem replay_verified_is_not_ensemble_calibrated :
     ¬ hasAssurance (mkEvidence .replayVerified false) .ensembleCalibrated := by
-  decide
+  simp [hasAssurance, mkEvidence, AssuranceLevel.rank]
 
 theorem ensemble_calibrated_is_not_scientifically_defensible :
     ¬ hasAssurance (mkEvidence .ensembleCalibrated false) .scientificallyDefensible := by
-  decide
+  simp [hasAssurance, mkEvidence, AssuranceLevel.rank]
 
 theorem ensemble_calibrated_includes_replay (external : Bool) :
     hasAssurance (mkEvidence .ensembleCalibrated external) .replayVerified := by
-  decide
+  simp [hasAssurance, mkEvidence, AssuranceLevel.rank]
 
 end UFFFormal
