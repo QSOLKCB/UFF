@@ -21,6 +21,7 @@
   "license": "Apache-2.0",
   "keywords": [
     "reproducible astrophysics",
+    "research software",
     "formal verification",
     "Lean 4",
     "theorem proving",
@@ -28,9 +29,6 @@
     "claim boundaries",
     "scientific provenance",
     "defense in depth",
-    "preregistration",
-    "survey systematics",
-    "falsification",
     "machine-checked assurance"
   ],
   "related_identifiers": [
