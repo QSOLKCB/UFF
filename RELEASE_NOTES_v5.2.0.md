@@ -15,7 +15,7 @@ Added `formal/lean/` with a pinned Lean toolchain and machine-checked theorems c
 
 - replay does not manufacture ensemble calibration;
 - ensemble calibration does not manufacture scientific defensibility;
-- replay promotion preserves external scientific judgement;
+- replay promotion preserves external scientific judgement and never lowers a higher, separately earned assurance state;
 - changed claim boundaries and frozen recipes change formal experiment identity;
 - cancelled transactions cannot export an archival bundle;
 - sonification preserves the underlying numerical result;
@@ -41,10 +41,12 @@ This prevents the theorem prover from being used as rhetorical authority outside
 Added a strict formal audit:
 
 - `sorry` and `admit` are forbidden;
-- project-defined `axiom` and `constant` declarations are forbidden in the UFF theorem modules;
-- `AUDIT_MANIFEST.tsv` must exactly match advertised theorem/lemma declarations;
+- project-defined `axiom` and `constant` declarations are forbidden in the UFF theorem modules, including supported attribute/modifier-prefixed forms such as `private axiom`;
+- `AUDIT_MANIFEST.tsv` must exactly match advertised theorem/lemma declarations, including supported modified declarations such as `private theorem`;
 - every advertised theorem is covered by `#print axioms`; and
 - unexpected axiom dependencies fail CI.
+
+The formal workflow runs on the review branch, pull requests into `main`, and pushes to `main`, so the exact merged formal tree is re-verified after merge.
 
 ### NEXUS architectural lineage
 
@@ -69,6 +71,8 @@ v5.2.0 strengthens the first part of that boundary by making selected assurance 
 
 ## Zenodo versioning
 
-Publish v5.2.0 through Zenodo's **New version** workflow. Do not overwrite the immutable v5.0.0 or v5.1.0 version records. The v5.2.0 version DOI is assigned by Zenodo when the new version is published.
+The assigned v5.2.0 Zenodo version DOI is **10.5281/zenodo.21911644**.
 
-The release package under `zenodo/v5.2.0/` provides metadata and an operator checklist for binding the deposit to the exact merged release commit.
+DOI assignment and exact software-tree binding are deliberately separate. PR #15 remains the release candidate until merged; after merge, the `v5.2.0` GitHub tag must resolve to the exact merged commit used for the archival payload. The DOI must not be treated as proof that an arbitrary branch head is the archived software identity.
+
+The release package under `zenodo/v5.2.0/` provides metadata and an operator checklist for completing that exact-commit binding.

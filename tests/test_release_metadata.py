@@ -14,19 +14,22 @@ PACKAGE_INIT = ROOT / "uff" / "__init__.py"
 RELEASE_NOTES = ROOT / "RELEASE_NOTES_v5.2.0.md"
 ZENODO = ROOT / ".zenodo.json"
 ZENODO_V5_2 = ROOT / "zenodo" / "v5.2.0" / "metadata.json"
+ZENODO_V5_2_GUIDE = ROOT / "zenodo" / "v5.2.0" / "ZENODO_UPLOAD_README.md"
 ZENODO_V5_1 = ROOT / "zenodo" / "v5.1.0" / "metadata.json"
 ZENODO_V5_1_MANIFEST = ROOT / "zenodo" / "v5.1.0" / "MANIFEST.json"
 OBSOLETE_DOI = "10.5281/zenodo.17669627"
 PUBLISHED_V5_0_DOI = "10.5281/zenodo.21830630"
+ASSIGNED_V5_2_DOI = "10.5281/zenodo.21911644"
 
 
-def test_v5_2_release_metadata_is_consistent_and_pending_doi_is_not_fabricated() -> None:
+def test_v5_2_release_metadata_is_consistent_and_assigned_doi_is_bound() -> None:
     readme = README.read_text(encoding="utf-8")
     pyproject = PYPROJECT.read_text(encoding="utf-8")
     citation = CITATION.read_text(encoding="utf-8")
     changelog = CHANGELOG.read_text(encoding="utf-8")
     package_init = PACKAGE_INIT.read_text(encoding="utf-8")
     release_notes = RELEASE_NOTES.read_text(encoding="utf-8")
+    zenodo_guide = ZENODO_V5_2_GUIDE.read_text(encoding="utf-8")
     zenodo = json.loads(ZENODO.read_text(encoding="utf-8"))
     zenodo_v5_2 = json.loads(ZENODO_V5_2.read_text(encoding="utf-8"))
 
@@ -47,22 +50,33 @@ def test_v5_2_release_metadata_is_consistent_and_pending_doi_is_not_fabricated()
         re.MULTILINE,
     )
     assert re.search(
-        r'^"Previous Zenodo Archive" = "https://doi\.org/10\.5281/zenodo\.21830630"$',
+        r'^DOI = "https://doi\.org/10\.5281/zenodo\.21911644"$',
+        pyproject,
+        re.MULTILINE,
+    )
+    assert re.search(
+        r'^"Zenodo v5\.0\.0 Archive" = "https://doi\.org/10\.5281/zenodo\.21830630"$',
         pyproject,
         re.MULTILINE,
     )
 
-    for text in (readme, pyproject, citation, changelog, release_notes):
+    for text in (readme, pyproject, citation, changelog, release_notes, zenodo_guide):
         assert OBSOLETE_DOI not in text
 
     # The immutable published v5.0.0 DOI remains historical context only.
     for text in (readme, pyproject, changelog):
         assert PUBLISHED_V5_0_DOI in text
 
-    # Do not fabricate a v5.2.0 version DOI before Zenodo publishes the new version.
-    assert not re.search(r"^doi:", citation, re.MULTILINE)
+    # The assigned v5.2.0 DOI is now explicit across release-facing metadata.
+    for text in (readme, pyproject, citation, changelog, release_notes, zenodo_guide):
+        assert ASSIGNED_V5_2_DOI in text
     assert re.search(
-        r'^url: "https://github\.com/QSOLKCB/UFF/releases/tag/v5\.2\.0"$',
+        r'^doi: "10\.5281/zenodo\.21911644"$',
+        citation,
+        re.MULTILINE,
+    )
+    assert re.search(
+        r'^url: "https://doi\.org/10\.5281/zenodo\.21911644"$',
         citation,
         re.MULTILINE,
     )
@@ -98,6 +112,10 @@ def test_v5_2_release_metadata_is_consistent_and_pending_doi_is_not_fabricated()
         and item["relation"] == "references"
         for item in zenodo["related_identifiers"]
     )
+
+    # DOI assignment does not replace the exact-commit/tag release identity gate.
+    assert "exact merged commit" in zenodo_guide
+    assert "v5.2.0` tag" in zenodo_guide
 
     assert re.search(
         r"^\| `uff\.sheridan-crucible\.v2` \| [^|\n]+ \| Planned, not implemented \|$",

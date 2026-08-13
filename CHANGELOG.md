@@ -13,6 +13,8 @@ Notable changes to QSOL UFF are documented here. The project follows
 - Machine-checked assurance separation showing that replay verification does not
   itself satisfy ensemble calibration and ensemble calibration does not itself
   satisfy scientific defensibility.
+- Monotone replay-promotion theorem proving replay verification cannot downgrade
+  an already higher, separately earned assurance state.
 - Formal identity models for frozen recipes, claim boundaries, and runtime
   replay contracts.
 - Formal fail-closed transaction model in which cancellation produces no
@@ -24,14 +26,18 @@ Notable changes to QSOL UFF are documented here. The project follows
 - Explicit machine-visible nonclaims for SHA-256 collision resistance, catalogue
   correctness, null-model adequacy, and physical truth.
 - Exact theorem declaration manifest, `#print axioms` audit surface, proof-hole
-  rejection, and project-defined axiom/constant rejection.
-- Dedicated `UFF Lean 4 formal verification` GitHub Actions workflow.
+  rejection, and project-defined axiom/constant rejection including supported
+  attribute/modifier-prefixed declarations.
+- Dedicated `UFF Lean 4 formal verification` GitHub Actions workflow, including
+  post-merge pushes to `main`.
 - Runtime-correspondence and NEXUS v1.0.0 architectural-lineage documentation.
 - Zenodo v5.2.0 metadata and exact-commit publication checklist.
 
 ### Changed
 
 - Bumped package, citation, release, and Zenodo metadata to v5.2.0.
+- Bound citation/package metadata to assigned Zenodo version DOI
+  `10.5281/zenodo.21911644` while keeping exact commit/tag binding separate.
 - Preserved the v5.1.0 scientific schemas and runtime behavior while adding an
   independent formal specification layer.
 - Made the distinction between formal proof scope and empirical scientific
@@ -42,8 +48,9 @@ Notable changes to QSOL UFF are documented here. The project follows
 - Lean CI pins the exact Lean release artifact and verifies the v5.1.0 base
   ancestry before building the formal library.
 - Formal CI rejects `sorry`, `admit`, and project-defined `axiom`/`constant`
-  declarations, requires exact theorem-manifest synchronization, and audits
-  advertised theorem dependencies.
+  declarations including supported modified forms, requires exact
+  theorem-manifest synchronization including supported modified theorem/lemma
+  declarations, and audits advertised theorem dependencies.
 - Existing Python 3.10-3.13 CI remains authoritative for runtime regressions.
 
 ### Scientific boundary
@@ -220,7 +227,7 @@ Full details: [RELEASE_NOTES_v5.0.0.md](RELEASE_NOTES_v5.0.0.md).
 
 ## Release links
 
-- v5.2.0 - release candidate; GitHub tag and Zenodo version DOI pending publication
+- v5.2.0 — release candidate; [Zenodo version DOI 10.5281/zenodo.21911644](https://doi.org/10.5281/zenodo.21911644) assigned; GitHub tag pending exact-merge binding
 - [v5.1.0](https://github.com/QSOLKCB/UFF/releases/tag/v5.1.0) - Zenodo version DOI pending metadata patch
 - [v5.0.0](https://github.com/QSOLKCB/UFF/releases/tag/v5.0.0) —
   [Zenodo archive](https://doi.org/10.5281/zenodo.21830630)

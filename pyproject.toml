@@ -65,7 +65,8 @@ Repository = "https://github.com/QSOLKCB/UFF"
 Documentation = "https://github.com/QSOLKCB/UFF/tree/main/docs"
 Changelog = "https://github.com/QSOLKCB/UFF/blob/main/CHANGELOG.md"
 Release = "https://github.com/QSOLKCB/UFF/releases/tag/v5.2.0"
-"Previous Zenodo Archive" = "https://doi.org/10.5281/zenodo.21830630"
+DOI = "https://doi.org/10.5281/zenodo.21911644"
+"Zenodo v5.0.0 Archive" = "https://doi.org/10.5281/zenodo.21830630"
 Issues = "https://github.com/QSOLKCB/UFF/issues"
 
 [tool.setuptools]

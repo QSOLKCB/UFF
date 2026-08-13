@@ -3,7 +3,7 @@
 [![CI](https://github.com/QSOLKCB/UFF/actions/workflows/ci.yml/badge.svg)](https://github.com/QSOLKCB/UFF/actions/workflows/ci.yml)
 [![Lean 4](https://github.com/QSOLKCB/UFF/actions/workflows/lean-formal.yml/badge.svg)](https://github.com/QSOLKCB/UFF/actions/workflows/lean-formal.yml)
 [![Release](https://img.shields.io/badge/release-v5.2.0-4c1.svg)](RELEASE_NOTES_v5.2.0.md)
-[![Zenodo v5.0.0 archive](https://img.shields.io/badge/Zenodo-v5.0.0%20archive-1682D4.svg)](https://doi.org/10.5281/zenodo.21830630)
+[![Zenodo v5.2.0](https://zenodo.org/badge/DOI/10.5281/zenodo.21911644.svg)](https://doi.org/10.5281/zenodo.21911644)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg)](https://www.python.org/)
 
@@ -249,7 +249,7 @@ bash audit.sh
 
 The advertised theorem surface includes machine-checked statements that:
 
-- replay promotion preserves the modeled external scientific judgement;
+- replay promotion preserves the modeled external scientific judgement and never lowers a higher assurance state;
 - a replay-verified state does not itself satisfy ensemble calibration;
 - an ensemble-calibrated state does not itself satisfy scientific defensibility;
 - changing a claim boundary or frozen recipe changes formal experiment identity;
@@ -262,7 +262,7 @@ The advertised theorem surface includes machine-checked statements that:
 
 The formal layer also makes its **nonclaims** machine-visible: it does not claim to prove SHA-256 collision resistance, catalogue correctness, null-model adequacy, or physical truth.
 
-CI rejects `sorry`/`admit`, rejects project-defined `axiom`/`constant` declarations, requires [`AUDIT_MANIFEST.tsv`](formal/lean/AUDIT_MANIFEST.tsv) to match the theorem declarations exactly, and audits each advertised theorem with `#print axioms`.
+CI rejects `sorry`/`admit`, rejects project-defined `axiom`/`constant` declarations including supported modifier/attribute-prefixed declarations, requires [`AUDIT_MANIFEST.tsv`](formal/lean/AUDIT_MANIFEST.tsv) to match theorem/lemma declarations including supported modified declarations, and audits each advertised theorem with `#print axioms`. The Lean workflow also runs on pushes to `main`, so the exact merged formal tree is re-verified after merge.
 
 Read:
 
@@ -388,11 +388,13 @@ zenodo/                     # release-specific archival upload guidance
 
 ## Citation and Zenodo versioning
 
-The immutable published v5.0.0 archive remains:
+The assigned v5.2.0 Zenodo version DOI is:
 
-> Slade, T. (2026). *QSOL UFF v5.0.0: Reproducible Astrophysics and Falsification Laboratory* (Version 5.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.21830630
+> Slade, T. (2026). *QSOL UFF v5.2.0: Machine-Checked Assurance and Formal Claim Boundaries for Reproducible Astrophysics* (Version 5.2.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.21911644
 
-v5.2.0 is prepared for Zenodo's **New version** workflow. Its version DOI must be assigned by Zenodo only after the exact merged v5.2.0 release tree is frozen and tagged. Do not relabel an earlier version DOI as v5.2.0.
+The immutable published v5.0.0 archive remains available at `10.5281/zenodo.21830630` for historical citation.
+
+DOI assignment and exact software-tree binding are separate. PR #15 remains the release candidate until merged; after merge, tag `v5.2.0` must resolve to the exact merged commit used for the archival payload. Do not treat DOI assignment alone as evidence that a branch head is the archived release identity.
 
 Machine-readable release metadata are in [CITATION.cff](CITATION.cff), [.zenodo.json](.zenodo.json), and [`zenodo/v5.2.0/metadata.json`](zenodo/v5.2.0/metadata.json).
 
