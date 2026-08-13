@@ -4,6 +4,7 @@ A	theorem	UFF.Assumptions	no_catalogue_correctness_claim
 A	theorem	UFF.Assumptions	no_null_model_adequacy_claim
 A	theorem	UFF.Assumptions	no_physical_truth_claim
 A/R	theorem	UFF.Assurance	replay_preserves_external_scientific_judgement
+A/R	theorem	UFF.Assurance	replay_promotion_does_not_lower_assurance
 A/R	theorem	UFF.Assurance	replay_verified_is_not_ensemble_calibrated
 A/R	theorem	UFF.Assurance	ensemble_calibrated_is_not_scientifically_defensible
 A/R	theorem	UFF.Assurance	ensemble_calibrated_includes_replay

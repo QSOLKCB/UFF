@@ -5,6 +5,7 @@ import UFF.Main
 #print axioms UFFFormal.no_null_model_adequacy_claim
 #print axioms UFFFormal.no_physical_truth_claim
 #print axioms UFFFormal.replay_preserves_external_scientific_judgement
+#print axioms UFFFormal.replay_promotion_does_not_lower_assurance
 #print axioms UFFFormal.replay_verified_is_not_ensemble_calibrated
 #print axioms UFFFormal.ensemble_calibrated_is_not_scientifically_defensible
 #print axioms UFFFormal.ensemble_calibrated_includes_replay

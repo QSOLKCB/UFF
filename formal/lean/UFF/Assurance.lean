@@ -6,12 +6,29 @@ namespace UFFFormal
 def mkEvidence (level : AssuranceLevel) (external : Bool) : EvidenceState :=
   { assurance := level, externalScientificJudgement := external }
 
-/-- Computational replay changes the assurance label but does not manufacture scientific judgement. -/
+/--
+Raise assurance to at least replay verification without discarding a higher,
+separately earned assurance level.
+-/
+def replayPromotedAssurance : AssuranceLevel → AssuranceLevel
+  | .inputsCommitted => .replayVerified
+  | .integrityVerified => .replayVerified
+  | .replayVerified => .replayVerified
+  | .ensembleCalibrated => .ensembleCalibrated
+  | .scientificallyDefensible => .scientificallyDefensible
+
+/-- Computational replay never manufactures scientific judgement or lowers assurance. -/
 def promoteToReplay (state : EvidenceState) : EvidenceState :=
-  { state with assurance := .replayVerified }
+  { state with assurance := replayPromotedAssurance state.assurance }
 
 theorem replay_preserves_external_scientific_judgement (state : EvidenceState) :
     (promoteToReplay state).externalScientificJudgement = state.externalScientificJudgement := rfl
+
+theorem replay_promotion_does_not_lower_assurance (state : EvidenceState) :
+    state.assurance.rank ≤ (promoteToReplay state).assurance.rank := by
+  cases state with
+  | mk assurance externalScientificJudgement =>
+      cases assurance <;> decide
 
 theorem replay_verified_is_not_ensemble_calibrated :
     ¬ hasAssurance (mkEvidence .replayVerified false) .ensembleCalibrated := by

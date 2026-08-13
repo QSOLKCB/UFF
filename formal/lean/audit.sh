@@ -18,8 +18,17 @@ fail() {
 if grep -R -nE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' UFF --include='*.lean'; then
   fail 'proof hole token found'
 fi
-if grep -R -nE '^[[:space:]]*(axiom|constant)[[:space:]]' UFF --include='*.lean'; then
-  fail 'project-defined axiom or constant declaration found'
+
+# Lean declarations can be prefixed by attributes and declaration modifiers.
+# Keep the source audit aligned with that syntax so e.g. `private axiom` cannot
+# evade the no-project-axioms policy and `private theorem` cannot disappear from
+# the advertised declaration inventory.
+DECL_ATTRS='(@\[[^]]+\][[:space:]]*)*'
+DECL_MODS='((private|protected|noncomputable|unsafe|partial|local)[[:space:]]+)*'
+DECL_PREFIX="^[[:space:]]*${DECL_ATTRS}${DECL_MODS}"
+
+if grep -R -nE "${DECL_PREFIX}(axiom|constant)[[:space:]]" UFF --include='*.lean'; then
+  fail 'project-defined axiom or constant declaration found, including modified declarations'
 fi
 
 ACTUAL="$TMP/actual.tsv"
@@ -28,7 +37,9 @@ EXPECTED="$TMP/expected.tsv"
 
 for file in UFF/*.lean; do
   module="UFF.$(basename "$file" .lean)"
-  sed -nE "s/^[[:space:]]*(theorem|lemma)[[:space:]]+([A-Za-z0-9_']+).*/\\1\t${module}\t\\2/p" "$file" >> "$ACTUAL"
+  # Capture groups 1-3 belong to attributes/modifiers; theorem/lemma and the
+  # declaration name are groups 4 and 5 respectively.
+  sed -nE "s/${DECL_PREFIX}(theorem|lemma)[[:space:]]+([A-Za-z0-9_']+).*/\\4\t${module}\t\\5/p" "$file" >> "$ACTUAL"
 done
 sort -o "$ACTUAL" "$ACTUAL"
 

@@ -3,6 +3,7 @@ name: UFF Lean 4 formal verification
 on:
   push:
     branches:
+      - main
       - agent/v5.2.0-lean-formal-assurance
     paths:
       - "formal/lean/**"
@@ -52,8 +53,11 @@ jobs:
             echo 'Lean formalization contains a forbidden proof hole.' >&2
             exit 1
           fi
-          if grep -R -nE '^[[:space:]]*(axiom|constant)[[:space:]]' formal/lean/UFF --include='*.lean'; then
-            echo 'Lean formalization contains a project-defined axiom/constant declaration.' >&2
+          decl_attrs='(@\[[^]]+\][[:space:]]*)*'
+          decl_mods='((private|protected|noncomputable|unsafe|partial|local)[[:space:]]+)*'
+          decl_prefix="^[[:space:]]*${decl_attrs}${decl_mods}"
+          if grep -R -nE "${decl_prefix}(axiom|constant)[[:space:]]" formal/lean/UFF --include='*.lean'; then
+            echo 'Lean formalization contains a project-defined axiom/constant declaration, including a modified declaration.' >&2
             exit 1
           fi
 

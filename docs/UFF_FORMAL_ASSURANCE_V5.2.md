@@ -8,8 +8,8 @@ The objective is deliberately narrow: make important **software and epistemic bo
 
 The v5.2.0 Lean layer covers:
 
-1. **Assurance ordering.** `REPLAY_VERIFIED` does not itself satisfy `ENSEMBLE_CALIBRATED`; `ENSEMBLE_CALIBRATED` does not itself satisfy `SCIENTIFICALLY_DEFENSIBLE`.
-2. **External scientific judgement separation.** Promoting a computational state to replay-verified leaves the modeled external scientific judgement unchanged.
+1. **Assurance ordering.** `REPLAY_VERIFIED` does not itself satisfy `ENSEMBLE_CALIBRATED`; `ENSEMBLE_CALIBRATED` does not itself satisfy `SCIENTIFICALLY_DEFENSIBLE`; replay promotion raises a state to at least replay verification and never discards a higher, separately earned assurance level.
+2. **External scientific judgement separation.** Promoting a computational state to at least replay-verified leaves the modeled external scientific judgement unchanged.
 3. **Identity-bearing claim boundaries.** Changing a claim boundary or frozen recipe changes experiment identity in the formal model.
 4. **Fail-closed cancellation.** A cancelled transaction has no archival bundle and is not exportable.
 5. **One-way observation.** Sonification retains the underlying numerical result; telemetry leaves evidence state unchanged.
@@ -33,6 +33,8 @@ The NEXUS v1.0.0 archive is referenced as a design ancestor, not copied as an au
 
 ## Verification discipline
 
-CI pins Lean 4, rejects proof holes, rejects project-defined axiom/constant declarations, checks the theorem manifest against source declarations, builds the complete Lean library, and runs `#print axioms` over every advertised theorem.
+CI pins Lean 4, rejects proof holes, rejects project-defined axiom/constant declarations including supported attribute/modifier-prefixed declarations, checks the theorem manifest against source declarations including modified theorems/lemmas, builds the complete Lean library, and runs `#print axioms` over every advertised theorem.
+
+The workflow runs for the review branch, pull requests into `main`, and pushes to `main`, so the exact merged formal tree is re-verified after merge rather than relying only on a pre-merge checkout.
 
 The resulting verification report is computational evidence about the formal specification. It remains distinct from empirical scientific validation.

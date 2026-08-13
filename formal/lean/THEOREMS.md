@@ -5,6 +5,7 @@ The canonical machine-readable declaration list is `AUDIT_MANIFEST.tsv`. CI requ
 ## Assurance boundaries
 
 - `replay_preserves_external_scientific_judgement`
+- `replay_promotion_does_not_lower_assurance`
 - `replay_verified_is_not_ensemble_calibrated`
 - `ensemble_calibrated_is_not_scientifically_defensible`
 - `ensemble_calibrated_includes_replay`

@@ -6,7 +6,7 @@ This directory contains a deliberately small Lean 4 model of selected UFF assura
 
 The library models and proves properties of:
 
-- the ordered UFF assurance ladder;
+- the ordered UFF assurance ladder, including replay promotion that never lowers an already higher assurance state;
 - separation of replay from ensemble calibration and external scientific judgement;
 - claim-boundary and frozen-recipe identity;
 - cancellation as a non-exportable transaction state;
@@ -27,6 +27,6 @@ lake build
 bash audit.sh
 ```
 
-CI additionally rejects `sorry`/`admit`, rejects project-defined `axiom`/`constant` declarations, checks `AUDIT_MANIFEST.tsv` against the Lean declarations, and audits each advertised theorem with `#print axioms`.
+CI additionally rejects `sorry`/`admit`, rejects project-defined `axiom`/`constant` declarations even when prefixed by supported Lean attributes/modifiers, checks `AUDIT_MANIFEST.tsv` against all theorem/lemma declarations including modified declarations, and audits each advertised theorem with `#print axioms`.
 
 The toolchain is pinned by `lean-toolchain`.
