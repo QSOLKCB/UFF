@@ -26,9 +26,11 @@ theorem replay_preserves_external_scientific_judgement (state : EvidenceState) :
 
 theorem replay_promotion_does_not_lower_assurance (state : EvidenceState) :
     state.assurance.rank ≤ (promoteToReplay state).assurance.rank := by
-  cases state with
-  | mk assurance externalScientificJudgement =>
-      cases assurance <;> decide
+  have monotone : ∀ level : AssuranceLevel,
+      level.rank ≤ (replayPromotedAssurance level).rank := by
+    intro level
+    cases level <;> decide
+  exact monotone state.assurance
 
 theorem replay_verified_is_not_ensemble_calibrated :
     ¬ hasAssurance (mkEvidence .replayVerified false) .ensembleCalibrated := by
