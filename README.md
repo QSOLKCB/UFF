@@ -1,35 +1,24 @@
 # QSOL UFF
 
 [![CI](https://github.com/QSOLKCB/UFF/actions/workflows/ci.yml/badge.svg)](https://github.com/QSOLKCB/UFF/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/badge/release-v5.1.0-4c1.svg)](RELEASE_NOTES_v5.1.0.md)
-[![Zenodo v5.0.0 archive](https://img.shields.io/badge/Zenodo-v5.0.0%20archive-1682D4.svg)](https://doi.org/10.5281/zenodo.21830630)
+[![Lean 4](https://github.com/QSOLKCB/UFF/actions/workflows/lean-formal.yml/badge.svg)](https://github.com/QSOLKCB/UFF/actions/workflows/lean-formal.yml)
+[![Release](https://img.shields.io/badge/release-v5.2.0-4c1.svg)](RELEASE_NOTES_v5.2.0.md)
+[![Zenodo v5.2.0](https://zenodo.org/badge/DOI/10.5281/zenodo.21911644.svg)](https://doi.org/10.5281/zenodo.21911644)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg)](https://www.python.org/)
 
-**QSOL UFF v5.1.0 - Reproducible Astrophysics, Falsification, and Defense-in-Depth Assurance Laboratory**
+**QSOL UFF v5.2.0 — Reproducible Astrophysics, Falsification, Defense-in-Depth Assurance, and Lean 4 Formal Claim Boundaries**
 
-QSOL UFF is a transparent Python research laboratory for two kinds of work that
-should never be confused:
+QSOL UFF is a transparent research laboratory for two kinds of work that should never be confused:
 
 1. fitting and comparing explicit astrophysical models; and
-2. testing extraordinary catalogue-level spatial claims under frozen,
-   replayable, survey-aware, and now fail-closed assurance rules.
+2. testing extraordinary catalogue-level spatial claims under frozen, replayable, survey-aware, fail-closed evidence rules.
 
-UFF v5.1.0 retains the galaxy-dynamics and compact-object tools, UFF-SLFA,
-Sheridan Crucible, claim provenance, and independent assessment programme from
-v5.0.0. It adds a deliberately small defense-in-depth layer around the evidence
-workflow: a QEC-inspired computational gate, a SPECTRAL-inspired pre-observation
-witness, a statistical-mechanics ensemble guardrail, and SONIFICATION-inspired
-receiver-neutral audit telemetry.
+v5.2.0 retains the galaxy-dynamics and compact-object laboratory, UFF-SLFA, Sheridan Crucible, claim provenance, independent assessment, SPECTRAL-style input witnessing, QEC-style replay admission, ensemble guardrails, and receiver-neutral audit telemetry from v5.1.0. It adds a deliberately small **Lean 4 formal assurance layer** for selected software and epistemic invariants.
 
-> **Scientific boundary:** UFF can formalise a claim, expose circular selection,
-> model survey geometry, freeze input identities, verify bundle integrity,
-> reproduce a deterministic result, and expose trust-boundary telemetry. It
-> cannot turn catalogue diagnostics into physical objects, prove analyst
-> blindness from a local hash, guarantee that a chosen null ensemble represents
-> nature, or promote replay into physical truth.
+> **Scientific boundary:** UFF can formalise a claim, expose circular selection, model survey geometry, freeze input identities, verify bundle integrity, reproduce a deterministic result, machine-check selected assurance invariants, and expose trust-boundary telemetry. It cannot turn catalogue diagnostics into physical objects, prove analyst blindness from a local hash, guarantee that a chosen null ensemble represents nature, prove SHA-256 collision resistance, or promote formal/replay consistency into physical truth.
 
-The v5.1.0 assurance rule is explicit:
+The governing rule remains:
 
 ```text
 REPLAY_VERIFIED != ENSEMBLE_CALIBRATED != PHYSICAL_TRUTH
@@ -43,23 +32,18 @@ REPLAY_VERIFIED != ENSEMBLE_CALIBRATED != PHYSICAL_TRUTH
 | UFF-SLFA | Test a frozen anomaly-rate claim inside fixed celestial node caps | `python sky_lattice_audit.py` | Preregistration-ready reference implementation |
 | Sheridan Crucible | Add masks, completeness, spherical density reconstruction, nuisance models, survey-matched rotations, and injection calibration | `python -m uff.sheridan` | Exact survey-aware reference implementation |
 | Provenance and assessment | Preserve incompatible public claim versions, source hashes, blockers, and methodological review | JSON ledgers and Markdown records | Governance / audit layer |
-| Defense-in-depth assurance | Freeze identities, fail closed on bundle/replay defects, separate replay from ensemble calibration, and export read-only telemetry | `python -m uff.spectral_witness`, `python -m uff.qec_gate`, `python -m uff.audit_events` | New in v5.1.0 |
+| Defense-in-depth assurance | Freeze identities, fail closed on bundle/replay defects, separate replay from ensemble calibration, and export read-only telemetry | `python -m uff.spectral_witness`, `python -m uff.qec_gate`, `python -m uff.audit_events` | v5.1.0 |
+| Lean 4 formal assurance | Machine-check selected assurance, identity, transaction, observation, manifest, and replay invariants | `cd formal/lean && lake build && bash audit.sh` | New in v5.2.0 |
 
-The default `uff` CLI remains focused on galaxy and compact-object analysis.
-Sky-audit and assurance interfaces remain separate so model fitting, evidence
-admission, and scientific interpretation cannot silently borrow authority from
-one another.
+The default `uff` CLI remains focused on galaxy and compact-object analysis. Sky-audit, defense, telemetry, and formal-verification interfaces remain separate so model fitting, evidence admission, theorem checking, and scientific interpretation cannot silently borrow authority from one another.
 
-## Why v5.1 exists
+## Why v5.2 exists
 
-UFF v5.0.0 made disputed catalogue-level celestial-node claims testable under
-frozen and survey-aware contracts. v5.1.0 addresses the next question:
+v5.0.0 made disputed catalogue-level claims testable under frozen and survey-aware contracts. v5.1.0 made the evidence boundary itself fail closed and separated replay from calibration. v5.2.0 addresses the next question:
 
-> Even when the scientific method is frozen, how do we make the evidence
-> boundary itself fail closed and make its assurance level impossible to
-> misread?
+> Which of those assurance and provenance boundaries can be made machine-checkable without pretending that a theorem prover proves nature?
 
-The resulting stack is:
+The resulting trust stack is:
 
 ```text
 BEFORE OBSERVATION
@@ -81,12 +65,17 @@ BEFORE OBSERVATION
               v
  SONIFICATION audit telemetry
  receiver-neutral events; external receivers optional
+              |
+              v
+      Lean 4 assurance model
+ machine-check selected invariants and nonclaims
+              |
+              v
+       external science
+ calibration, peer review, replication, judgement
 ```
 
-A claim that is incomplete remains `CONTRACT_NOT_EXECUTABLE`. A bundle that is
-intact but not replayed remains `INTEGRITY_ONLY` and is **not admitted**. A
-successful replay remains computational assurance, not proof that the null
-ensemble or physical interpretation is correct.
+A claim that is incomplete remains `CONTRACT_NOT_EXECUTABLE`. A bundle that is intact but not replayed remains `INTEGRITY_ONLY` and is **not admitted**. A successful replay remains computational assurance. A Lean theorem remains a statement about the formal specification. Neither is automatically an empirical or physical verdict.
 
 ## Installation
 
@@ -95,12 +84,6 @@ git clone https://github.com/QSOLKCB/UFF.git
 cd UFF
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install -e .
-```
-
-For development and tests:
-
-```bash
 python -m pip install -e ".[dev]"
 pytest
 ```
@@ -125,18 +108,11 @@ Canonical CSV columns are:
 R_kpc,V_obs_kms,e_V_kms,V_gas_kms,V_disk_kms,V_bul_kms
 ```
 
-Short SPARC aliases are also accepted. See [Data format](docs/DATA_FORMAT.md) and
-[Model definitions](docs/MODELS.md).
+Short SPARC aliases are also accepted. See [Data format](docs/DATA_FORMAT.md) and [Model definitions](docs/MODELS.md).
 
-Included model families are Newtonian baryons, NFW and Burkert halos, MOND/RAR
-variants including an explicitly approximate EFE sensitivity proxy, a
-repository-specific empirical UFF curve family, and an optional weak-field
-central SMBH term.
+Included model families are Newtonian baryons, NFW and Burkert halos, MOND/RAR variants including an explicitly approximate EFE sensitivity proxy, a repository-specific empirical UFF curve family, and an optional weak-field central SMBH term.
 
-The fit pipeline reports likelihood diagnostics, chi-squared, RMSE, AIC/AICc,
-BIC, relative information-criterion weights, bound hits, full residual arrays,
-and SHA-256 input receipts. Optional posterior sampling, plots, and
-deterministic sonification remain available.
+The fit pipeline reports likelihood diagnostics, chi-squared, RMSE, AIC/AICc, BIC, relative information-criterion weights, bound hits, full residual arrays, and SHA-256 input receipts. Optional posterior sampling, plots, and deterministic sonification remain available.
 
 ### Compact-object scale report
 
@@ -148,22 +124,15 @@ python -m uff compact-object \
   --out outputs/sgr-a-scale-report.json
 ```
 
-This reports Kerr characteristic radii, the sphere of influence, the selected
-LQG area-gap convention, and scale ratios. LQG is not used in the galaxy
-likelihood. See [Scientific status](docs/SCIENCE_STATUS_2026.md).
+This reports Kerr characteristic radii, the sphere of influence, the selected LQG area-gap convention, and scale ratios. LQG is not used in the galaxy likelihood. See [Scientific status](docs/SCIENCE_STATUS_2026.md).
 
 ## 2. UFF-SLFA: frozen sky-lattice claims
 
 UFF-SLFA asks a narrow question:
 
-> Does an independently selected catalogue show a preregistered excess of a
-> declared anomaly inside spherical caps around frozen celestial nodes, under a
-> null model that preserves the relevant selection structure?
+> Does an independently selected catalogue show a preregistered excess of a declared anomaly inside spherical caps around frozen celestial nodes, under a null model that preserves the relevant selection structure?
 
-A `uff.sky-lattice-claim.v1` contract freezes node IDs and ICRS coordinates,
-one cap radius, the anomaly predicate, catalogue/holdout/weight/stratum
-declarations, the null model and deterministic seed, decision thresholds, and
-anti-circularity declarations.
+A `uff.sky-lattice-claim.v1` contract freezes node IDs and ICRS coordinates, one cap radius, the anomaly predicate, catalogue/holdout/weight/stratum declarations, the null model and deterministic seed, decision thresholds, and anti-circularity declarations.
 
 Run and verify an audit:
 
@@ -178,34 +147,15 @@ python sky_lattice_audit.py verify \
   --catalogue frozen_catalogue.csv
 ```
 
-SLFA supports shared RA shifts, Haar-uniform proper SO(3) rotations, and
-stratified label permutations. It uses finite plus-one empirical p-values, Holm
-family-wise correction, and TFT-derived invariance checks for geometric null
-transforms.
+SLFA supports shared RA shifts, Haar-uniform proper SO(3) rotations, and stratified label permutations. It uses finite plus-one empirical p-values, Holm family-wise correction, and TFT-derived invariance checks for geometric null transforms.
 
 Read the full [Sky-Lattice Falsification Protocol](docs/SKY_LATTICE_FALSIFICATION_PROTOCOL.md).
 
 ## 3. Sheridan Crucible: survey-aware falsification
 
-Sheridan wraps an ordinary SLFA claim in `uff.sheridan-crucible.v1` and makes
-telescope/catalogue geometry part of the frozen experiment.
+Sheridan wraps an ordinary SLFA claim in `uff.sheridan-crucible.v1` and makes telescope/catalogue geometry part of the frozen experiment.
 
-It adds explicit survey-support quadrature, masks and fractional coverage,
-completeness filtering and inverse-completeness weights, normalized spherical
-von Mises-Fisher KDE, leave-one-out/adaptive bandwidths, mask-aware edge
-renormalization, survey-availability-matched SO(3) rotations, nuisance-model
-comparison, predictive checks, synthetic anomaly-label injection, bounded exact
-source execution, and replayable SHA-256 evidence bundles.
-
-Generate a deterministic full-sky support grid:
-
-```bash
-python -m uff.sheridan support-grid \
-  --points 4096 \
-  --out full_sky_support.csv
-```
-
-Run and replay a frozen Sheridan contract:
+It adds explicit survey-support quadrature, masks and fractional coverage, completeness filtering and inverse-completeness weights, normalized spherical von Mises-Fisher KDE, leave-one-out/adaptive bandwidths, mask-aware edge renormalization, survey-availability-matched SO(3) rotations, nuisance-model comparison, predictive checks, synthetic anomaly-label injection, bounded exact source execution, and replayable SHA-256 evidence bundles.
 
 ```bash
 python -m uff.sheridan run \
@@ -224,15 +174,9 @@ Read the full [Sheridan Siege Engine protocol](docs/SHERIDAN_SIEGE_ENGINE.md).
 
 ## 4. Defense in depth
 
-Read [UFF Defense in Depth](docs/UFF_DEFENSE_IN_DEPTH.md) for the complete
-authority model and the versioned [v5.1.0 technical report source](papers/UFF_v5.1.0_DEFENSE_IN_DEPTH_TECHNICAL_REPORT.md). The rendered PDF is included in the Zenodo upload bundle.
+Read [UFF Defense in Depth](docs/UFF_DEFENSE_IN_DEPTH.md) and the [v5.1.0 technical report source](papers/UFF_v5.1.0_DEFENSE_IN_DEPTH_TECHNICAL_REPORT.md).
 
-### QEC boundary gate - computational admission
-
-The QEC-inspired gate performs strict canonical JSON and artifact validation,
-recomputes child hashes and contract cross-links, constructs an externally
-anchorable deterministic root, and then requires fresh domain replay before
-admission.
+### QEC boundary gate — computational admission
 
 ```bash
 python -m uff.qec_gate \
@@ -240,15 +184,13 @@ python -m uff.qec_gate \
   --catalogue frozen_catalogue.csv
 ```
 
-Integrity inspection is deliberately weaker and never admits:
+Integrity-only inspection is deliberately weaker and never admits:
 
 ```bash
 python -m uff.qec_gate \
   runs/frozen-claim/manifest.json \
   --integrity-only
 ```
-
-Assurance states:
 
 | State | Meaning | Admitted? |
 |---|---|---:|
@@ -258,9 +200,7 @@ Assurance states:
 
 See [QEC Boundary Gate](docs/QEC_BOUNDARY_GATE.md).
 
-### SPECTRAL witness - pre-observation identity
-
-Commit identity-bearing inputs before running or inspecting the audit:
+### SPECTRAL witness — pre-observation identity
 
 ```bash
 python -m uff.spectral_witness commit precommit.json \
@@ -268,28 +208,9 @@ python -m uff.spectral_witness commit precommit.json \
   --catalogue frozen_catalogue.csv
 ```
 
-For Sheridan add `--support frozen_support.csv`.
+For Sheridan add `--support frozen_support.csv`. Reveal only through a replay-verified bundle. A local commitment establishes identity, not chronology; historical preregistration still requires an independent timestamped or signed anchor.
 
-Reveal through a replay-verified evidence bundle:
-
-```bash
-python -m uff.spectral_witness reveal \
-  precommit.json runs/frozen-claim/manifest.json \
-  --contract frozen_contract.json \
-  --catalogue frozen_catalogue.csv \
-  --expected-commit <externally-anchored-digest>
-```
-
-v5.1.0 binds the witness's canonical contract digest to the contract actually
-verified from the replayed recipe. A witness for contract A cannot admit a
-replay-valid bundle produced from contract B.
-
-A local commitment proves identity, not chronology. Historical preregistration
-still requires an independent timestamped or signed anchor.
-
-### Statistical-mechanics guardrail - replay is not calibration
-
-The interpretation guardrail formalizes:
+### Statistical-mechanics guardrail — replay is not calibration
 
 ```text
 INPUTS_COMMITTED
@@ -299,16 +220,11 @@ INPUTS_COMMITTED
       -> SCIENTIFICALLY_DEFENSIBLE (external scientific judgement)
 ```
 
-No lower rung implies a higher rung. A future `ENSEMBLE_CALIBRATED` state must
-be earned with explicit type-I-error, power, negative-control, survey-systematic,
-convergence, seed-block, and multiplicity calibration. No quantum many-body
-model is imported into ordinary catalogue resampling by this analogy.
+No lower rung implies a higher rung. A future `ENSEMBLE_CALIBRATED` state must be earned with explicit type-I-error, power, negative-control, survey-systematic, convergence, seed-block, and multiplicity calibration.
 
 See [Statistical Mechanics Guardrail](docs/STATISTICAL_MECHANICS_GUARDRAIL.md).
 
-### SONIFICATION audit telemetry - read-only receiver bus
-
-Generate deterministic receiver-neutral telemetry outside the evidence bundle:
+### SONIFICATION audit telemetry — read-only receiver bus
 
 ```bash
 python -m uff.audit_events \
@@ -317,26 +233,57 @@ python -m uff.audit_events \
   --out telemetry/frozen-claim-events.json
 ```
 
-Canonical event fields describe trust-boundary and already-recorded scientific
-states. Tempo, hertz, MIDI, timbre, loudness, waveform, and rendered audio are
-noncanonical receiver choices. Telemetry has **zero authority** over bundle
-admission or scientific verdicts.
+Telemetry has **zero authority** over bundle admission or scientific verdicts. Tempo, hertz, MIDI, timbre, loudness, waveform, and rendered audio are noncanonical receiver choices.
+
+## 5. Lean 4 formal assurance
+
+The v5.2.0 formal layer lives in [`formal/lean/`](formal/lean/) and is intentionally compact. It models selected UFF invariants instead of attempting to reproduce the numerical astrophysics in a theorem prover.
+
+Build and audit it with:
+
+```bash
+cd formal/lean
+lake build
+bash audit.sh
+```
+
+The advertised theorem surface includes machine-checked statements that:
+
+- replay promotion preserves the modeled external scientific judgement and never lowers a higher assurance state;
+- a replay-verified state does not itself satisfy ensemble calibration;
+- an ensemble-calibrated state does not itself satisfy scientific defensibility;
+- changing a claim boundary or frozen recipe changes formal experiment identity;
+- a cancelled transaction produces no bundle and is not exportable;
+- sonification preserves the underlying numerical result;
+- telemetry leaves evidence state unchanged;
+- manifest sealing computes the envelope digest from a pre-existing core;
+- same deterministic engine + frozen recipe + runtime contract gives the same formal replay result; and
+- a changed runtime contract changes replay identity.
+
+The formal layer also makes its **nonclaims** machine-visible: it does not claim to prove SHA-256 collision resistance, catalogue correctness, null-model adequacy, or physical truth.
+
+CI rejects `sorry`/`admit`, rejects project-defined `axiom`/`constant` declarations including supported modifier/attribute-prefixed declarations, requires [`AUDIT_MANIFEST.tsv`](formal/lean/AUDIT_MANIFEST.tsv) to match theorem/lemma declarations including supported modified declarations, and audits each advertised theorem with `#print axioms`. The Lean workflow also runs on pushes to `main`, so the exact merged formal tree is re-verified after merge.
+
+Read:
+
+- [v5.2.0 Formal Assurance Report](docs/UFF_FORMAL_ASSURANCE_V5.2.md)
+- [Formal README](formal/lean/README.md)
+- [Assumptions and nonclaims](formal/lean/ASSUMPTIONS_AND_NONCLAIMS.md)
+- [Runtime correspondence](formal/lean/RUNTIME_CORRESPONDENCE.md)
+- [Advertised theorem surface](formal/lean/THEOREMS.md)
 
 ## Evidence bundles and verdict boundaries
 
-SLFA, Sheridan, and the v5.1.0 gate separate five questions that are often
-blurred together:
+SLFA, Sheridan, the v5.1.0 gate, and the v5.2.0 formal layer separate questions that are often blurred together:
 
 1. **Was the claim fully specified?**
 2. **Are the artifacts intact?**
 3. **Does numerical replay reproduce the stored result?**
-4. **Is the statistical ensemble calibrated for the inferential claim?**
-5. **Is the scientific model and sampling design defensible?**
+4. **Do selected formal assurance definitions satisfy their stated invariants?**
+5. **Is the statistical ensemble calibrated for the inferential claim?**
+6. **Is the scientific model and sampling design defensible?**
 
-A bundle may be computationally perfect and scientifically biased. Hashes prove
-byte identity; deterministic replay proves computational consistency; neither
-proves that the sampling frame, anomaly predicate, null distribution, or causal
-interpretation is appropriate.
+A bundle may be computationally perfect and scientifically biased. A formal model may be internally proved and fail to correspond to a buggy implementation. Hashes prove byte identity; deterministic replay proves computational consistency; Lean proves theorems about its definitions; none of those facts alone proves that the sampling frame, anomaly predicate, null distribution, or causal interpretation is scientifically appropriate.
 
 Sheridan bundles contain:
 
@@ -350,20 +297,11 @@ decision.json
 manifest.json
 ```
 
-The QEC gate may additionally write `qec_gate.json` after successful replay;
-the receipt is self-hash-excluded and validated against the full deterministic
-receipt payload.
-
-Failed and untestable nodes remain visible. Null outcomes are not deleted. A
-positive association remains an association, not automatic evidence for its
-proposed cause.
+The QEC gate may additionally write `qec_gate.json` after successful replay. Failed and untestable nodes remain visible. Null outcomes are not deleted. A positive association remains an association, not automatic evidence for its proposed cause.
 
 ## Claim provenance and independent assessment
 
-The repository includes a content-addressed public-claim ledger for the
-Logvinovich celestial-node claims. It preserves incompatible coordinate sets,
-radii, query predicates, reported counts, and unresolved fields without
-choosing a preferred version on the claimant's behalf.
+The repository includes a content-addressed public-claim ledger for the Logvinovich celestial-node claims. It preserves incompatible coordinate sets, radii, query predicates, reported counts, and unresolved fields without choosing a preferred version on the claimant's behalf.
 
 Key records include:
 
@@ -374,14 +312,7 @@ Key records include:
 - [Independent assessment source manifest](docs/INDEPENDENT_ASSESSMENT_SOURCE_MANIFEST_2026-08-07.md)
 - [Machine-readable assessment action ledger](examples/independent_assessment_actions_2026-08-07.json)
 
-The governing assessment remains intentionally uncomfortable:
-
-> The crucible's syntax is largely formalised. Its statistical calibration
-> still needs validation, and the claimant has not supplied one stationary
-> claim to place inside it.
-
-The proposed `uff.sheridan-crucible.v2` expansion remains a roadmap, not an
-implemented contract in v5.1.0.
+The proposed `uff.sheridan-crucible.v2` expansion remains a roadmap, not an implemented contract in v5.2.0.
 
 ## Machine-readable schemas and protocols
 
@@ -394,10 +325,11 @@ implemented contract in v5.1.0.
 | `uff.qec-boundary-gate.v1` | Replay-verified gate receipt | Yes, verifier-generated |
 | `uff.spectral-witness.v1` | Pre-observation input-identity commitment | Yes |
 | `uff.audit-event-stream.v1` | Receiver-neutral read-only audit telemetry | Yes, non-authoritative |
+| UFF Lean 4 v5.2 model | Formal assurance specification | Yes, theorem-checked; non-runtime |
 | `uff.public-claim-profile.v1` | Provenance record containing unresolved public claim versions | No by design |
 | `uff.independent-assessment-response.v1` | Machine-readable implementation roadmap | No; governance record |
 | `uff.sheridan-crucible.v2` | Proposed publication-grade contract expansion | Planned, not implemented |
-| `ENSEMBLE_CALIBRATED` | Future assurance state | Planned, not implemented |
+| `ENSEMBLE_CALIBRATED` | Future runtime assurance state | Planned, not implemented |
 
 ## Repository layout
 
@@ -421,9 +353,10 @@ uff/
   qec_gate.py               # strict defense-in-depth admission boundary
   spectral_witness.py       # pre-observation input identity commit/reveal
   audit_events.py           # receiver-neutral read-only forensic telemetry
+formal/lean/                # v5.2.0 Lean 4 assurance specification and audit
 examples/                   # frozen example contracts and governance ledgers
 tests/                      # model, geometry, replay, provenance and assurance regressions
-docs/                       # protocols, scientific boundaries and manifests
+docs/                       # protocols, formal/scientific boundaries and manifests
 papers/                     # methods papers, formal reports and references
 zenodo/                     # release-specific archival upload guidance
 ```
@@ -434,48 +367,38 @@ zenodo/                     # release-specific archival upload guidance
 - Algebraic MOND relations are not full AQUAL/QUMOND solvers for flattened disks.
 - Information-criterion rankings depend on the candidate set and data contract.
 - The UFF empirical profile is not derived from a covariant field theory.
-- Catalogue diagnostics such as excess noise, uncertainty, or missing values are
-  not physical objects without an independently validated object-level model.
-- Broadband colour differences are not spectral resonances without a
-  bandpass-aware spectral model.
-- Cross-catalogue agreement is not automatic statistical independence when
-  catalogues share objects, source-density structure, or systematics.
-- Preregistration prevents later rule changes; it does not repair a biased
-  sampling frame or make previously inspected data blind.
+- Catalogue diagnostics are not physical objects without an independently validated object-level model.
+- Cross-catalogue agreement is not automatic statistical independence when catalogues share objects, source-density structure, or systematics.
+- Preregistration prevents later rule changes; it does not repair a biased sampling frame or make previously inspected data blind.
 - `REPLAY_VERIFIED` is computational assurance, not ensemble calibration.
 - A local SPECTRAL witness establishes identity, not historical chronology.
 - SONIFICATION telemetry is an observation aid, not additional evidence.
-- The current exact Sheridan KDE is intentionally bounded by a frozen source
-  limit rather than silently changing algorithm or exhausting memory.
+- Lean theorems prove properties of the formal model, not automatic semantic equivalence with Python or truth about nature.
 
-## Release notes and technical report
+## Release notes and archival package
 
+- [QSOL UFF v5.2.0](RELEASE_NOTES_v5.2.0.md)
+- [v5.2.0 Formal Assurance Report](docs/UFF_FORMAL_ASSURANCE_V5.2.md)
+- [Zenodo v5.2.0 upload guide](zenodo/v5.2.0/ZENODO_UPLOAD_README.md)
 - [QSOL UFF v5.1.0](RELEASE_NOTES_v5.1.0.md)
-- [v5.1.0 Defense-in-Depth Technical Report source](papers/UFF_v5.1.0_DEFENSE_IN_DEPTH_TECHNICAL_REPORT.md) - the rendered PDF is included in the Zenodo bundle
-- [Zenodo v5.1.0 upload guide](zenodo/v5.1.0/ZENODO_UPLOAD_README.md)
+- [v5.1.0 Defense-in-Depth Technical Report](papers/UFF_v5.1.0_DEFENSE_IN_DEPTH_TECHNICAL_REPORT.md)
 - [QSOL UFF v5.0.0](RELEASE_NOTES_v5.0.0.md)
 - [UFF Sheridan Crucible v1.1.0](RELEASE_NOTES_SHERIDAN_v1.1.0.md)
 - [UFF-SLFA v1.0.0](RELEASE_NOTES_SLFA_v1.0.0.md)
 
 ## Citation and Zenodo versioning
 
-The currently published archive is v5.0.0:
+The assigned v5.2.0 Zenodo version DOI is:
 
-> Slade, T. (2026). *QSOL UFF v5.0.0: Reproducible Astrophysics and
-> Falsification Laboratory* (Version 5.0.0) [Computer software]. Zenodo.
-> https://doi.org/10.5281/zenodo.21830630
+> Slade, T. (2026). *QSOL UFF v5.2.0: Machine-Checked Assurance and Formal Claim Boundaries for Reproducible Astrophysics* (Version 5.2.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.21911644
 
-v5.1.0 is prepared as a **new Zenodo version** of that record. Its version DOI
-will be assigned when the v5.1.0 deposit is published. Until then, the DOI above
-must be treated as the immutable v5.0.0 archive, not as the v5.1.0 DOI.
+The immutable published v5.0.0 archive remains available at `10.5281/zenodo.21830630` for historical citation.
 
-Machine-readable release metadata are in [CITATION.cff](CITATION.cff) and
-[.zenodo.json](.zenodo.json). The supporting Zenodo package includes a
-post-publication checklist identifying every place where the newly assigned
-v5.1.0 DOI should be patched after publication.
+DOI assignment and exact software-tree binding are separate. PR #15 remains the release candidate until merged; after merge, tag `v5.2.0` must resolve to the exact merged commit used for the archival payload. Do not treat DOI assignment alone as evidence that a branch head is the archived release identity.
 
-Analyses must also cite the primary scientific sources for every physical model,
-catalogue, and statistical method used.
+Machine-readable release metadata are in [CITATION.cff](CITATION.cff), [.zenodo.json](.zenodo.json), and [`zenodo/v5.2.0/metadata.json`](zenodo/v5.2.0/metadata.json).
+
+Analyses must also cite the primary scientific sources for every physical model, catalogue, and statistical method used.
 
 ## License
 
