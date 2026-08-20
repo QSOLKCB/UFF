@@ -3,7 +3,7 @@
 [![CI](https://github.com/QSOLKCB/UFF/actions/workflows/ci.yml/badge.svg)](https://github.com/QSOLKCB/UFF/actions/workflows/ci.yml)
 [![Lean 4](https://github.com/QSOLKCB/UFF/actions/workflows/lean-formal.yml/badge.svg)](https://github.com/QSOLKCB/UFF/actions/workflows/lean-formal.yml)
 [![Release](https://img.shields.io/badge/release-v5.3.0-4c1.svg)](RELEASE_NOTES_v5.3.0.md)
-[![Zenodo v5.3.0](https://img.shields.io/badge/Zenodo-v5.3.0%20DOI%20pending-lightgrey.svg)](zenodo/v5.3.0/ZENODO_UPLOAD_README.md)
+[![Zenodo v5.3.0](https://zenodo.org/badge/DOI/10.5281/zenodo.22026554.svg)](https://doi.org/10.5281/zenodo.22026554)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg)](https://www.python.org/)
 
@@ -396,7 +396,7 @@ zenodo/                     # release-specific archival upload guidance
 
 - [QSOL UFF v5.3.0](RELEASE_NOTES_v5.3.0.md)
 - [v5.3.0 Nonclaim Calibration](docs/NONCLAIM_CALIBRATION.md)
-- [Zenodo v5.3.0 upload guide](zenodo/v5.3.0/ZENODO_UPLOAD_README.md)
+- [Zenodo v5.3.0 publication record](zenodo/v5.3.0/ZENODO_UPLOAD_README.md)
 - [QSOL UFF v5.2.0](RELEASE_NOTES_v5.2.0.md)
 - [v5.2.0 Formal Assurance Report](docs/UFF_FORMAL_ASSURANCE_V5.2.md)
 - [QSOL UFF v5.1.0](RELEASE_NOTES_v5.1.0.md)
@@ -407,7 +407,9 @@ zenodo/                     # release-specific archival upload guidance
 
 ## Citation and Zenodo versioning
 
-The v5.3.0 Zenodo record metadata is prepared, but its new version DOI is **pending assignment**. Do not reuse the immutable v5.2.0 DOI for v5.3.0.
+The assigned v5.3.0 Zenodo version DOI is:
+
+> Slade, T. (2026). *QSOL UFF v5.3.0: Nonclaim Calibration and Evidence-Scope Discipline for Reproducible Astrophysics* (Version 5.3.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.22026554
 
 The previous v5.2.0 Zenodo version DOI remains historical provenance:
 
@@ -415,7 +417,7 @@ The previous v5.2.0 Zenodo version DOI remains historical provenance:
 
 The immutable published v5.0.0 archive remains available at `10.5281/zenodo.21830630` for historical citation.
 
-DOI assignment and exact software-tree binding are separate. The final tag `v5.3.0` must resolve to the exact merged commit used for the archival payload. Do not treat DOI assignment alone as evidence that a branch head is the archived release identity.
+DOI assignment and exact software-tree binding are separate. Tag `v5.3.0` remains bound to release commit `1e310b257ec51c92cccf12271900cec5aa972c50`, the source identity archived for the release. This post-publication DOI metadata update belongs on `main` and does not move or replace the tag.
 
 Machine-readable release metadata are in [CITATION.cff](CITATION.cff), [.zenodo.json](.zenodo.json), and [`zenodo/v5.3.0/metadata.json`](zenodo/v5.3.0/metadata.json).
 
