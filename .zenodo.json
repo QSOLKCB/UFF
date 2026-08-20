@@ -1,9 +1,9 @@
 {
-  "title": "QSOL UFF v5.2.0: Machine-Checked Assurance and Formal Claim Boundaries for Reproducible Astrophysics",
+  "title": "QSOL UFF v5.3.0: Nonclaim Calibration and Evidence-Scope Discipline for Reproducible Astrophysics",
   "upload_type": "software",
-  "publication_date": "2026-08-12",
-  "version": "5.2.0",
-  "description": "<p><strong>QSOL UFF v5.2.0</strong> is an additive formal-assurance release of the reproducible astrophysics and falsification laboratory. It retains the v5.1.0 scientific implementation and defense-in-depth workflow while adding a Lean 4 specification of selected invariants around assurance ordering, replay, experiment identity, transaction closure, one-way observation, telemetry authority, and manifest construction.</p><p>The Lean layer is audited for proof holes and project-defined axioms, pins its toolchain, maintains an exact theorem manifest, and runs an explicit axiom-dependency audit.</p><p><strong>Scientific boundary:</strong> machine-checked software invariants do not prove SHA-256 security, catalogue correctness, null-model adequacy, statistical independence, causality, or physical truth. The governing rule remains <code>REPLAY_VERIFIED != ENSEMBLE_CALIBRATED != PHYSICAL_TRUTH</code>.</p>",
+  "publication_date": "2026-08-20",
+  "version": "5.3.0",
+  "description": "<p><strong>QSOL UFF v5.3.0</strong> is an additive epistemic-assurance release of the reproducible astrophysics and falsification laboratory. It retains the v5.2.0 scientific implementation, defense-in-depth evidence workflow, and Lean 4 formal assurance layer while adding a reusable nonclaim calibration vocabulary and a machine-readable worked reference.</p><p>The v5.3.0 calibration rule is <code>EXISTENCE != ROBUSTNESS != GENERICITY != PREVALENCE != EMPIRICAL_SUPPORT != PHYSICAL_TRUTH</code>. The release records forbidden promotions such as <code>can form -&gt; likely to form</code>, <code>fine-tuned success -&gt; robust success</code>, <code>constructed trajectory -&gt; generic outcome</code>, and <code>theoretical possibility -&gt; empirical occurrence</code>.</p><p>The worked reference is Jampolski &amp; Rezzolla, <em>Formation of gravastars</em>, arXiv:2509.15302v2. It is included as a claim-scope calibration source because the paper demonstrates gravastar formation under fine-tuned conditions while leaving robustness under more realistic assumptions and the relative likelihood of gravastar versus black-hole formation open.</p><p><strong>Scientific boundary:</strong> the reference is not evidence that astrophysical gravastars are generic, common, observed, or physically preferred. The existing UFF rule <code>REPLAY_VERIFIED != ENSEMBLE_CALIBRATED != PHYSICAL_TRUTH</code> remains unchanged.</p>",
   "creators": [
     {
       "name": "Slade, Trent",
@@ -22,24 +22,30 @@
   "keywords": [
     "reproducible astrophysics",
     "research software",
+    "nonclaims",
+    "claim boundaries",
+    "epistemic calibration",
+    "scientific provenance",
+    "evidence scope",
     "formal verification",
     "Lean 4",
-    "theorem proving",
     "deterministic replay",
-    "claim boundaries",
-    "scientific provenance",
-    "defense in depth",
-    "machine-checked assurance"
+    "gravastars"
   ],
   "related_identifiers": [
     {
-      "identifier": "https://github.com/QSOLKCB/UFF/releases/tag/v5.2.0",
+      "identifier": "https://github.com/QSOLKCB/UFF/releases/tag/v5.3.0",
       "relation": "isIdenticalTo",
       "scheme": "url"
     },
     {
       "identifier": "https://github.com/QSOLKCB/UFF",
       "relation": "isVersionOf",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://arxiv.org/abs/2509.15302",
+      "relation": "references",
       "scheme": "url"
     },
     {
