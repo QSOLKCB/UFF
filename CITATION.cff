@@ -1,16 +1,15 @@
 cff-version: 1.2.0
-message: "If you use QSOL UFF, cite this software release and the primary scientific sources for every model, catalogue, and statistical method used. The assigned v5.2.0 Zenodo version DOI is 10.5281/zenodo.21911644."
-title: "QSOL UFF v5.2.0: Machine-Checked Assurance and Formal Claim Boundaries for Reproducible Astrophysics"
+message: "If you use QSOL UFF, cite this software release and the primary scientific sources for every model, catalogue, statistical method, and nonclaim calibration reference used. The v5.3.0 Zenodo version DOI is pending assignment; do not reuse the immutable v5.2.0 DOI 10.5281/zenodo.21911644."
+title: "QSOL UFF v5.3.0: Nonclaim Calibration and Evidence-Scope Discipline for Reproducible Astrophysics"
 type: software
-version: 5.2.0
-date-released: 2026-08-12
+version: 5.3.0
+date-released: 2026-08-20
 authors:
   - family-names: Slade
     given-names: Trent
     orcid: "https://orcid.org/0009-0002-4515-9237"
-doi: "10.5281/zenodo.21911644"
 repository-code: "https://github.com/QSOLKCB/UFF"
-url: "https://doi.org/10.5281/zenodo.21911644"
+url: "https://github.com/QSOLKCB/UFF/releases/tag/v5.3.0"
 license: Apache-2.0
 keywords:
   - reproducible astrophysics
@@ -25,13 +24,18 @@ keywords:
   - Lean 4
   - theorem proving
   - machine-checked assurance
+  - nonclaims
+  - claim boundaries
+  - epistemic calibration
 abstract: >-
-  QSOL UFF v5.2.0 retains the v5.1.0 reproducible astrophysics, falsification,
-  provenance, witness, replay-gate, ensemble-boundary, and telemetry systems
-  while adding a Lean 4 specification of selected software and epistemic
-  invariants. The formal layer machine-checks assurance ordering, replay
-  separation, identity-bearing claim boundaries, cancellation closure,
-  one-way sonification, zero-authority telemetry, no-self-hash manifest
-  construction, and deterministic replay identity. It explicitly does not
-  prove SHA-256 security, catalogue correctness, null-model adequacy,
-  statistical independence, causality, or physical truth.
+  QSOL UFF v5.3.0 retains the v5.2.0 reproducible astrophysics,
+  falsification, provenance, witness, replay-gate, ensemble-boundary,
+  telemetry, and Lean 4 assurance systems while adding a reusable nonclaim
+  calibration vocabulary and a machine-readable worked reference. The release
+  explicitly separates existence, robustness, genericity, prevalence,
+  empirical support, and physical truth, and records forbidden epistemic
+  promotions such as can-form to likely-to-form and theoretical possibility to
+  empirical occurrence. The worked reference is Jampolski and Rezzolla,
+  Formation of gravastars, arXiv:2509.15302v2. It is a calibration source, not
+  evidence that astrophysical gravastars are generic, common, observed, or
+  physically preferred.
