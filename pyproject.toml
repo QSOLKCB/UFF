@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "qsol-uff"
-version = "5.2.0"
-description = "Reproducible astrophysics and falsification laboratory with fail-closed and machine-checked evidence assurance"
+version = "5.3.0"
+description = "Reproducible astrophysics and falsification laboratory with fail-closed, machine-checked, and nonclaim calibration assurance"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {file = "LICENSE"}
@@ -30,6 +30,9 @@ keywords = [
   "scientific provenance",
   "formal verification",
   "Lean 4",
+  "nonclaims",
+  "claim boundaries",
+  "epistemic calibration",
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -64,8 +67,8 @@ Homepage = "https://github.com/QSOLKCB/UFF"
 Repository = "https://github.com/QSOLKCB/UFF"
 Documentation = "https://github.com/QSOLKCB/UFF/tree/main/docs"
 Changelog = "https://github.com/QSOLKCB/UFF/blob/main/CHANGELOG.md"
-Release = "https://github.com/QSOLKCB/UFF/releases/tag/v5.2.0"
-DOI = "https://doi.org/10.5281/zenodo.21911644"
+Release = "https://github.com/QSOLKCB/UFF/releases/tag/v5.3.0"
+"Previous Zenodo v5.2.0" = "https://doi.org/10.5281/zenodo.21911644"
 "Zenodo v5.0.0 Archive" = "https://doi.org/10.5281/zenodo.21830630"
 Issues = "https://github.com/QSOLKCB/UFF/issues"
 
