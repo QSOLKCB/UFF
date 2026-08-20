@@ -1,0 +1,93 @@
+{
+  "schema": "uff.nonclaim-reference.v1",
+  "record_id": "arxiv:2509.15302v2",
+  "record_role": "nonclaim-calibration",
+  "source": {
+    "title": "Formation of gravastars",
+    "authors": [
+      "Daniel Jampolski",
+      "Luciano Rezzolla"
+    ],
+    "identifier": "arXiv:2509.15302v2",
+    "version_date": "2026-06-11",
+    "category": "gr-qc",
+    "url": "https://arxiv.org/abs/2509.15302"
+  },
+  "scope": {
+    "uff_use": "Worked reference for distinguishing demonstrated results from unsupported stronger claims.",
+    "not_evidence_for": [
+      "astrophysical prevalence of gravastars",
+      "generic gravastar formation",
+      "observational detection of gravastars",
+      "physical preference for gravastars over black holes"
+    ]
+  },
+  "dimensions": [
+    {
+      "dimension": "existence",
+      "source_status": "supported-within-model",
+      "source_basis": "The paper demonstrates a gravastar-forming collapse trajectory in the specified construction under fine-tuned conditions.",
+      "uff_nonclaim": "This establishes model possibility, not genericity, prevalence, or observation.",
+      "boundary_origin": "source-explicit-plus-uff-interpretation"
+    },
+    {
+      "dimension": "robustness",
+      "source_status": "open",
+      "source_basis": "The paper states that future work must test more realistic equations of state, off-center bubble nucleation, and deviations from spherical symmetry.",
+      "uff_nonclaim": "Robustness under realistic perturbations is not established.",
+      "boundary_origin": "source-explicit"
+    },
+    {
+      "dimension": "genericity",
+      "source_status": "open",
+      "source_basis": "The authors explicitly leave open whether generic initial conditions are more likely to form a gravastar or a black hole.",
+      "uff_nonclaim": "A successful tuned trajectory must not be reported as generic formation.",
+      "boundary_origin": "source-explicit"
+    },
+    {
+      "dimension": "prevalence",
+      "source_status": "not-established",
+      "source_basis": "No population measure or astrophysical occurrence rate is established by the construction.",
+      "uff_nonclaim": "Can form must not be promoted to likely to form or commonly forms.",
+      "boundary_origin": "uff-interpretation"
+    },
+    {
+      "dimension": "empirical_support",
+      "source_status": "not-claimed-by-this-result",
+      "source_basis": "The work is a theoretical formation model rather than an observational detection study.",
+      "uff_nonclaim": "The construction is not empirical evidence that gravastars occur in nature.",
+      "boundary_origin": "uff-interpretation"
+    },
+    {
+      "dimension": "predictive_direction",
+      "source_status": "target-conditioned-backward-construction",
+      "source_basis": "The paper explains that it starts from the desired final gravastar state and integrates backward to identify conditions producing that state.",
+      "uff_nonclaim": "Backward target-conditioned construction must not be presented as forward predictive genericity from independently fixed initial conditions.",
+      "boundary_origin": "source-explicit-plus-uff-interpretation"
+    },
+    {
+      "dimension": "stability",
+      "source_status": "not-generically-established",
+      "source_basis": "The construction reaches a static equilibrium, while the paper leaves possible instabilities under less idealized assumptions to future study.",
+      "uff_nonclaim": "Static equilibrium in the constructed model is not a general proof of dynamical stability.",
+      "boundary_origin": "source-explicit-plus-uff-interpretation"
+    },
+    {
+      "dimension": "universality",
+      "source_status": "model-bound",
+      "source_basis": "The compactness threshold is derived inside the paper's collapse construction and assumptions.",
+      "uff_nonclaim": "A model-bound threshold must not be promoted to a universal bound without an independent universality argument.",
+      "boundary_origin": "uff-interpretation"
+    }
+  ],
+  "forbidden_promotions": [
+    "can form -> likely to form",
+    "constructed trajectory -> generic outcome",
+    "fine-tuned success -> robust success",
+    "static equilibrium -> general dynamical stability",
+    "model-bound threshold -> universal physical law",
+    "backward target-conditioned construction -> forward predictive genericity",
+    "theoretical possibility -> empirical occurrence",
+    "association -> causation"
+  ]
+}

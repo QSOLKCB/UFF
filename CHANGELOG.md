@@ -3,6 +3,59 @@
 Notable changes to QSOL UFF are documented here. The project follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.3.0] - 2026-08-20
+
+### Added
+
+- Reusable nonclaim-calibration vocabulary separating existence, robustness,
+  genericity, prevalence, empirical support, and physical truth.
+- Additional claim-scope dimensions for causal interpretation, universality,
+  predictive direction, and static equilibrium versus general dynamical
+  stability.
+- Worked machine-readable `uff.nonclaim-reference.v1` record for Jampolski &
+  Rezzolla, *Formation of gravastars*, arXiv:2509.15302v2.
+- Explicit provenance for whether a nonclaim boundary is source-explicit, an UFF
+  interpretation, or a combination of both.
+- Regression tests requiring the nonclaim calibration surface and common
+  forbidden epistemic promotions to remain machine-readable.
+- Zenodo v5.3.0 metadata snapshot and exact-release publication guide.
+
+### Changed
+
+- Bumped package, citation, README, release, and Zenodo metadata to v5.3.0.
+- Extended `formal/lean/ASSUMPTIONS_AND_NONCLAIMS.md` to reference the v5.3
+  calibration layer without extending the Lean theorem surface.
+- Added the governing nonclaim boundary:
+  `EXISTENCE != ROBUSTNESS != GENERICITY != PREVALENCE != EMPIRICAL_SUPPORT != PHYSICAL_TRUTH`.
+- Preserved the existing assurance boundary
+  `REPLAY_VERIFIED != ENSEMBLE_CALIBRATED != PHYSICAL_TRUTH` unchanged.
+- Kept the immutable v5.2.0 DOI `10.5281/zenodo.21911644` as historical
+  provenance only; the new v5.3.0 DOI remains pending Zenodo assignment.
+
+### Validation
+
+- Nonclaim calibration JSON is required to expose all eight calibration
+  dimensions and explicit source-basis / UFF-nonclaim fields.
+- Tests reject loss of the principal forbidden promotions, including
+  `can form -> likely to form`, `fine-tuned success -> robust success`, and
+  `theoretical possibility -> empirical occurrence`.
+- Existing Python and Lean assurance behavior is unchanged by the calibration
+  layer.
+
+### Scientific boundary
+
+- The Jampolski & Rezzolla paper is a calibration reference, not evidence that
+  astrophysical gravastars are generic, common, observed, or physically
+  preferred.
+- A successful theoretical construction may establish model possibility while
+  leaving robustness, genericity, prevalence, and observation open.
+- Backward target-conditioned construction is not silently promoted to forward
+  predictive genericity.
+- Static equilibrium in a specified construction is not silently promoted to a
+  general proof of dynamical stability.
+
+Full details: [RELEASE_NOTES_v5.3.0.md](RELEASE_NOTES_v5.3.0.md).
+
 ## [5.2.0] - 2026-08-12
 
 ### Added
@@ -227,7 +280,8 @@ Full details: [RELEASE_NOTES_v5.0.0.md](RELEASE_NOTES_v5.0.0.md).
 
 ## Release links
 
-- v5.2.0 — release candidate; [Zenodo version DOI 10.5281/zenodo.21911644](https://doi.org/10.5281/zenodo.21911644) assigned; GitHub tag pending exact-merge binding
+- v5.3.0 — release preparation; Zenodo version DOI pending; GitHub tag must bind to exact merged release commit
+- v5.2.0 — [Zenodo version DOI 10.5281/zenodo.21911644](https://doi.org/10.5281/zenodo.21911644); retained as immutable historical provenance
 - [v5.1.0](https://github.com/QSOLKCB/UFF/releases/tag/v5.1.0) - Zenodo version DOI pending metadata patch
 - [v5.0.0](https://github.com/QSOLKCB/UFF/releases/tag/v5.0.0) —
   [Zenodo archive](https://doi.org/10.5281/zenodo.21830630)
