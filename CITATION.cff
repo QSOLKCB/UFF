@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use QSOL UFF, cite this software release and the primary scientific sources for every model, catalogue, statistical method, and nonclaim calibration reference used. The v5.3.0 Zenodo version DOI is pending assignment; do not reuse the immutable v5.2.0 DOI 10.5281/zenodo.21911644."
+message: "If you use QSOL UFF, cite this software release and the primary scientific sources for every model, catalogue, statistical method, and nonclaim calibration reference used. The assigned v5.3.0 Zenodo version DOI is 10.5281/zenodo.22026554; the immutable v5.2.0 DOI remains 10.5281/zenodo.21911644."
 title: "QSOL UFF v5.3.0: Nonclaim Calibration and Evidence-Scope Discipline for Reproducible Astrophysics"
 type: software
 version: 5.3.0
@@ -8,8 +8,9 @@ authors:
   - family-names: Slade
     given-names: Trent
     orcid: "https://orcid.org/0009-0002-4515-9237"
+doi: "10.5281/zenodo.22026554"
 repository-code: "https://github.com/QSOLKCB/UFF"
-url: "https://github.com/QSOLKCB/UFF/releases/tag/v5.3.0"
+url: "https://doi.org/10.5281/zenodo.22026554"
 license: Apache-2.0
 keywords:
   - reproducible astrophysics
