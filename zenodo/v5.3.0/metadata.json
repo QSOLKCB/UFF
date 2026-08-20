@@ -1,0 +1,57 @@
+{
+  "title": "QSOL UFF v5.3.0: Nonclaim Calibration and Evidence-Scope Discipline for Reproducible Astrophysics",
+  "upload_type": "software",
+  "publication_date": "2026-08-20",
+  "version": "5.3.0",
+  "description": "<p><strong>QSOL UFF v5.3.0</strong> is an additive epistemic-assurance release of the reproducible astrophysics and falsification laboratory. It retains the v5.2.0 scientific implementation, defense-in-depth evidence workflow, and Lean 4 formal assurance layer while adding a reusable nonclaim calibration vocabulary and a machine-readable worked reference.</p><p>The v5.3.0 calibration rule is <code>EXISTENCE != ROBUSTNESS != GENERICITY != PREVALENCE != EMPIRICAL_SUPPORT != PHYSICAL_TRUTH</code>. The release records forbidden promotions such as <code>can form -&gt; likely to form</code>, <code>fine-tuned success -&gt; robust success</code>, <code>constructed trajectory -&gt; generic outcome</code>, and <code>theoretical possibility -&gt; empirical occurrence</code>.</p><p>The worked reference is Jampolski &amp; Rezzolla, <em>Formation of gravastars</em>, arXiv:2509.15302v2. It is included as a claim-scope calibration source because the paper demonstrates gravastar formation under fine-tuned conditions while leaving robustness under more realistic assumptions and the relative likelihood of gravastar versus black-hole formation open.</p><p><strong>Scientific boundary:</strong> the reference is not evidence that astrophysical gravastars are generic, common, observed, or physically preferred. The existing UFF rule <code>REPLAY_VERIFIED != ENSEMBLE_CALIBRATED != PHYSICAL_TRUTH</code> remains unchanged.</p>",
+  "creators": [
+    {
+      "name": "Slade, Trent",
+      "orcid": "0009-0002-4515-9237",
+      "affiliation": "QSOL-IMC"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "OpenAI ChatGPT",
+      "type": "Other",
+      "affiliation": "OpenAI"
+    }
+  ],
+  "license": "Apache-2.0",
+  "keywords": [
+    "reproducible astrophysics",
+    "research software",
+    "nonclaims",
+    "claim boundaries",
+    "epistemic calibration",
+    "scientific provenance",
+    "evidence scope",
+    "formal verification",
+    "Lean 4",
+    "deterministic replay",
+    "gravastars"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/QSOLKCB/UFF/releases/tag/v5.3.0",
+      "relation": "isIdenticalTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/QSOLKCB/UFF",
+      "relation": "isVersionOf",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://arxiv.org/abs/2509.15302",
+      "relation": "references",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/QSOLKCB/QSOL-NEXUS/tree/main/archives/v1.0.0",
+      "relation": "references",
+      "scheme": "url"
+    }
+  ]
+}
