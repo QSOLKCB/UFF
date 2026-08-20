@@ -60,9 +60,10 @@ def test_nonclaim_reference_forbids_common_epistemic_promotions() -> None:
         in promotions
     )
     assert "theoretical possibility -> empirical occurrence" in promotions
+    assert "association -> causation" in promotions
 
 
-def test_nonclaim_doc_preserves_governing_boundary() -> None:
+def test_nonclaim_doc_preserves_governing_boundary_and_dimension_contract() -> None:
     text = DOC.read_text(encoding="utf-8")
 
     assert (
@@ -70,6 +71,9 @@ def test_nonclaim_doc_preserves_governing_boundary() -> None:
         "!= PHYSICAL_TRUTH"
         in text
     )
+    assert "canonical `uff.nonclaim-reference.v1` vocabulary has eight dimensions" in text
+    assert "| `stability` |" in text
+    assert "Causal interpretation is enforced as a **forbidden promotion**" in text
     assert "arXiv:2509.15302v2" in text
     assert "nonclaim calibration reference" in text
     assert "does not change galaxy likelihoods" in text

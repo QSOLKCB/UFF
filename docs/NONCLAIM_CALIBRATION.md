@@ -14,6 +14,8 @@ A result may establish one rung while leaving every later rung open.
 
 ## Calibration dimensions
 
+The canonical `uff.nonclaim-reference.v1` vocabulary has eight dimensions:
+
 | Dimension | Question |
 |---|---|
 | `existence` | Does at least one admissible construction, trajectory, solution, or dataset realization exist? |
@@ -21,9 +23,11 @@ A result may establish one rung while leaving every later rung open.
 | `genericity` | Does it arise across a broad, non-fine-tuned region of admissible initial conditions or models? |
 | `prevalence` | How often should it occur under a justified measure, ensemble, population, or generative process? |
 | `empirical_support` | Is there observational or experimental evidence that the modeled phenomenon occurs in nature? |
-| `causal_interpretation` | Does the evidence identify the proposed cause rather than merely an association or compatible mechanism? |
-| `universality` | Is a model-bound limit or relation established beyond the model class from which it was derived? |
 | `predictive_direction` | Was the result obtained by forward prediction from independently specified initial conditions, or by target-conditioned/backward construction? |
+| `stability` | Does an equilibrium or successful construction remain stable under the dynamical and structural perturbations relevant to the claim? |
+| `universality` | Is a model-bound limit or relation established beyond the model class from which it was derived? |
+
+Causal interpretation is enforced as a **forbidden promotion**, not as a ninth canonical dimension: an association or compatible mechanism must not be promoted to an identified cause without separately earned evidence.
 
 ## Forbidden promotions
 
