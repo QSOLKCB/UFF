@@ -29,8 +29,12 @@ Notable changes to QSOL UFF are documented here. The project follows
   `EXISTENCE != ROBUSTNESS != GENERICITY != PREVALENCE != EMPIRICAL_SUPPORT != PHYSICAL_TRUTH`.
 - Preserved the existing assurance boundary
   `REPLAY_VERIFIED != ENSEMBLE_CALIBRATED != PHYSICAL_TRUTH` unchanged.
-- Kept the immutable v5.2.0 DOI `10.5281/zenodo.21911644` as historical
-  provenance only; the new v5.3.0 DOI remains pending Zenodo assignment.
+- Bound the published v5.3.0 Zenodo version DOI
+  `10.5281/zenodo.22026554` into release-facing metadata while retaining the
+  immutable v5.2.0 DOI `10.5281/zenodo.21911644` as historical provenance.
+- Preserved tag `v5.3.0` on exact archived source commit
+  `1e310b257ec51c92cccf12271900cec5aa972c50`; DOI synchronization is a
+  post-publication metadata update on `main`, not a retagged release.
 
 ### Validation
 
@@ -39,6 +43,8 @@ Notable changes to QSOL UFF are documented here. The project follows
 - Tests reject loss of the principal forbidden promotions, including
   `can form -> likely to form`, `fine-tuned success -> robust success`, and
   `theoretical possibility -> empirical occurrence`.
+- Release metadata tests require the v5.3.0 DOI, exact release commit, and
+  no-retagging publication rule to remain explicit.
 - Existing Python and Lean assurance behavior is unchanged by the calibration
   layer.
 
@@ -280,7 +286,7 @@ Full details: [RELEASE_NOTES_v5.0.0.md](RELEASE_NOTES_v5.0.0.md).
 
 ## Release links
 
-- v5.3.0 — release preparation; Zenodo version DOI pending; GitHub tag must bind to exact merged release commit
+- [v5.3.0](https://github.com/QSOLKCB/UFF/releases/tag/v5.3.0) — [Zenodo version DOI 10.5281/zenodo.22026554](https://doi.org/10.5281/zenodo.22026554); tag bound to exact archived source commit `1e310b257ec51c92cccf12271900cec5aa972c50`
 - v5.2.0 — [Zenodo version DOI 10.5281/zenodo.21911644](https://doi.org/10.5281/zenodo.21911644); retained as immutable historical provenance
 - [v5.1.0](https://github.com/QSOLKCB/UFF/releases/tag/v5.1.0) - Zenodo version DOI pending metadata patch
 - [v5.0.0](https://github.com/QSOLKCB/UFF/releases/tag/v5.0.0) —

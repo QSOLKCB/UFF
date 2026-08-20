@@ -81,8 +81,8 @@ Added regression tests that require:
 
 ## Archival record
 
-The v5.3.0 Zenodo metadata is prepared under `zenodo/v5.3.0/` and mirrored in `.zenodo.json`. The arXiv reference is recorded as a related identifier with relation `references`.
+The published v5.3.0 Zenodo version DOI is **10.5281/zenodo.22026554**.
 
-A new Zenodo version DOI must be assigned by Zenodo before final DOI binding. The previous v5.2.0 DOI, `10.5281/zenodo.21911644`, remains immutable historical provenance and must not be relabeled as the v5.3.0 DOI.
+The Zenodo deposit contains the archived `source.zip` and v5.3.0 release notes supplied for the release. The previous v5.2.0 DOI, `10.5281/zenodo.21911644`, remains immutable historical provenance and is not relabeled as the v5.3.0 DOI.
 
-The final GitHub `v5.3.0` tag and archival payload must bind to the exact merged release commit before publication.
+The GitHub `v5.3.0` tag remains bound to exact release commit `1e310b257ec51c92cccf12271900cec5aa972c50`. This post-publication DOI-binding update applies only to `main`; it does not move, recreate, or replace the release tag or archived source identity.

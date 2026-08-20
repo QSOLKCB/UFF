@@ -8,6 +8,7 @@ ROOT = Path(__file__).parents[1]
 ZENODO = ROOT / ".zenodo.json"
 ZENODO_SNAPSHOT = ROOT / "zenodo" / "v5.3.0" / "metadata.json"
 PREVIOUS_DOI = "10.5281/zenodo.21911644"
+CURRENT_DOI = "10.5281/zenodo.22026554"
 
 
 def test_v5_3_zenodo_lineage_is_machine_readable() -> None:
@@ -15,6 +16,7 @@ def test_v5_3_zenodo_lineage_is_machine_readable() -> None:
     snapshot = json.loads(ZENODO_SNAPSHOT.read_text(encoding="utf-8"))
 
     assert metadata == snapshot
+    assert CURRENT_DOI in metadata["description"]
     assert any(
         item["identifier"] == PREVIOUS_DOI
         and item["relation"] == "isNewVersionOf"

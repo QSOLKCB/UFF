@@ -22,9 +22,11 @@ ZENODO_V5_1_MANIFEST = ROOT / "zenodo" / "v5.1.0" / "MANIFEST.json"
 OBSOLETE_DOI = "10.5281/zenodo.17669627"
 PUBLISHED_V5_0_DOI = "10.5281/zenodo.21830630"
 PUBLISHED_V5_2_DOI = "10.5281/zenodo.21911644"
+PUBLISHED_V5_3_DOI = "10.5281/zenodo.22026554"
+RELEASE_COMMIT = "1e310b257ec51c92cccf12271900cec5aa972c50"
 
 
-def test_v5_3_release_metadata_is_consistent_and_doi_is_pending() -> None:
+def test_v5_3_release_metadata_is_consistent_and_doi_is_bound() -> None:
     readme = README.read_text(encoding="utf-8")
     pyproject = PYPROJECT.read_text(encoding="utf-8")
     citation = CITATION.read_text(encoding="utf-8")
@@ -46,7 +48,11 @@ def test_v5_3_release_metadata_is_consistent_and_doi_is_pending() -> None:
         pyproject,
         re.MULTILINE,
     )
-    assert not re.search(r'^DOI = ', pyproject, re.MULTILINE)
+    assert re.search(
+        r'^DOI = "https://doi\.org/10\.5281/zenodo\.22026554"$',
+        pyproject,
+        re.MULTILINE,
+    )
     assert re.search(
         r'^"Previous Zenodo v5\.2\.0" = "https://doi\.org/10\.5281/zenodo\.21911644"$',
         pyproject,
@@ -68,19 +74,22 @@ def test_v5_3_release_metadata_is_consistent_and_doi_is_pending() -> None:
     )
     for text in current_texts:
         assert OBSOLETE_DOI not in text
+        assert PUBLISHED_V5_3_DOI in text
 
-    # Published historical DOIs remain immutable provenance, never the v5.3 DOI.
     for text in (readme, pyproject, changelog):
         assert PUBLISHED_V5_0_DOI in text
     for text in current_texts:
         assert PUBLISHED_V5_2_DOI in text
 
-    assert "DOI is **pending assignment**" in readme
-    assert "DOI is pending assignment" in citation
-    assert "has **not** been assigned" in zenodo_guide
-    assert not re.search(r'^doi:', citation, re.MULTILINE)
+    assert "pending assignment" not in readme
+    assert "pending assignment" not in citation
     assert re.search(
-        r'^url: "https://github\.com/QSOLKCB/UFF/releases/tag/v5\.3\.0"$',
+        r'^doi: "10\.5281/zenodo\.22026554"$',
+        citation,
+        re.MULTILINE,
+    )
+    assert re.search(
+        r'^url: "https://doi\.org/10\.5281/zenodo\.22026554"$',
         citation,
         re.MULTILINE,
     )
@@ -95,6 +104,7 @@ def test_v5_3_release_metadata_is_consistent_and_doi_is_pending() -> None:
     assert zenodo["upload_type"] == "software"
     assert zenodo["publication_date"] == "2026-08-20"
     assert zenodo["version"] == "5.3.0"
+    assert PUBLISHED_V5_3_DOI in zenodo["description"]
     assert zenodo["creators"] == [
         {
             "name": "Slade, Trent",
@@ -123,9 +133,9 @@ def test_v5_3_release_metadata_is_consistent_and_doi_is_pending() -> None:
         for item in zenodo["related_identifiers"]
     )
 
-    # DOI assignment does not replace exact-commit/tag release identity.
-    assert "exact merged commit" in zenodo_guide
-    assert "`v5.3.0` tag" in zenodo_guide
+    assert RELEASE_COMMIT in release_notes
+    assert RELEASE_COMMIT in zenodo_guide
+    assert "Do **not** move, recreate, or retag `v5.3.0`" in zenodo_guide
 
     assert re.search(
         r"^\| `uff\.nonclaim-reference\.v1` \| [^|\n]+ \| No; provenance/calibration record \|$",
